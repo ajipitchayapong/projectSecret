@@ -8,7 +8,7 @@ body {
   margin: 0;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
     sans-serif;
-  background: #14151f;
+  background: #5594d8;
   color: #fff;
 }
 
@@ -22,78 +22,79 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 16px;
+  gap: 24px;
 }
 
-/* เวที */
-.wrap {
-  width: 512px;
-  height: 512px;
+/* ===========================
+   เวทีสัตว์ — FIX RATIO, CENTER
+   =========================== */
+.animal-stage {
   position: relative;
-  overflow: hidden;
-  border-radius: 24px;
-  background: radial-gradient(circle at 20% 0%, #56c1ff, #18264a);
-}
-
-/* container ของสัตว์ */
-#animalchanger {
-  position: relative;
-  width: 100%;
-  height: 100%;
+  width: 40vw; /* เวทีจะหด/ขยายตามหน้าจอ */
+  height: auto;
+  aspect-ratio: var(--ratio); /* อัตราส่วนจริงจาก SVG */
+  max-height: 40vh;
+  overflow: visible;
+  margin: 0 auto;
 }
 
 /* polygon หลัก */
 .shard {
   position: absolute;
   inset: 0;
+  z-index: 1; /* ต่ำกว่า label */
   will-change: clip-path, opacity, transform, background-color;
   transform: translateZ(0);
-  z-index: 1; /* ตัวนกเลเยอร์ 1 */
 }
 
-/* เลขกำกับ shard */
+/* ตัวเลขกำกับ */
 .shard-label {
   position: absolute;
-  transform: translate(-50%, -50%);
+  z-index: 9 !important; /* สูงกว่าสัตว์ */
+  pointer-events: none;
+  color: #fff;
   font-size: 12px;
   font-weight: 600;
-  color: #ffffff;
   text-shadow: 0 0 3px rgba(0, 0, 0, 0.8);
-  pointer-events: none;
-  z-index: 4; /* สูงสุด */
 }
 
-.info {
-  text-align: center;
-  line-height: 1.3;
-}
-
-.info h2 {
-  margin: 0;
-  font-size: 1.25rem;
-}
-
-.info p {
-  margin: 4px 0 0;
-  font-size: 0.9rem;
-  opacity: 0.7;
-}
-
-/* ปุ่ม */
 .controls {
   display: flex;
   gap: 12px;
+  justify-content: center;
 }
 
 button {
-  padding: 8px 16px;
-  border-radius: 999px;
+  padding: 8px 20px;
+  font-size: 14px;
+  border-radius: 24px;
   border: none;
-  background: #ffffff22;
-  color: #fff;
   cursor: pointer;
-  backdrop-filter: blur(8px);
+
+  /* Glass style */
+  background: rgba(255, 255, 255, 0.25);
+  color: #ffffff;
+  backdrop-filter: blur(6px);
+
+  /* ทำให้ดู soft เหมือนของเดิม */
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.08);
+  transition: background 0.2s ease, transform 0.2s ease;
 }
+
 button:hover {
-  background: #ffffff44;
+  background: rgba(255, 255, 255, 0.45);
+  transform: translateY(-2px);
+}
+
+button:active {
+  transform: scale(0.96);
+  background: rgba(255, 255, 255, 0.55);
+}
+
+.hover-label {
+  margin-left: 12px;
+  align-self: center;
+  font-size: 0.9rem;
+  opacity: 0.9;
+  white-space: nowrap;
 }
