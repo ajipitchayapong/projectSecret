@@ -2,7 +2,7 @@ import { useState } from "react";
 import { ANIMALS } from "./animalConfig";
 
 const SHARD_COUNT = ANIMALS[0].shards.length;
-const DURATION = 5.0;
+const DURATION = 1.0;
 const STAGGER = 0.015;
 
 function App() {
