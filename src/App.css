@@ -1,42 +1,133 @@
+/* src/App.css */
+
+/* --- Global Reset & Container --- */
 #root {
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+/* กรอบหลักของหน้า */
+.page {
+  position: relative;
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  /* ไม่จำเป็นต้องใส่ overflow: hidden ตรงนี้แล้ว เพราะเราไปจัดการที่ .stage-wrapper แทน */
+  /* overflow: hidden; */
+  padding-bottom: 20px;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
+/* --- ส่วนที่แก้ไขใหม่เพื่อแก้ Zoom Jumping --- */
+
+/* 1. Wrapper: กรอบนอก (อยู่นิ่งๆ ทำหน้าที่รับเมาส์และกำหนดขอบเขต) */
+.stage-wrapper {
+  position: relative;
+  width: 100%;
+
+  /* กำหนดสัดส่วนภาพที่นี่ */
+  aspect-ratio: var(--ratio);
+
+  margin: 0 auto;
+  background-color: #e0e0e0;
+
+  /* ตัดส่วนเกินทิ้งที่นี่ (Masking) */
+  overflow: hidden;
+
+  border-radius: 12px;
+  touch-action: none;
+  cursor: default;
+}
+
+/* 2. Inner: ไส้ใน (ทำหน้าที่ขยายตัว Zoom) */
+.stage-inner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  /* ย้าย transition มาที่นี่ เพื่อให้การขยายสมูท */
+  will-change: transform;
+  transition: transform 0.2s ease-out;
+
+  /* สำคัญ: ต้องเต็มพื้นที่เสมอ */
+  transform-origin: center center;
+}
+
+/* --- จบส่วนแก้ไข --- */
+
+/* ชิ้นส่วน Polygon */
+.shard {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  /* ให้เมาส์ทะลุผ่านไปได้ถ้า shard นั้นซ่อนอยู่ */
+  pointer-events: none;
+}
+
+/* --- Controls Section --- */
+.controls {
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+
+  position: relative;
+  z-index: 10;
+}
+
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #1a1a1a;
+  color: white;
+  cursor: pointer;
+  transition: border-color 0.25s, background-color 0.25s;
+}
+
+button:hover {
+  background-color: #646cff;
+  border-color: #646cff;
+}
+
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+
+.hover-label {
+  margin-top: 1rem;
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #333;
+  min-height: 1.5em;
+}
+
+/* --- Dark Mode Support --- */
+@media (prefers-color-scheme: dark) {
+  :root {
+    color: #f9f9f9;
+    background-color: #242424;
   }
-  to {
-    transform: rotate(360deg);
+  .page {
+    /* พื้นหลังหน้าเว็บ */
   }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
+  .stage-wrapper {
+    background-color: #444; /* พื้นหลังกรอบตอนยังไม่โหลดรูป */
   }
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
+  .hover-label {
+    color: #f9f9f9;
+  }
 }
