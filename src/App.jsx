@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { ANIMALS } from "./animalConfig";
 import "./App.css";
 
@@ -12,15 +12,32 @@ function App() {
   const [showLabels, setShowLabels] = useState(false);
   const [hoverIndex, setHoverIndex] = useState(null);
 
-  // 1. เพิ่ม State เก็บรายการ Shard ที่ถูกคลิก (ใช้ Set เพื่อกันเลขซ้ำ)
-  const [markedShards, setMarkedShards] = useState(new Set());
+  // 1. เปลี่ยนจาก Set เป็น Array เพื่อเก็บลำดับการคลิก (Order)
+  const [markedOrder, setMarkedOrder] = useState([]);
 
   const [mousePos, setMousePos] = useState(null);
   const stageRef = useRef(null);
 
+  const animal = ANIMALS[currentIndex];
+  // หาจำนวน Shard จริงๆ ของสัตว์ตัวปัจจุบัน (ไม่นับ Shard ที่อาจจะเป็น null/disabled ถ้ามี)
+  // แต่จาก config ดูเหมือนจะเต็ม array แต่เราสามารถใช้ length ของ animal.shards ได้เลย
+  const totalShards = animal.shards.length;
+
+  // Effect สำหรับเช็คว่าครบหรือยัง แล้ว Auto Export
+  useEffect(() => {
+    if (markedOrder.length > 0 && markedOrder.length === totalShards) {
+        // ให้เวลา State Update และ Render แป๊บนึงก่อน Export
+        const timeout = setTimeout(() => {
+            handleExport();
+        }, 500);
+        return () => clearTimeout(timeout);
+    }
+  }, [markedOrder, totalShards, currentIndex]);
+
+
   const changeAnimal = (delta) => {
-    // 2. เมื่อเปลี่ยนสัตว์ ให้เคลียร์ค่าที่มาร์คไว้ (หรือถ้าไม่อยากเคลียร์ก็ลบบรรทัดนี้ทิ้ง)
-    setMarkedShards(new Set());
+    // 2. Clear array เมื่อเปลี่ยนสัตว์
+    setMarkedOrder([]);
 
     setCurrentIndex((prev) => {
       const next = (prev + delta + ANIMALS.length) % ANIMALS.length;
@@ -29,21 +46,80 @@ function App() {
     });
   };
 
-  // 3. ฟังก์ชันสำหรับคลิกเลือก/ยกเลิกเลือก
+  // 3. ปรับ Logic การคลิก
   const toggleShard = (index) => {
-    const newSet = new Set(markedShards);
-    if (newSet.has(index)) {
-      newSet.delete(index); // ถ้ามีแล้วให้ลบออก (Unmark)
-    } else {
-      newSet.add(index); // ถ้ายังไม่มีให้เพิ่ม (Mark)
-    }
-    setMarkedShards(newSet);
+    setMarkedOrder((prev) => {
+        const existingIndex = prev.indexOf(index);
+        if (existingIndex !== -1) {
+            // ถ้ามีอยู่แล้ว ให้เอาออก (Unmark)
+            // การเอาออกจะทำให้ลำดับของตัวหลังๆ เลื่อนขึ้นมาโดยอัตโนมัติ ซึ่งน่าจะถูกต้องตาม logic การ Mark
+            return prev.filter(item => item !== index);
+        } else {
+            // ถ้ายังไม่มี ให้ต่อท้าย (Mark ต่อไปเป็นลำดับถัดไป)
+            return [...prev, index];
+        }
+    });
+  };
 
-    // log ออกมาดูใน Console เผื่อก๊อปไปใช้ต่อ
-    console.log(
-      "Marked Indices:",
-      [...newSet].sort((a, b) => a - b)
-    );
+  const handleExport = () => {
+    // สร้าง Object ใหม่ตาม Format
+    // Format: export const [animalName] = { ... }
+    
+    // เรียง Shard ตามลำดับ original array แต่ใส่ order ใหม่เข้าไป
+    const newShards = animal.shards.map((shard, originalIndex) => {
+        // หาว่า originalIndex นี้ ถูกคลิกเป็นลำดับที่เท่าไหร่
+        const orderIndex = markedOrder.indexOf(originalIndex);
+        
+        // ถ้าอยู่ใน markedOrder ก็ใช้ลำดับนั้น (0, 1, 2...)
+        // ถ้าไม่อยู่ (กรณีอาจจะกด export manual? แต่โจทย์บอก auto เมื่อครบ)
+        // ก็ใส่เป็น -1 หรือค่าเดิมไปก่อน แต่ตาม Flow นี้คือน่าจะครบแล้วทุกตัวที่เป็น visible
+        const newOrder = orderIndex !== -1 ? orderIndex : shard.order;
+
+        return {
+            ...shard,
+            order: newOrder
+        };
+    });
+
+    // Construct String manually to preserve format and add comments
+    let exportContent = `export const ${animal.id}Ordered = {\n`;
+    
+    // Add other properties (dynamically)
+    const { shards: _ignore, ...otherProps } = animal;
+    for (const [key, value] of Object.entries(otherProps)) {
+        // Use JSON.stringify for value to handle strings, numbers, booleans correctly
+        exportContent += `  ${key}: ${JSON.stringify(value)},\n`;
+    }
+
+    exportContent += `  shards: [\n`;
+
+    newShards.forEach((shard, index) => {
+        // Construct the object string manually to ensure desired property order
+        // Required Order: clipPath, color, order, shard
+        const shardObjContent = `    {\n` +
+                                `      clipPath:\n` + 
+                                `        ${JSON.stringify(shard.clipPath)},\n` +
+                                `      color: ${JSON.stringify(shard.color)},\n` +
+                                `      order: ${shard.order},\n` +
+                                `      shard: ${shard.shard},\n` +
+                                `    }`;
+        
+        exportContent += `${shardObjContent},\n\n`;
+    });
+
+    exportContent += `  ]\n};`;
+    
+    const blob = new Blob([exportContent], { type: "text/javascript" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `${animal.id}Ordered.js`;
+    document.body.appendChild(link);
+    link.click();
+    
+    // Cleanup
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
   };
 
   const handleMouseMove = (e) => {
@@ -54,20 +130,27 @@ function App() {
     setMousePos({ x, y });
   };
 
-  const animal = ANIMALS[currentIndex];
   const stageWidth = animal.stageWidth ?? 1000;
   const stageHeight = animal.stageHeight ?? 1000;
   const ratio = stageWidth / stageHeight;
 
+  // ใช้ pool ใหญ่สุดเผื่อไว้ก่อน
   const pool = Array.from({ length: MAX_SHARD_COUNT }, (_, i) => i);
 
   const shards = pool.map((i) => {
+    // ต้องระวัง Index เกิน range ของสัตว์ปัจจุบัน
     const shardData = animal.shards[i];
-    const isVisible = !!shardData;
+    
+    // ถ้าเกิน range ก็ไม่แสดง
+    if (!shardData) return null;
+
+    const isVisible = true; // สมมติว่าทุกอันใน config visible หมด
     const isHovered = i === hoverIndex;
 
-    // 4. เช็คว่า Index นี้ถูกมาร์คไว้ไหม
-    const isMarked = markedShards.has(i);
+    // 4. เช็คว่า Index นี้ถูกมาร์คไว้ไหม จาก Array
+    const isMarked = markedOrder.includes(i);
+    // หา order ปัจจุบันที่ mark (ถ้าต้องการแสดงเลข)
+    const markedSequence = markedOrder.indexOf(i); 
 
     let baseOrder =
       isVisible && typeof shardData.order === "number" ? shardData.order : i;
@@ -83,10 +166,6 @@ function App() {
       ? shardData.clipPath
       : "polygon(50% 50%, 50% 50%, 50% 50%)";
 
-    // 5. Logic ลำดับสี (Priority):
-    // - ถ้า Hover -> สีฟ้า (#00FFFF)
-    // - ถ้าไม่ได้ Hover แต่ถูก Mark -> สีแดงอมชมพู (#FF0055)
-    // - ถ้าปกติ -> สีเดิม
     const currentColor = isVisible
       ? isHovered
         ? "#00FFFF"
@@ -104,7 +183,6 @@ function App() {
         className="shard"
         onMouseEnter={() => isVisible && setHoverIndex(i)}
         onMouseLeave={() => setHoverIndex(null)}
-        // 6. ใส่ Event Click
         onClick={() => isVisible && toggleShard(i)}
         style={{
           clipPath: currentClipPath,
@@ -121,23 +199,42 @@ function App() {
             background-color 0s 0s linear 
           `,
         }}
-      />
+      >
+        {/* Optional: แสดงเลข Order ที่ Mark ไว้กลาง Shard เพื่อให้รู้ว่ากดลำดับที่เท่าไหร่แล้ว */}
+        {isMarked && showLabels && (
+            <span style={{
+                position: 'absolute', 
+                top: '50%', 
+                left: '50%', 
+                transform: 'translate(-50%, -50%)', 
+                color: 'white', 
+                fontWeight: 'bold',
+                fontSize: '12px',
+                pointerEvents: 'none',
+                textShadow: '0 0 2px black'
+            }}>
+                {markedSequence}
+            </span>
+        )}
+      </div>
     );
   });
 
-  // ... (ส่วน return ด้านล่างเหมือนเดิม)
   let hoverLabelText = "";
   if (showLabels) {
     if (hoverIndex !== null) {
-      hoverLabelText = `Shard #${hoverIndex + 1}`;
+      hoverLabelText = `Shard Index: ${hoverIndex} (Click to set Order: ${markedOrder.length})`;
     } else {
-      hoverLabelText = "Hover บนชิ้น polygon เพื่อดูเลข";
+      hoverLabelText = `Marked: ${markedOrder.length} / ${totalShards}`;
     }
   }
 
   return (
     <div className="page">
-      {/* ... (เหมือนเดิม) ... */}
+      <div className="status-bar" style={{position:'absolute', top: 10, left: 10, color: 'white', zIndex: 999}}>
+         Animal: {animal.name} | Progress: {markedOrder.length} / {totalShards}
+      </div>
+
       <div
         className="stage-wrapper"
         ref={stageRef}
@@ -161,12 +258,22 @@ function App() {
       </div>
 
       <div className="controls">
-        {/* ... (เหมือนเดิม) ... */}
         <button onClick={() => changeAnimal(-1)}>Prev</button>
         <button onClick={() => changeAnimal(1)}>Next</button>
         <button onClick={() => setShowLabels((v) => !v)}>
-          {showLabels ? "Hide shard numbers" : "Show shard numbers"}
+          {showLabels ? "Hide Numbers" : "Show Numbers"}
         </button>
+        
+        {/* ปุ่ม Reset เผื่อกดผิดเยอะๆ */}
+        <button onClick={() => setMarkedOrder([])} style={{marginLeft: '10px', background: '#FF4444'}}>
+          Reset Orders
+        </button>
+
+        {/* ปุ่ม Export Manual เผื่อลืม */}
+        <button onClick={handleExport} style={{marginLeft: '10px'}}>
+             Force Export
+        </button>
+
         {showLabels && <div className="hover-label">{hoverLabelText}</div>}
       </div>
     </div>

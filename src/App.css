@@ -122,7 +122,7 @@ button:focus-visible {
     background-color: #242424;
   }
   .page {
-    /* พื้นหลังหน้าเว็บ */
+    background-color: #444;
   }
   .stage-wrapper {
     background-color: #444; /* พื้นหลังกรอบตอนยังไม่โหลดรูป */
