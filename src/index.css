@@ -1,100 +1,44 @@
-*,
-*::before,
-*::after {
+:root {
+  --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #312e81 100%);
+  --glass-bg: rgba(255, 255, 255, 0.1);
+  --glass-border: rgba(255, 255, 255, 0.2);
+  --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  --primary-glow: 0 0 20px rgba(99, 102, 241, 0.6);
+  --text-primary: #ffffff;
+  --text-secondary: #94a3b8;
+  --font-main: 'Outfit', system-ui, sans-serif;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap');
+
+*, *::before, *::after {
   box-sizing: border-box;
 }
 
 body {
   margin: 0;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-    sans-serif;
-  background: #5594d8;
-  color: #fff;
+  font-family: var(--font-main);
+  background: var(--bg-gradient);
+  color: var(--text-primary);
+  min-height: 100vh;
+  overflow-x: hidden;
 }
 
 #root {
   min-height: 100vh;
 }
 
-.page {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 24px;
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
 }
-
-/* ===========================
-   เวทีสัตว์ — FIX RATIO, CENTER
-   =========================== */
-.animal-stage {
-  position: relative;
-  width: 40vw; /* เวทีจะหด/ขยายตามหน้าจอ */
-  height: auto;
-  aspect-ratio: var(--ratio); /* อัตราส่วนจริงจาก SVG */
-  max-height: 40vh;
-  overflow: visible;
-  margin: 0 auto;
+::-webkit-scrollbar-track {
+  background: transparent;
 }
-
-/* polygon หลัก */
-.shard {
-  position: absolute;
-  inset: 0;
-  z-index: 1; /* ต่ำกว่า label */
-  will-change: clip-path, opacity, transform, background-color;
-  transform: translateZ(0);
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
 }
-
-/* ตัวเลขกำกับ */
-.shard-label {
-  position: absolute;
-  z-index: 9 !important; /* สูงกว่าสัตว์ */
-  pointer-events: none;
-  color: #fff;
-  font-size: 12px;
-  font-weight: 600;
-  text-shadow: 0 0 3px rgba(0, 0, 0, 0.8);
-}
-
-.controls {
-  display: flex;
-  gap: 12px;
-  justify-content: center;
-}
-
-button {
-  padding: 8px 20px;
-  font-size: 14px;
-  border-radius: 24px;
-  border: none;
-  cursor: pointer;
-
-  /* Glass style */
-  background: rgba(255, 255, 255, 0.25);
-  color: #ffffff;
-  backdrop-filter: blur(6px);
-
-  /* ทำให้ดู soft เหมือนของเดิม */
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.08);
-  transition: background 0.2s ease, transform 0.2s ease;
-}
-
-button:hover {
-  background: rgba(255, 255, 255, 0.45);
-  transform: translateY(-2px);
-}
-
-button:active {
-  transform: scale(0.96);
-  background: rgba(255, 255, 255, 0.55);
-}
-
-.hover-label {
-  margin-left: 12px;
-  align-self: center;
-  font-size: 0.9rem;
-  opacity: 0.9;
-  white-space: nowrap;
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.4);
 }

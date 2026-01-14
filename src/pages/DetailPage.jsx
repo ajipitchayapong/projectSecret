@@ -1,12 +1,14 @@
 import { useState, useRef, useEffect } from "react";
-import { ANIMALS } from "./animalConfig";
-import "./App.css";
+import { Link } from "react-router-dom";
+import { ANIMALS } from "../data/animalConfig";
+import Button from "../components/Button";
+import "./DetailPage.css";
 
 const MAX_SHARD_COUNT = Math.max(...ANIMALS.map((a) => a.shards.length));
 const DURATION = 1.0;
 const STAGGER = 0.015;
 
-function App() {
+function DetailPage() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [direction, setDirection] = useState("left");
   const [showLabels, setShowLabels] = useState(false);
@@ -230,17 +232,89 @@ function App() {
   }
 
   return (
-    <div className="page">
-      <div className="status-bar" style={{position:'absolute', top: 10, left: 10, color: 'white', zIndex: 999}}>
-         Animal: {animal.name} | Progress: {markedOrder.length} / {totalShards}
+    <div className="page" style={{ 
+      background: 'radial-gradient(circle at 50% 100%, #1e1b4b 0%, #0f172a 100%)',
+      position: 'relative',
+      overflow: 'hidden'
+    }}>
+      
+      {/* Background Ambient Glow */}
+      <div style={{
+        position: 'absolute',
+        width: '60vw',
+        height: '60vw',
+        background: 'radial-gradient(circle, rgba(99,102,241,0.1) 0%, transparent 70%)',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        pointerEvents: 'none',
+        zIndex: 0
+      }} />
+
+      {/* Top Bar (Progress & Info) */}
+      <div style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        padding: '20px 40px',
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        zIndex: 50,
+        background: 'linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, transparent 100%)',
+        pointerEvents: 'none' // Click through to stage if needed
+      }}>
+         <div style={{ pointerEvents: 'auto' }}>
+            <Link to="/" style={{ textDecoration: 'none', color: 'white', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <div style={{ 
+                    width: '32px', height: '32px',  borderRadius: '8px', 
+                    background: 'rgba(255,255,255,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center'
+                }}>←</div>
+                <span style={{ fontWeight: 600, letterSpacing: '1px' }}>BACK</span>
+            </Link>
+         </div>
+
+         <div style={{ 
+             display: 'flex', flexDirection: 'column', alignItems: 'center',
+             textShadow: '0 2px 4px rgba(0,0,0,0.5)' 
+         }}>
+             <h2 style={{ margin: 0, fontSize: '1.5rem', letterSpacing: '2px', textTransform: 'uppercase' }}>{animal.name}</h2>
+             <div style={{ 
+                 display: 'flex', alignItems: 'center', gap: '10px', marginTop: '5px',
+                 fontSize: '0.9rem', color: 'rgba(255,255,255,0.7)'
+             }}>
+                 <span>Progress</span>
+                 <div style={{ 
+                     width: '150px', height: '4px', background: 'rgba(255,255,255,0.1)', borderRadius: '2px',
+                     overflow: 'hidden'
+                 }}>
+                     <div style={{ 
+                         width: `${(markedOrder.length / totalShards) * 100}%`, 
+                         height: '100%', 
+                         background: '#6366f1',
+                         boxShadow: '0 0 10px #6366f1',
+                         transition: 'width 0.3s ease'
+                     }} />
+                 </div>
+                 <span>{markedOrder.length} / {totalShards}</span>
+             </div>
+         </div>
+
+         <div style={{ width: '80px' }}></div> {/* Spacer for alignment */}
       </div>
 
+      {/* Main Stage */}
       <div
         className="stage-wrapper"
         ref={stageRef}
         onMouseMove={handleMouseMove}
         onMouseLeave={() => setMousePos(null)}
-        style={{ "--ratio": ratio }}
+        style={{ 
+            "--ratio": ratio,
+            zIndex: 10,
+            filter: 'drop-shadow(0 20px 50px rgba(0,0,0,0.5))'
+        }}
       >
         <div
           className="stage-inner"
@@ -257,27 +331,66 @@ function App() {
         </div>
       </div>
 
-      <div className="controls">
-        <button onClick={() => changeAnimal(-1)}>Prev</button>
-        <button onClick={() => changeAnimal(1)}>Next</button>
-        <button onClick={() => setShowLabels((v) => !v)}>
-          {showLabels ? "Hide Numbers" : "Show Numbers"}
-        </button>
-        
-        {/* ปุ่ม Reset เผื่อกดผิดเยอะๆ */}
-        <button onClick={() => setMarkedOrder([])} style={{marginLeft: '10px', background: '#FF4444'}}>
-          Reset Orders
-        </button>
+      {/* Bottom HUD Controls */}
+      <div className="controls" style={{
+          position: 'fixed',
+          bottom: '40px',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          display: 'flex',
+          gap: '16px',
+          padding: '12px',
+          background: 'rgba(15, 23, 42, 0.6)',
+          backdropFilter: 'blur(16px)',
+          borderRadius: '24px',
+          border: '1px solid rgba(255,255,255,0.1)',
+          boxShadow: '0 10px 40px rgba(0,0,0,0.3)',
+          zIndex: 100,
+          alignItems: 'center'
+      }}>
+         <Button onClick={() => changeAnimal(-1)} variant="secondary">
+            Prev
+         </Button>
 
-        {/* ปุ่ม Export Manual เผื่อลืม */}
-        <button onClick={handleExport} style={{marginLeft: '10px'}}>
-             Force Export
-        </button>
+         <div style={{ width: '1px', height: '20px', background: 'rgba(255,255,255,0.1)' }} />
 
-        {showLabels && <div className="hover-label">{hoverLabelText}</div>}
+         <Button onClick={() => setShowLabels((v) => !v)} variant={showLabels ? "primary" : "secondary"}>
+           {showLabels ? "Hide Numbers" : "Show Numbers"}
+         </Button>
+         
+         <Button onClick={() => setMarkedOrder([])} variant="secondary" style={{ color: '#f87171' }}>
+           Reset
+         </Button>
+
+         <Button onClick={handleExport} variant="secondary">
+             Export
+         </Button>
+
+         <div style={{ width: '1px', height: '20px', background: 'rgba(255,255,255,0.1)' }} />
+
+         <Button onClick={() => changeAnimal(1)} variant="primary">
+            Next Animal
+         </Button>
       </div>
+
+      {/* Hover Tooltip/Info */}
+      {showLabels && (
+          <div className="hover-label" style={{
+              position: 'fixed',
+              bottom: '120px',
+              left: '50%',
+              transform: 'translateX(-50%)',
+              background: 'rgba(0,0,0,0.8)',
+              padding: '8px 16px',
+              borderRadius: '8px',
+              pointerEvents: 'none',
+              zIndex: 1000
+          }}>
+              {hoverLabelText}
+          </div>
+      )}
     </div>
   );
 }
 
-export default App;
+export default DetailPage;
