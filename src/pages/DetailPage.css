@@ -1,13 +1,13 @@
 /* src/App.css */
 
 /* --- Global Reset & Container --- */
-#root {
+/* #root {
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-}
+} */
 
 /* กรอบหลักของหน้า */
 .page {
@@ -94,7 +94,9 @@ button {
   background-color: #1a1a1a;
   color: white;
   cursor: pointer;
-  transition: border-color 0.25s, background-color 0.25s;
+  transition:
+    border-color 0.25s,
+    background-color 0.25s;
 }
 
 button:hover {
@@ -131,3 +133,5 @@ button:focus-visible {
     color: #f9f9f9;
   }
 }
+
+/* --- Detail Page Background and Decor Removed --- */
