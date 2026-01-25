@@ -9,10 +9,10 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Navigate to="/detail" replace />} />
+        <Route path="/" element={<Navigate to="/landing-design" replace />} />
         <Route path="/landing-design" element={<LandingPage />} />
         <Route path="/detail" element={<DetailPage />} />
       </Routes>
     </BrowserRouter>
-  </React.StrictMode>
+  </React.StrictMode>,
 );
