@@ -24,6 +24,19 @@ body {
   overflow: hidden;
 }
 
+/* Gradient Fade to blend with Section 2 - Increased height for smoothness */
+.section-1::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 40vh; /* Significantly increased for very smooth fade */
+  background: linear-gradient(to bottom, transparent, #040f2b 90%);
+  z-index: 2;
+  pointer-events: none;
+}
+
 /* Update .fullscreen-bg to apply to section-1 context */
 
 .section-2 {
@@ -36,6 +49,19 @@ body {
   padding: 0;
 }
 
+/* Upward Gradient to blend into Section 1 */
+.section-2::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 20vh;
+  background: linear-gradient(to bottom, #040f2b, transparent);
+  z-index: 2;
+  pointer-events: none;
+}
+
 /* Section 2 Overlay (Middle Layer) */
 .bg-overlay-section-2 {
   position: relative; /* Key: Put back in flow to push parent height */
@@ -45,16 +71,6 @@ body {
   display: block;
   z-index: 1;
   pointer-events: none;
-}
-
-.bg-section-2 {
-  /* Position handled by Framer Motion wrapper */
-  display: block;
-  /* object-fit and position handled inline or here */
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: top;
 }
 
 /* Update .fullscreen-bg to apply to section-1 context */

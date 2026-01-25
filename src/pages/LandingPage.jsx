@@ -18,7 +18,7 @@ const LandingPage = () => {
     restDelta: 0.001,
   });
 
-  // --- Parallax Transforms (Matched from LandingPageParallax.jsx) ---
+  // --- Parallax Transforms ---
 
   // Section 1 Background: Static
   const bg1Y = useTransform(smoothScrollY, [0, 1000], ["0%", "0%"]);
@@ -86,7 +86,7 @@ const LandingPage = () => {
               width: "100%",
               height: "100%",
               background:
-                "radial-gradient(50% 50% at 50% 50%, #06194A 0%, #040F2B 100%)",
+                "linear-gradient(180deg, #040F2B 0%, rgba(4, 15, 43, 0.00) 100%), radial-gradient(50% 50% at 50% 50%, #06194A 0%, #040F2B 100%);",
             }}
           />
         </motion.div>
@@ -158,10 +158,6 @@ const LandingPage = () => {
             )}
           </div>
         </motion.div>
-
-        <div className="content">
-          {/* Content for Section 2 will go here */}
-        </div>
       </section>
 
       <motion.div
