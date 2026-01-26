@@ -1,13 +1,13 @@
 import React, { useRef } from "react";
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
-import "./LandingPage.css";
+import "./ExLandingPage.css";
 // Import the background image
 import bgSection1 from "/src/assets/landing-bg-section1.webp";
 import bgOverlaySection2 from "/src/assets/landing-bg-overlay-section2.png";
 import floatingGroup from "/src/assets/floating-group-section2.png";
 import { ANIMALS } from "../data/animalConfig";
 
-const LandingPage = () => {
+const ExLandingPage = () => {
   const containerRef = useRef(null);
   const { scrollY } = useScroll();
 
@@ -28,8 +28,8 @@ const LandingPage = () => {
   const text1Opacity = useTransform(smoothScrollY, [0, 400], [1, 0]);
 
   // Section 2 Parallax
-  // Background: Far away, massive, moves slowly. Starts higher (-10%) to overlap section 1 better
-  const bg2Y = useTransform(smoothScrollY, [500, 1500], ["-10%", "5%"]);
+  // Background: Far away, massive, moves slowly
+  const bg2Y = useTransform(smoothScrollY, [500, 1500], ["-5%", "5%"]);
 
   // Overlay: Middle ground, moves faster against scroll
   const overlayY = useTransform(smoothScrollY, [500, 1500], ["0%", "-15%"]);
@@ -86,7 +86,7 @@ const LandingPage = () => {
               width: "100%",
               height: "100%",
               background:
-                "linear-gradient(180deg, #040F2B 0%, rgba(4, 15, 43, 0.00) 100%), radial-gradient(50% 50% at 50% 50%, #06194A 0%, #040F2B 100%)",
+                "linear-gradient(180deg, #040F2B 0%, rgba(4, 15, 43, 0.00) 100%), radial-gradient(50% 50% at 50% 50%, #06194A 0%, #040F2B 100%);",
             }}
           />
         </motion.div>
@@ -189,4 +189,4 @@ const LandingPage = () => {
   );
 };
 
-export default LandingPage;
+export default ExLandingPage;

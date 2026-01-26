@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap");
 
 :root {
   --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #312e81 100%);
@@ -8,17 +8,20 @@
   --primary-glow: 0 0 20px rgba(99, 102, 241, 0.6);
   --text-primary: #ffffff;
   --text-secondary: #94a3b8;
-  --font-main: 'Outfit', system-ui, sans-serif;
+  --font-main: "Outfit", system-ui, sans-serif;
 }
 
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
 body {
   margin: 0;
   font-family: var(--font-main);
-  background: var(--bg-gradient);
+  /* background: var(--bg-gradient); */
+  background: #040f2b; /* Deep Ocean Blue to match Landing Page and hide gaps */
   color: var(--text-primary);
   min-height: 100vh;
   overflow-x: hidden;

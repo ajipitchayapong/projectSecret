@@ -45,8 +45,7 @@ body {
   min-height: 100vh; /* Ensure at least full screen */
   height: auto; /* Allow growth if image is tall */
   overflow: hidden;
-  /* Negative margin to fix sub-pixel gap lines */
-  margin: -1px 0 0 0;
+  margin: 0;
   padding: 0;
 }
 
@@ -75,22 +74,18 @@ body {
 }
 
 /* Update .fullscreen-bg to apply to section-1 context */
-/* Update .fullscreen-bg to apply to section-1 context */
 .fullscreen-bg {
-  position: absolute; /* Changed to absolute to fill the 100vh section */
-  top: 0;
-  left: 0;
+  position: relative; /* Changed from absolute to flow naturally */
   width: 100%;
-  height: 100%;
+  height: auto;
   z-index: 0;
-  line-height: 0;
+  line-height: 0; /* Remove potential gap below image */
 }
 
 .fullscreen-bg img {
   width: 100%;
-  height: 100%; /* Force fill height */
-  object-fit: cover; /* Cover ensures no empty gaps on resize */
-  object-position: center;
+  height: auto; /* Allow image to define height */
+  object-fit: contain; /* Ensure full image is seen */
   display: block;
 }
 
@@ -125,6 +120,8 @@ body {
   font-family: "IBM Plex Sans Thai", "Outfit", sans-serif;
   font-size: 2.5rem;
   color: rgba(255, 255, 255, 0.9);
+  /* Reset all margins first, then add top margin */
+  margin: 0;
   margin-top: 0.5rem;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
