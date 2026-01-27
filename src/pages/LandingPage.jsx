@@ -2,8 +2,9 @@ import React, { useRef } from "react";
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import "./LandingPage.css";
 // Import the background image
-import bgSection1 from "/src/assets/landing-bg-section1.webp";
-import bgOverlaySection2 from "/src/assets/landing-bg-overlay-section2.png";
+import bgSection1 from "/src/assets/landing-bg-section1.webp"; // Restore missing bgSection1
+import layerBack from "/src/assets/1.webp";
+import layerFront from "/src/assets/2.webp";
 import floatingGroup from "/src/assets/floating-group-section2.png";
 import { ANIMALS } from "../data/animalConfig";
 
@@ -31,8 +32,14 @@ const LandingPage = () => {
   // Background: Far away, massive, moves slowly. Starts higher (-10%) to overlap section 1 better
   const bg2Y = useTransform(smoothScrollY, [500, 1500], ["-10%", "5%"]);
 
-  // Overlay: Middle ground, moves faster against scroll
-  const overlayY = useTransform(smoothScrollY, [500, 1500], ["0%", "-15%"]);
+  // --- Layer Transforms (Horizontal & Vertical) ---
+  // Layer 1 (Back)
+  const layerBackY = useTransform(smoothScrollY, [200, 1000], ["0%", "-10%"]);
+  const layerBackX = useTransform(smoothScrollY, [200, 1000], ["0%", "-15%"]); // แก้ค่าตรงนี้เพื่อเลื่อนแนวนอน
+
+  // Layer 2 (Front - formerly Mid)
+  const layerFrontY = useTransform(smoothScrollY, [200, 1000], ["0%", "-10%"]);
+  const layerFrontX = useTransform(smoothScrollY, [200, 1000], ["0%", "15%"]); // แก้ค่าตรงนี้เพื่อเลื่อนแนวนอน
 
   // Floating Decor: Closer, moves significantly against scroll
   const floatDecorY = useTransform(smoothScrollY, [500, 1500], ["10%", "-20%"]);
@@ -91,14 +98,27 @@ const LandingPage = () => {
           />
         </motion.div>
 
-        {/* Overlay Image (Above BG, Below Bubbles) */}
+        {/* --- Parallax Layers (Custom Configuration) --- */}
+
+        {/* Layer 1: Background Rocks (1.png) */}
         <motion.img
-          src={bgOverlaySection2}
-          alt="Ocean Overlay"
-          className="bg-overlay-section-2"
-          style={{ y: overlayY }}
+          src={layerBack}
+          alt="Ocean Back Layer"
+          className="parallax-layer layer-back"
+          style={{ y: layerBackY, x: layerBackX }}
         />
 
+        {/* Layer 2: Midground (2.webp) */}
+        <motion.img
+          src={layerFront}
+          alt="Ocean Front Layer"
+          className="parallax-layer layer-front"
+          style={{ y: layerFrontY, x: layerFrontX }}
+        />
+
+        {/* Layer 3 Removed as requested */}
+
+        {/* Bubbles (Existing) */}
         <motion.div className="bubbles" style={{ y: bubbleY }}>
           <span className="bubble"></span>
           <span className="bubble"></span>
@@ -190,3 +210,4 @@ const LandingPage = () => {
 };
 
 export default LandingPage;
+// Forced rebuild

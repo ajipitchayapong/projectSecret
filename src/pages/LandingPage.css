@@ -42,8 +42,8 @@ body {
 .section-2 {
   position: relative;
   width: 100%;
-  min-height: 100vh; /* Ensure at least full screen */
-  height: auto; /* Allow growth if image is tall */
+  min-height: 150vh; /* Increased to accommodate parallax scrolling room */
+  height: auto;
   overflow: hidden;
   /* Negative margin to fix sub-pixel gap lines */
   margin: -1px 0 0 0;
@@ -64,17 +64,28 @@ body {
 }
 
 /* Section 2 Overlay (Middle Layer) */
-.bg-overlay-section-2 {
-  position: relative; /* Key: Put back in flow to push parent height */
-  width: 100%; /* Force full width */
-  height: auto; /* Scale height naturally (No stretch) */
-  margin-top: 5%; /* Replaces 'top' to push it down in flow */
+.parallax-layer {
+  position: absolute;
+  top: 5%; /* Push down a bit to center vertically relative to section */
+  left: 25%; /* Center horizontally (100% - 50%) / 2 */
+  width: 50%; /* Reduced by half as requested */
+  height: auto; /* Maintain aspect ratio */
   display: block;
-  z-index: 1;
   pointer-events: none;
 }
 
-/* Update .fullscreen-bg to apply to section-1 context */
+.layer-back {
+  z-index: 1;
+  margin-left: 30%; /* Offset to the right for depth */
+  margin-top: 10%;
+}
+
+.layer-front {
+  z-index: 2;
+  margin-left: -30%; /* Offset to the left for depth */
+  margin-top: 10%;
+}
+
 /* Update .fullscreen-bg to apply to section-1 context */
 .fullscreen-bg {
   position: absolute; /* Changed to absolute to fill the 100vh section */

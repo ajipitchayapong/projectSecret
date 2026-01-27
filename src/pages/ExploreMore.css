@@ -1,0 +1,963 @@
+/* src/pages/ExploreMore.css */
+
+/* Global Reset for this page */
+.explore-page {
+  position: relative;
+  width: 100%;
+  height: 100vh; /* Fixed viewport height */
+  font-family: "Outfit", sans-serif;
+  color: white;
+  overflow: hidden; /* Disable scrolling */
+  background-color: #000; /* Fallback */
+}
+
+/* Glassmorphism Background: Deep Ocean Blue Theme */
+.explore-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /* Deep Underwater Gradient: Light Blue surface -> Deep Dark Blue abyss */
+  background: radial-gradient(
+    circle at 50% 10%,
+    #0ea5e9 0%,
+    #0369a1 20%,
+    #172554 60%,
+    #020617 100%
+  );
+  z-index: 0;
+  overflow: hidden; /* Ensure orbs don't cause scroll */
+}
+
+/* Animations */
+@keyframes float {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(30px, -50px) scale(1.1);
+  }
+  66% {
+    transform: translate(-20px, 20px) scale(0.9);
+  }
+}
+
+@keyframes drift {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(-40px, -20px) scale(1.2);
+  }
+}
+
+@keyframes deepSeaCurrent {
+  0% {
+    background-position: 50% 0%;
+  }
+  100% {
+    background-position: 50% 100%;
+  }
+}
+
+@keyframes snow-drift {
+  0% {
+    background-position:
+      0 0,
+      0 0,
+      0 0;
+  }
+  100% {
+    background-position:
+      -500px 1000px,
+      400px 400px,
+      300px 300px;
+  }
+}
+
+@keyframes pulse-glow {
+  0%,
+  100% {
+    box-shadow:
+      0 0 15px rgba(56, 189, 248, 0.4),
+      inset 0 0 10px rgba(255, 255, 255, 0.2);
+    transform: scale(1.4);
+  }
+  50% {
+    box-shadow:
+      0 0 30px rgba(56, 189, 248, 0.7),
+      inset 0 0 20px rgba(56, 189, 248, 0.3);
+    transform: scale(1.55);
+  }
+}
+
+@keyframes bubble-drift {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  25% {
+    transform: translate(2px, -3px);
+  }
+  50% {
+    transform: translate(-1px, -5px);
+  }
+  75% {
+    transform: translate(-3px, -2px);
+  }
+}
+
+@keyframes bubble-wobble {
+  0%,
+  100% {
+    border-radius: 50%;
+  }
+  33% {
+    border-radius: 48% 52% 51% 49% / 49% 51% 48% 52%;
+  }
+  66% {
+    border-radius: 52% 48% 49% 51% / 51% 49% 52% 48%;
+  }
+}
+
+@keyframes caustics-wave {
+  0% {
+    transform: rotate(0deg) scale(1.5) translateY(0);
+  }
+  50% {
+    transform: rotate(5deg) scale(1.6) translateY(-20px);
+  }
+  100% {
+    transform: rotate(0deg) scale(1.5) translateY(0);
+  }
+}
+
+@keyframes content-fade-in {
+  0% {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+    filter: blur(15px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+@keyframes menu-pop {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.08);
+  }
+  100% {
+    transform: scale(1.05);
+  }
+}
+
+@keyframes ripple-wave {
+  0% {
+    transform: translate(-50%, -50%) scale(0.2);
+    opacity: 0.5; /* Reduced opacity */
+    border-width: 10px;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(2.2);
+    opacity: 0;
+    border-width: 1px;
+  }
+}
+
+@keyframes ripple-wave-delayed {
+  0% {
+    transform: translate(-50%, -50%) scale(0.1);
+    opacity: 0.3; /* Reduced opacity */
+    border-width: 6px;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1.6);
+    opacity: 0;
+    border-width: 1px;
+  }
+}
+
+@keyframes container-wobble {
+  0%,
+  100% {
+    border-radius: 50px;
+    transform: scale(1);
+  }
+  25% {
+    transform: scale(1.005) skewX(0.2deg);
+  }
+  50% {
+    border-radius: 53px 47px 51px 49px / 49% 51% 47px 53px;
+    transform: scale(1.01);
+  }
+  75% {
+    transform: scale(1.005) skewX(-0.2deg);
+  }
+}
+
+@keyframes pearl-glow {
+  0%,
+  100% {
+    opacity: 0.4;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.3);
+  }
+}
+
+@keyframes content-ripple {
+  0% {
+    transform: scale(0.98);
+    filter: brightness(1.5) blur(2px);
+  }
+  100% {
+    transform: scale(1);
+    filter: brightness(1) blur(0);
+  }
+}
+
+/* Wave Layer: Marine Snow Particles */
+.wave-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+
+  /* Marine Snow Particles */
+  background-image:
+    radial-gradient(
+      2px 2px at 20px 30px,
+      rgba(255, 255, 255, 0.4),
+      transparent
+    ),
+    radial-gradient(
+      2px 2px at 40px 70px,
+      rgba(255, 255, 255, 0.4),
+      transparent
+    ),
+    radial-gradient(
+      2px 2px at 50px 160px,
+      rgba(255, 255, 255, 0.4),
+      transparent
+    ),
+    radial-gradient(
+      2px 2px at 90px 40px,
+      rgba(255, 255, 255, 0.4),
+      transparent
+    ),
+    radial-gradient(
+      2px 2px at 130px 80px,
+      rgba(255, 255, 255, 0.4),
+      transparent
+    ),
+    radial-gradient(
+      2px 2px at 160px 120px,
+      rgba(255, 255, 255, 0.4),
+      transparent
+    );
+
+  background-size:
+    200px 200px,
+    300px 300px,
+    400px 400px,
+    250px 250px,
+    350px 350px,
+    450px 450px;
+
+  /* Drifting Animation */
+  animation: snow-drift 40s linear infinite;
+  opacity: 0.6;
+}
+
+/* Caustics Layer: Light Network */
+.caustics-layer {
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  pointer-events: none;
+  z-index: 2;
+  mix-blend-mode: overlay;
+  opacity: 0.4;
+
+  /* Overlapping Light Webs */
+  background:
+    repeating-radial-gradient(
+      circle at 50% 50%,
+      transparent 0,
+      rgba(255, 255, 255, 0.1) 20px,
+      transparent 40px
+    ),
+    repeating-linear-gradient(
+      45deg,
+      transparent 0,
+      rgba(255, 255, 255, 0.05) 50px,
+      transparent 100px
+    );
+
+  animation: caustics-wave 15s ease-in-out infinite;
+}
+
+/* Glowing Orbs - Animated */
+.explore-bg::before {
+  content: "";
+  position: absolute;
+  top: -20%;
+  left: 20%;
+  width: 600px;
+  height: 600px;
+  /* Light Aqua glow */
+  background: radial-gradient(
+    circle,
+    rgba(34, 211, 238, 0.25) 0%,
+    transparent 70%
+  );
+  border-radius: 50%;
+  pointer-events: none;
+  filter: blur(40px);
+  animation: float 20s ease-in-out infinite;
+}
+
+.explore-bg::after {
+  content: "";
+  position: absolute;
+  bottom: 0%;
+  right: 10%;
+  width: 500px;
+  height: 500px;
+  /* Deep Blue glow */
+  background: radial-gradient(
+    circle,
+    rgba(37, 99, 235, 0.2) 0%,
+    transparent 70%
+  );
+  border-radius: 50%;
+  pointer-events: none;
+  filter: blur(60px);
+  animation: drift 25s ease-in-out infinite alternate;
+}
+
+.explore-container {
+  position: relative;
+  z-index: 10;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%; /* Fill fixed parent exactly */
+}
+
+/* --- Progress Indicator (Step Tracker) --- */
+.progress-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 2.5rem;
+  z-index: 20;
+  width: 60%; /* Match stage width */
+  max-width: 800px; /* Match max-width */
+
+  /* Premium Glass/Bubble Frame */
+  background: radial-gradient(
+    circle at 30% 30%,
+    rgba(255, 255, 255, 0.15) 0%,
+    rgba(255, 255, 255, 0.05) 100%
+  );
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  padding: 18px 35px; /* Bigger padding */
+  border-radius: 60px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow:
+    inset 0 4px 15px rgba(255, 255, 255, 0.2),
+    /* Subtle Gel Rim */ 0 15px 35px rgba(0, 0, 0, 0.4),
+    0 0 30px rgba(14, 165, 233, 0.1); /* Faint Outer Glow */
+}
+
+/* Flex wrapper for dots + continuous track */
+.progress-indicator {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  gap: 0;
+}
+
+/* Background Track (The Empty Trail) */
+.progress-track-bg {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  transform: translateY(-50%);
+  z-index: 1;
+}
+
+/* The Traveling Fill (Ultra-Bright Neon) */
+.progress-track-fill {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  height: 8px; /* Thicker */
+  background: linear-gradient(
+    90deg,
+    #0ea5e9 0%,
+    #7dd3fc 50%,
+    #ffffff 100% /* Bright white tip */
+  );
+  border-radius: 6px;
+  transform: translateY(-50%);
+  z-index: 2;
+  transition: width 0.8s cubic-bezier(0.65, 0, 0.35, 1);
+
+  /* Multi-layered Neon Glow */
+  box-shadow:
+    0 0 10px rgba(14, 165, 233, 0.8),
+    0 0 25px rgba(56, 189, 248, 0.6),
+    0 0 40px rgba(125, 211, 252, 0.3);
+}
+
+/* Traveling Glow Head - More Powerful Spark */
+.progress-track-fill::after {
+  content: "";
+  position: absolute;
+  right: -10px;
+  top: 50%;
+  width: 22px; /* Bigger spark */
+  height: 22px;
+  background: #fff;
+  border-radius: 50%;
+  transform: translateY(-50%);
+  box-shadow:
+    0 0 15px #fff,
+    0 0 30px #38bdf8,
+    0 0 50px #0ea5e9,
+    0 0 80px rgba(56, 189, 248, 0.4);
+  filter: blur(0.5px);
+}
+
+.progress-step-wrapper {
+  /* No longer needed if we use flat dots, but keeping class for index context if helpful */
+  display: contents;
+}
+
+.progress-dot {
+  width: 26px; /* Slightly bigger */
+  height: 26px;
+  min-width: 26px;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  position: relative;
+  z-index: 3;
+
+  /* Hyper-Realistic Soap Bubble - Pure Blue Tint */
+  background: radial-gradient(
+    circle at 30% 30%,
+    rgba(255, 255, 255, 0.15) 0%,
+    rgba(255, 255, 255, 0.05) 50%,
+    rgba(56, 189, 248, 0.1) 100%
+  );
+
+  /* Iridescent Rim */
+  border: 1.5px solid rgba(255, 255, 255, 0.2);
+  border-top-color: rgba(255, 255, 255, 0.6);
+  border-left-color: rgba(255, 255, 255, 0.5);
+  border-bottom-color: rgba(56, 189, 248, 0.4);
+
+  box-shadow:
+    inset 0 2px 4px rgba(255, 255, 255, 0.4),
+    inset 0 -2px 6px rgba(14, 165, 233, 0.1),
+    0 4px 15px rgba(0, 0, 0, 0.3);
+
+  /* Dual Animation: Wobbling + Floating Drift */
+  animation:
+    bubble-wobble 4s infinite ease-in-out,
+    bubble-drift 6s infinite ease-in-out alternate;
+}
+
+/* Secondary Reflection */
+.progress-dot::before {
+  content: "";
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  width: 5px;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  transform: rotate(-45deg);
+  filter: blur(0.5px);
+}
+
+/* Primary Highlight (Glare) */
+.progress-dot::after {
+  content: "";
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: 8px;
+  height: 8px;
+  background: radial-gradient(circle, #fff 0%, rgba(255, 255, 255, 0) 80%);
+  border-radius: 50%;
+  opacity: 0.9;
+  filter: blur(0.5px);
+}
+
+.progress-dot.passed {
+  border-color: rgba(56, 189, 248, 0.6);
+  background: radial-gradient(
+    circle at 30% 30%,
+    rgba(56, 189, 248, 0.2) 0%,
+    rgba(14, 165, 233, 0.1) 100%
+  );
+}
+
+.progress-dot:hover {
+  transform: scale(1.2) translateY(-2px);
+  border-color: #fff;
+  box-shadow:
+    inset 0 4px 8px rgba(255, 255, 255, 0.6),
+    0 8px 15px rgba(14, 165, 233, 0.2);
+}
+
+.progress-dot.active {
+  /* Glowing Pearl Core */
+  background: radial-gradient(
+    circle at 40% 40%,
+    #fff 0%,
+    #38bdf8 40%,
+    #1e293b 100%
+  );
+  border: 2px solid #fff;
+  box-shadow:
+    0 0 20px rgba(56, 189, 248, 0.8),
+    inset 0 0 10px rgba(255, 255, 255, 0.5);
+
+  animation:
+    bubble-wobble 3s infinite ease-in-out,
+    pulse-glow 4s infinite ease-in-out;
+}
+
+/* --- Upper Section: Stage + Arrows --- */
+.stage-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  gap: 40px;
+  margin-bottom: 2rem;
+}
+
+/* Transparent Stage Container */
+.stage-wrapper {
+  position: relative;
+  width: 60%;
+  max-width: 800px;
+  aspect-ratio: var(--ratio);
+
+  /* Removed Glass Effect for floating look */
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+
+  overflow: visible;
+}
+
+@keyframes float-animal {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-15px);
+  }
+}
+
+.stage-inner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  will-change: transform;
+
+  animation: float-animal 6s ease-in-out infinite;
+
+  transition: transform 0.2s ease-out;
+  transform-origin: center center;
+}
+
+/* --- Bubble UI Components --- */
+
+/* Navigation Arrows - Hyper-Realistic Bubble Style */
+.nav-arrow {
+  width: 75px;
+  height: 75px;
+  border-radius: 50%;
+  position: relative; /* For pseudo highlights */
+  overflow: visible;
+
+  /* Transparent Soap Liquid */
+  background: radial-gradient(
+    circle at 30% 30%,
+    rgba(255, 255, 255, 0.1) 0%,
+    rgba(255, 255, 255, 0.05) 40%,
+    rgba(14, 165, 233, 0.05) 100%
+  );
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+
+  /* Iridescent Rim */
+  border: 1.5px solid rgba(255, 255, 255, 0.2);
+  border-top-color: rgba(255, 255, 255, 0.6);
+  border-left-color: rgba(255, 255, 255, 0.4);
+  border-bottom-color: rgba(56, 189, 248, 0.3);
+
+  box-shadow:
+    inset 0 4px 10px rgba(255, 255, 255, 0.3),
+    /* Rim Light */ inset 0 -5px 15px rgba(0, 0, 0, 0.1),
+    0 10px 25px rgba(0, 0, 0, 0.3);
+
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  flex-shrink: 0;
+
+  /* Bubble Physics Animation */
+  animation:
+    bubble-wobble 5s infinite ease-in-out,
+    bubble-drift 8s infinite ease-in-out alternate;
+}
+
+/* Arrow Bubble Highlights */
+.nav-arrow::before {
+  content: "";
+  position: absolute;
+  top: 10px;
+  left: 12px;
+  width: 15px;
+  height: 15px;
+  background: radial-gradient(circle, #fff 0%, rgba(255, 255, 255, 0) 80%);
+  border-radius: 50%;
+  opacity: 0.8;
+  filter: blur(1px);
+}
+
+.nav-arrow::after {
+  content: "";
+  position: absolute;
+  bottom: 8px;
+  right: 12px;
+  width: 10px;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  transform: rotate(-30deg);
+  filter: blur(1px);
+}
+
+.nav-arrow:hover {
+  transform: scale(1.15) translateY(-5px); /* Floating look */
+  background: radial-gradient(
+    circle at 30% 30%,
+    rgba(255, 255, 255, 0.25) 0%,
+    rgba(56, 189, 248, 0.1) 100%
+  );
+  box-shadow:
+    inset 0 8px 20px rgba(255, 255, 255, 0.7),
+    inset 0 -5px 15px rgba(0, 0, 0, 0.1),
+    0 15px 35px rgba(14, 165, 233, 0.3);
+  border-color: rgba(255, 255, 255, 0.8);
+}
+
+/* Remove default browser focus ring and prevent visual shift on click */
+.nav-arrow:focus,
+.nav-arrow:active,
+.nav-arrow:focus-visible,
+.progress-dot:focus,
+.progress-dot:active,
+.progress-dot:focus-visible {
+  outline: none !important;
+  box-shadow: none !important; /* Resetting to none unless we specifically want the bubble shadow to persist */
+  -webkit-tap-highlight-color: transparent;
+  transform: none; /* Prevent any accidental scaling down/up on click */
+}
+
+/* Re-apply the base bubble shadows for focused arrows so they don't lose their depth */
+.nav-arrow:focus,
+.nav-arrow:active {
+  box-shadow:
+    inset 0 4px 10px rgba(255, 255, 255, 0.3),
+    inset 0 -5px 15px rgba(0, 0, 0, 0.1),
+    0 10px 25px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Ensure dots also keep their base look when interacted with */
+.progress-dot:focus,
+.progress-dot:active {
+  box-shadow:
+    inset 0 2px 4px rgba(255, 255, 255, 0.4),
+    inset 0 -2px 6px rgba(14, 165, 233, 0.1),
+    0 4px 15px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* --- Lower Section: Info Frame - Adjusted to Gel/Bubble Look --- */
+.info-section {
+  text-align: center;
+  max-width: 800px;
+  color: white;
+  position: relative;
+  overflow: hidden;
+
+  /* Dark Blue Glass Frame */
+  background: rgba(5, 15, 40, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+
+  padding: 50px;
+  border-radius: 50px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow:
+    0 20px 50px rgba(0, 0, 0, 0.6),
+    inset 0 0 30px rgba(14, 165, 233, 0.05); /* Internal liquid depth */
+
+  transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* The Ripple Layers */
+.info-section::before,
+.info-section::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 500px;
+  height: 500px;
+  border: 2px solid rgba(125, 211, 252, 0.4);
+  border-radius: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  pointer-events: none;
+  z-index: 10;
+  opacity: 0;
+}
+
+.info-section::after {
+  width: 300px;
+  height: 300px;
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.info-section.tab-changing {
+  border-color: rgba(56, 189, 248, 0.3);
+  background: rgba(14, 165, 233, 0.08); /* Much softer flash */
+}
+
+.info-section.tab-changing::before {
+  animation: ripple-wave 3s cubic-bezier(0.215, 1, 0.355, 1) forwards; /* Slower */
+}
+
+.info-section.tab-changing::after {
+  animation: ripple-wave-delayed 3s cubic-bezier(0.215, 1, 0.355, 1) 0.2s
+    forwards; /* Slower + More delay */
+}
+
+/* No Noise Texture */
+
+.animal-title {
+  font-size: 3.5rem;
+  font-weight: 700;
+  margin: 0 0 1.5rem 0;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+
+  /* Multi-shade Ocean Gradient */
+  background: linear-gradient(135deg, #ffffff 0%, #38bdf8 50%, #0284c7 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent; /* Fallback */
+
+  text-shadow: 0 4px 20px rgba(14, 165, 233, 0.5);
+
+  /* Entry Animation */
+  animation: content-fade-in 0.7s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+}
+
+.info-menu {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 2rem;
+  font-weight: 500;
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.menu-item {
+  cursor: pointer;
+  padding: 12px 35px;
+  border-radius: 40px;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  border: 1px solid transparent;
+  color: rgba(224, 242, 254, 0.6);
+  position: relative;
+  overflow: hidden;
+}
+
+.menu-item:hover {
+  color: white;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* Active Gel Bubble Button - Premium Refinement */
+.menu-item.active {
+  font-weight: 700;
+  color: #fff;
+  background: linear-gradient(135deg, #0ea5e9 0%, #0369a1 100%);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  box-shadow:
+    inset 0 4px 8px rgba(255, 255, 255, 0.4),
+    0 10px 20px rgba(14, 165, 233, 0.4);
+  animation: menu-pop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+/* Inner Liquid Sheen for Active Item */
+.menu-item.active::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transform: skewX(-25deg);
+  transition: 0.5s;
+}
+
+.menu-item.active::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: 50%;
+  width: 6px;
+  height: 6px;
+  background: #fff;
+  border-radius: 50%;
+  transform: translateX(-50%);
+  box-shadow:
+    0 0 10px #38bdf8,
+    0 0 20px #0ea5e9;
+  animation: pearl-glow 2s infinite ease-in-out;
+}
+
+.divider {
+  display: none; /* Hide divider for bubble pills style */
+}
+
+.animal-description {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: rgba(224, 242, 254, 0.9);
+  margin: 0 auto;
+  max-width: 100%;
+
+  /* Entry Animation - Staggered */
+  animation: content-fade-in 1.2s cubic-bezier(0.23, 1, 0.32, 1) 0.1s forwards;
+}
+
+/* Back Button - Mini Bubble */
+.back-link {
+  position: absolute;
+  top: 30px;
+  left: 30px;
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+  z-index: 20;
+  padding: 12px 24px;
+  border-radius: 30px;
+
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: inset 0 2px 8px rgba(255, 255, 255, 0.3);
+  transition: all 0.3s;
+}
+
+.back-link:hover {
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow:
+    inset 0 2px 10px rgba(255, 255, 255, 0.5),
+    0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Shard Styles */
+.shard {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .stage-section {
+    gap: 10px;
+    flex-direction: column;
+  }
+  .nav-arrow {
+    width: 48px;
+    height: 48px;
+  }
+  .stage-wrapper {
+    width: 90%;
+  }
+  .animal-title {
+    font-size: 2.5rem;
+  }
+  .info-menu {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .info-section {
+    padding: 30px;
+    border-radius: 30px;
+  }
+}
