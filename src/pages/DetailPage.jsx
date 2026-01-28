@@ -269,7 +269,7 @@ function DetailPage() {
 
   return (
     <div
-      className="page"
+      className="detail-page"
       style={{
         background:
           "radial-gradient(circle at 50% 100%, #1e1b4b 0%, #0f172a 100%)",
@@ -395,7 +395,7 @@ function DetailPage() {
 
       {/* Main Stage */}
       <div
-        className="stage-wrapper"
+        className="detail-stage-wrapper"
         ref={stageRef}
         onMouseMove={handleMouseMove}
         onMouseLeave={() => setMousePos(null)}
@@ -406,7 +406,7 @@ function DetailPage() {
         }}
       >
         <div
-          className="stage-inner"
+          className="detail-stage-inner"
           style={{
             transform: showLabels ? "scale(2.5)" : "scale(1)",
             transformOrigin:
