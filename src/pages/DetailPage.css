@@ -129,7 +129,7 @@ button:focus-visible {
 @media (prefers-color-scheme: dark) {
   :root {
     color: #f9f9f9;
-    background-color: #242424;
+    background-color: #13144c; /* Deep Ocean Blue everywhere */
   }
   .page {
     background-color: #444;
