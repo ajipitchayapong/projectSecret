@@ -8,8 +8,10 @@ import "./ExploreMore.css";
 const MAX_SHARD_COUNT = Math.max(
   ...ANIMALS.map((animalConfig) => animalConfig.shards.length),
 );
+// [CONFIG] ความเร็วในการขยับของแต่ละชิ้นส่วน (หน่วย: วินาที)
 const DURATION = 1.0;
-const STAGGER = 0.015;
+// [CONFIG] เวลาที่ใช้ในการเรียงตัวทั้งหมดจนครบ (วินาที) - ไม่ว่าตัวสัตว์จะมีกี่ชิ้น ก็จะใช้เวลาเรียงตัวประมาณนี้
+const TARGET_STAGGER_TIME = 1.25;
 
 function ExploreMore() {
   const levels = ANIMALS;
@@ -21,6 +23,10 @@ function ExploreMore() {
 
   const [activeTabKey, setActiveTabKey] = useState(topicKeys[0]);
   const [isChangingTab, setIsChangingTab] = useState(false);
+  const [shimmerReady, setShimmerReady] = useState(false);
+
+  // Calculate the exact time the assembly animation finishes
+
 
   const handleTabChange = (key) => {
     if (key === activeTabKey) return;
@@ -42,6 +48,25 @@ function ExploreMore() {
     ) || ANIMAL_DETAILS.animals[0]; // Fallback
 
   const totalShards = animal?.shards?.length || 0;
+
+  // Calculate dynamic stagger so total assembly time is consistent
+  const staggerPerShard = TARGET_STAGGER_TIME / Math.max(1, totalShards);
+
+  // Calculate the exact time the assembly animation finishes
+  useEffect(() => {
+    setShimmerReady(false);
+
+    // Logic: The last shard to arrive has the max delay.
+    // Total Time = (MaxDelay) + (Animation Duration)
+    const maxDelay = (totalShards - 1) * staggerPerShard;
+    const assemblyDuration = (maxDelay + DURATION) * 1000; // Convert to ms
+
+    const timer = setTimeout(() => {
+      setShimmerReady(true);
+    }, assemblyDuration + 100); // Add small buffer (100ms) for smoothness
+
+    return () => clearTimeout(timer);
+  }, [currentIndex, totalShards, staggerPerShard]);
 
   const changeAnimal = (delta) => {
     setCurrentIndex((prev) => {
@@ -89,6 +114,8 @@ function ExploreMore() {
 
   // ใช้ pool ใหญ่สุดเผื่อไว้ก่อน
   const pool = Array.from({ length: MAX_SHARD_COUNT }, (_, i) => i);
+  // Calculate batch size: 2% of total shards (minimum 1)
+  const batchSize = Math.max(1, Math.round(totalShards * 0.015));
 
   const shards = pool.map((index) => {
     // ต้องระวัง Index เกิน range ของสัตว์ปัจจุบัน
@@ -102,7 +129,7 @@ function ExploreMore() {
 
     const orderIndex = direction === "left" ? rank : totalShards - 1 - rank;
 
-    const delay = orderIndex * STAGGER;
+    const delay = orderIndex * staggerPerShard;
 
     const currentClipPath = isVisible
       ? shardData.clipPath
@@ -129,7 +156,7 @@ function ExploreMore() {
     return (
       <div
         key={index}
-        className="shard"
+        className={`shard ${shimmerReady ? "shimmer-ready" : ""}`}
         style={{
           clipPath: currentClipPath,
           WebkitClipPath: currentClipPath,
@@ -146,6 +173,7 @@ function ExploreMore() {
             background-color 0s 0s linear,
             transform ${DURATION}s ${delay}s cubic-bezier(0.25, 0.8, 0.25, 1)
           `,
+          "--shimmer-delay": `${Math.floor(rank / batchSize) * 0.1}s`,
         }}
       />
     );
@@ -157,6 +185,7 @@ function ExploreMore() {
       <div className="explore-bg">
         <div className="wave-layer" />
         <div className="caustics-layer" />
+        <div className="light-sweep-layer" />
       </div>
 
       {/* Main Content Container */}
@@ -178,9 +207,8 @@ function ExploreMore() {
             {levels.map((_, index) => (
               <div
                 key={index}
-                className={`progress-dot ${
-                  index === currentIndex ? "active" : ""
-                } ${index < currentIndex ? "passed" : ""}`}
+                className={`progress-dot ${index === currentIndex ? "active" : ""
+                  } ${index < currentIndex ? "passed" : ""}`}
                 onClick={() => {
                   setCurrentIndex(index);
                   setActiveTabKey(topicKeys[0]); // Reset tab when jumping

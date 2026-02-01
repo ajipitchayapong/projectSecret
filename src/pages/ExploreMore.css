@@ -4,11 +4,14 @@
 .explore-page {
   position: relative;
   width: 100%;
-  height: 100vh; /* Fixed viewport height */
+  height: 100vh;
+  /* Fixed viewport height */
   font-family: "Outfit", sans-serif;
   color: white;
-  overflow: hidden; /* Disable scrolling */
-  background-color: #000; /* Fallback */
+  overflow: hidden;
+  /* Disable scrolling */
+  background-color: #000;
+  /* Fallback */
 }
 
 /* Glassmorphism Background: Deep Ocean Blue Theme */
@@ -19,36 +22,40 @@
   width: 100%;
   height: 100%;
   /* Deep Underwater Gradient: Light Blue surface -> Deep Dark Blue abyss */
-  background: radial-gradient(
-    circle at 50% 10%,
-    #0ea5e9 0%,
-    #0369a1 20%,
-    #172554 60%,
-    #020617 100%
-  );
+  background: radial-gradient(circle at 50% 10%,
+      #0ea5e9 0%,
+      #0369a1 20%,
+      #172554 60%,
+      #020617 100%);
   z-index: 0;
-  overflow: hidden; /* Ensure orbs don't cause scroll */
+  overflow: hidden;
+  /* Ensure orbs don't cause scroll */
 }
 
 /* Animations */
 @keyframes float {
+
   0%,
   100% {
     transform: translate(0, 0) scale(1);
   }
+
   33% {
     transform: translate(30px, -50px) scale(1.1);
   }
+
   66% {
     transform: translate(-20px, 20px) scale(0.9);
   }
 }
 
 @keyframes drift {
+
   0%,
   100% {
     transform: translate(0, 0) scale(1);
   }
+
   50% {
     transform: translate(-40px, -20px) scale(1.2);
   }
@@ -58,6 +65,7 @@
   0% {
     background-position: 50% 0%;
   }
+
   100% {
     background-position: 50% 100%;
   }
@@ -70,6 +78,7 @@
       0 0,
       0 0;
   }
+
   100% {
     background-position:
       -500px 1000px,
@@ -79,6 +88,7 @@
 }
 
 @keyframes pulse-glow {
+
   0%,
   100% {
     box-shadow:
@@ -86,6 +96,7 @@
       inset 0 0 10px rgba(255, 255, 255, 0.2);
     transform: scale(1.4);
   }
+
   50% {
     box-shadow:
       0 0 30px rgba(56, 189, 248, 0.7),
@@ -95,29 +106,36 @@
 }
 
 @keyframes bubble-drift {
+
   0%,
   100% {
     transform: translate(0, 0);
   }
+
   25% {
     transform: translate(2px, -3px);
   }
+
   50% {
     transform: translate(-1px, -5px);
   }
+
   75% {
     transform: translate(-3px, -2px);
   }
 }
 
 @keyframes bubble-wobble {
+
   0%,
   100% {
     border-radius: 50%;
   }
+
   33% {
     border-radius: 48% 52% 51% 49% / 49% 51% 48% 52%;
   }
+
   66% {
     border-radius: 52% 48% 49% 51% / 51% 49% 52% 48%;
   }
@@ -127,9 +145,11 @@
   0% {
     transform: rotate(0deg) scale(1.5) translateY(0);
   }
+
   50% {
     transform: rotate(5deg) scale(1.6) translateY(-20px);
   }
+
   100% {
     transform: rotate(0deg) scale(1.5) translateY(0);
   }
@@ -141,6 +161,7 @@
     transform: translateY(20px) scale(0.95);
     filter: blur(15px);
   }
+
   100% {
     opacity: 1;
     transform: translateY(0) scale(1);
@@ -152,9 +173,11 @@
   0% {
     transform: scale(1);
   }
+
   50% {
     transform: scale(1.08);
   }
+
   100% {
     transform: scale(1.05);
   }
@@ -163,9 +186,11 @@
 @keyframes ripple-wave {
   0% {
     transform: translate(-50%, -50%) scale(0.2);
-    opacity: 0.5; /* Reduced opacity */
+    opacity: 0.5;
+    /* Reduced opacity */
     border-width: 10px;
   }
+
   100% {
     transform: translate(-50%, -50%) scale(2.2);
     opacity: 0;
@@ -176,9 +201,11 @@
 @keyframes ripple-wave-delayed {
   0% {
     transform: translate(-50%, -50%) scale(0.1);
-    opacity: 0.3; /* Reduced opacity */
+    opacity: 0.3;
+    /* Reduced opacity */
     border-width: 6px;
   }
+
   100% {
     transform: translate(-50%, -50%) scale(1.6);
     opacity: 0;
@@ -187,18 +214,22 @@
 }
 
 @keyframes container-wobble {
+
   0%,
   100% {
     border-radius: 50px;
     transform: scale(1);
   }
+
   25% {
     transform: scale(1.005) skewX(0.2deg);
   }
+
   50% {
     border-radius: 53px 47px 51px 49px / 49% 51% 47px 53px;
     transform: scale(1.01);
   }
+
   75% {
     transform: scale(1.005) skewX(-0.2deg);
   }
@@ -209,14 +240,19 @@
     transform: scale(1);
     opacity: 1;
   }
+
   15% {
-    transform: scale(1.15); /* Subtle stretch before snap */
+    transform: scale(1.15);
+    /* Subtle stretch before snap */
     opacity: 0.8;
   }
+
   25% {
     transform: scale(1.2);
-    opacity: 0; /* Sudden snap! */
+    opacity: 0;
+    /* Sudden snap! */
   }
+
   100% {
     opacity: 0;
   }
@@ -232,9 +268,11 @@
       0 8px 0 -4px rgba(255, 255, 255, 0.8),
       -8px 0 0 -4px rgba(255, 255, 255, 0.8);
   }
+
   20% {
     opacity: 1;
   }
+
   100% {
     transform: translate(-50%, -50%) scale(1.8);
     opacity: 0;
@@ -258,36 +296,24 @@
 
   /* Marine Snow Particles */
   background-image:
-    radial-gradient(
-      2px 2px at 20px 30px,
+    radial-gradient(2px 2px at 20px 30px,
       rgba(255, 255, 255, 0.4),
-      transparent
-    ),
-    radial-gradient(
-      2px 2px at 40px 70px,
+      transparent),
+    radial-gradient(2px 2px at 40px 70px,
       rgba(255, 255, 255, 0.4),
-      transparent
-    ),
-    radial-gradient(
-      2px 2px at 50px 160px,
+      transparent),
+    radial-gradient(2px 2px at 50px 160px,
       rgba(255, 255, 255, 0.4),
-      transparent
-    ),
-    radial-gradient(
-      2px 2px at 90px 40px,
+      transparent),
+    radial-gradient(2px 2px at 90px 40px,
       rgba(255, 255, 255, 0.4),
-      transparent
-    ),
-    radial-gradient(
-      2px 2px at 130px 80px,
+      transparent),
+    radial-gradient(2px 2px at 130px 80px,
       rgba(255, 255, 255, 0.4),
-      transparent
-    ),
-    radial-gradient(
-      2px 2px at 160px 120px,
+      transparent),
+    radial-gradient(2px 2px at 160px 120px,
       rgba(255, 255, 255, 0.4),
-      transparent
-    );
+      transparent);
 
   background-size:
     200px 200px,
@@ -316,18 +342,14 @@
 
   /* Overlapping Light Webs */
   background:
-    repeating-radial-gradient(
-      circle at 50% 50%,
+    repeating-radial-gradient(circle at 50% 50%,
       transparent 0,
       rgba(255, 255, 255, 0.1) 20px,
-      transparent 40px
-    ),
-    repeating-linear-gradient(
-      45deg,
+      transparent 40px),
+    repeating-linear-gradient(45deg,
       transparent 0,
       rgba(255, 255, 255, 0.05) 50px,
-      transparent 100px
-    );
+      transparent 100px);
 
   animation: caustics-wave 15s ease-in-out infinite;
 }
@@ -341,11 +363,9 @@
   width: 600px;
   height: 600px;
   /* Light Aqua glow */
-  background: radial-gradient(
-    circle,
-    rgba(34, 211, 238, 0.25) 0%,
-    transparent 70%
-  );
+  background: radial-gradient(circle,
+      rgba(34, 211, 238, 0.25) 0%,
+      transparent 70%);
   border-radius: 50%;
   pointer-events: none;
   filter: blur(40px);
@@ -360,11 +380,9 @@
   width: 500px;
   height: 500px;
   /* Deep Blue glow */
-  background: radial-gradient(
-    circle,
-    rgba(37, 99, 235, 0.2) 0%,
-    transparent 70%
-  );
+  background: radial-gradient(circle,
+      rgba(37, 99, 235, 0.2) 0%,
+      transparent 70%);
   border-radius: 50%;
   pointer-events: none;
   filter: blur(60px);
@@ -381,7 +399,8 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100%; /* Fill fixed parent exactly */
+  height: 100%;
+  /* Fill fixed parent exactly */
 }
 
 /* --- Progress Indicator (Step Tracker) --- */
@@ -391,24 +410,27 @@
   justify-content: center;
   margin-bottom: 2.5rem;
   z-index: 20;
-  width: 60%; /* Match stage width */
-  max-width: 800px; /* Match max-width */
+  width: 60%;
+  /* Match stage width */
+  max-width: 800px;
+  /* Match max-width */
 
   /* Premium Glass/Bubble Frame */
-  background: radial-gradient(
-    circle at 30% 30%,
-    rgba(255, 255, 255, 0.15) 0%,
-    rgba(255, 255, 255, 0.05) 100%
-  );
+  background: radial-gradient(circle at 30% 30%,
+      rgba(255, 255, 255, 0.15) 0%,
+      rgba(255, 255, 255, 0.05) 100%);
   backdrop-filter: blur(15px);
   -webkit-backdrop-filter: blur(15px);
-  padding: 18px 35px; /* Bigger padding */
+  padding: 18px 35px;
+  /* Bigger padding */
   border-radius: 60px;
   border: 1px solid rgba(255, 255, 255, 0.2);
   box-shadow:
     inset 0 4px 15px rgba(255, 255, 255, 0.2),
-    /* Subtle Gel Rim */ 0 15px 35px rgba(0, 0, 0, 0.4),
-    0 0 30px rgba(14, 165, 233, 0.1); /* Faint Outer Glow */
+    /* Subtle Gel Rim */
+    0 15px 35px rgba(0, 0, 0, 0.4),
+    0 0 30px rgba(14, 165, 233, 0.1);
+  /* Faint Outer Glow */
 
   /* Prevent any selection or focus artifacts */
   user-select: none;
@@ -444,13 +466,14 @@
   position: absolute;
   top: 50%;
   left: 0;
-  height: 8px; /* Thicker */
-  background: linear-gradient(
-    90deg,
-    #0ea5e9 0%,
-    #7dd3fc 50%,
-    #ffffff 100% /* Bright white tip */
-  );
+  height: 8px;
+  /* Thicker */
+  background: linear-gradient(90deg,
+      #0ea5e9 0%,
+      #7dd3fc 50%,
+      #ffffff 100%
+      /* Bright white tip */
+    );
   border-radius: 6px;
   transform: translateY(-50%);
   z-index: 2;
@@ -467,9 +490,11 @@
 .progress-track-fill::after {
   content: "";
   position: absolute;
-  right: -14px; /* Centered on dot */
+  right: -14px;
+  /* Centered on dot */
   top: 50%;
-  width: 28px; /* Bigger to cover dot area */
+  width: 28px;
+  /* Bigger to cover dot area */
   height: 28px;
   background: #fff;
   border-radius: 50%;
@@ -488,23 +513,23 @@
 }
 
 .progress-dot {
-  width: 26px; /* Slightly bigger */
+  width: 26px;
+  /* Slightly bigger */
   height: 26px;
   min-width: 26px;
   cursor: pointer;
   transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
   position: relative;
   z-index: 3;
-  border-radius: 50% !important; /* Force circular shape ALWAYS */
+  border-radius: 50% !important;
+  /* Force circular shape ALWAYS */
   overflow: visible;
 
   /* Hyper-Realistic Soap Bubble - Pure Blue Tint */
-  background: radial-gradient(
-    circle at 30% 30%,
-    rgba(255, 255, 255, 0.15) 0%,
-    rgba(255, 255, 255, 0.05) 50%,
-    rgba(56, 189, 248, 0.1) 100%
-  );
+  background: radial-gradient(circle at 30% 30%,
+      rgba(255, 255, 255, 0.15) 0%,
+      rgba(255, 255, 255, 0.05) 50%,
+      rgba(56, 189, 248, 0.1) 100%);
 
   /* Iridescent Rim */
   border: 1.5px solid rgba(255, 255, 255, 0.2);
@@ -553,11 +578,9 @@
 
 .progress-dot.passed {
   border-color: rgba(56, 189, 248, 0.6);
-  background: radial-gradient(
-    circle at 30% 30%,
-    rgba(56, 189, 248, 0.2) 0%,
-    rgba(14, 165, 233, 0.1) 100%
-  );
+  background: radial-gradient(circle at 30% 30%,
+      rgba(56, 189, 248, 0.2) 0%,
+      rgba(14, 165, 233, 0.1) 100%);
 }
 
 .progress-dot:hover {
@@ -574,7 +597,8 @@
   background: none;
   border-color: transparent;
   box-shadow: none;
-  animation: none; /* Let the Spark be the indicator */
+  animation: none;
+  /* Let the Spark be the indicator */
 }
 
 /* --- Realistic Bubble Burst Effect --- */
@@ -585,12 +609,10 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: radial-gradient(
-    circle at 30% 30%,
-    rgba(255, 255, 255, 0.4),
-    rgba(56, 189, 248, 0.2) 60%,
-    transparent 100%
-  );
+  background: radial-gradient(circle at 30% 30%,
+      rgba(255, 255, 255, 0.4),
+      rgba(56, 189, 248, 0.2) 60%,
+      transparent 100%);
   border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: 50%;
   animation: bubble-burst 0.4s ease-out forwards;
@@ -612,6 +634,7 @@
 }
 
 /* --- Upper Section: Stage + Arrows --- */
+/* --- Upper Section: Stage + Arrows --- */
 .stage-section {
   display: flex;
   align-items: center;
@@ -621,28 +644,13 @@
   margin-bottom: 2rem;
 }
 
-/* Transparent Stage Container */
-.stage-wrapper {
-  position: relative;
-  width: 60%;
-  max-width: 800px;
-  aspect-ratio: var(--ratio);
-
-  /* Removed Glass Effect for floating look */
-  background: transparent;
-  border: none;
-  box-shadow: none;
-  backdrop-filter: none;
-  -webkit-backdrop-filter: none;
-
-  overflow: visible;
-}
-
 @keyframes float-animal {
+
   0%,
   100% {
     transform: translateY(0px);
   }
+
   50% {
     transform: translateY(-15px);
   }
@@ -669,16 +677,15 @@
   width: 75px;
   height: 75px;
   border-radius: 50%;
-  position: relative; /* For pseudo highlights */
+  position: relative;
+  /* For pseudo highlights */
   overflow: visible;
 
   /* Transparent Soap Liquid */
-  background: radial-gradient(
-    circle at 30% 30%,
-    rgba(255, 255, 255, 0.1) 0%,
-    rgba(255, 255, 255, 0.05) 40%,
-    rgba(14, 165, 233, 0.05) 100%
-  );
+  background: radial-gradient(circle at 30% 30%,
+      rgba(255, 255, 255, 0.1) 0%,
+      rgba(255, 255, 255, 0.05) 40%,
+      rgba(14, 165, 233, 0.05) 100%);
   backdrop-filter: blur(5px);
   -webkit-backdrop-filter: blur(5px);
 
@@ -690,7 +697,8 @@
 
   box-shadow:
     inset 0 4px 10px rgba(255, 255, 255, 0.3),
-    /* Rim Light */ inset 0 -5px 15px rgba(0, 0, 0, 0.1),
+    /* Rim Light */
+    inset 0 -5px 15px rgba(0, 0, 0, 0.1),
     0 10px 25px rgba(0, 0, 0, 0.3);
 
   color: white;
@@ -707,7 +715,8 @@
     bubble-wobble 5s infinite ease-in-out,
     bubble-drift 8s infinite ease-in-out alternate;
 
-  border-radius: 50% !important; /* Force circular shape ALWAYS */
+  border-radius: 50% !important;
+  /* Force circular shape ALWAYS */
 }
 
 /* Arrow Bubble Highlights */
@@ -738,12 +747,11 @@
 }
 
 .nav-arrow:hover {
-  transform: scale(1.15) translateY(-5px); /* Floating look */
-  background: radial-gradient(
-    circle at 30% 30%,
-    rgba(255, 255, 255, 0.25) 0%,
-    rgba(56, 189, 248, 0.1) 100%
-  );
+  transform: scale(1.15) translateY(-5px);
+  /* Floating look */
+  background: radial-gradient(circle at 30% 30%,
+      rgba(255, 255, 255, 0.25) 0%,
+      rgba(56, 189, 248, 0.1) 100%);
   box-shadow:
     inset 0 8px 20px rgba(255, 255, 255, 0.7),
     inset 0 -5px 15px rgba(0, 0, 0, 0.1),
@@ -769,7 +777,8 @@
 .progress-dot:active,
 .progress-dot:focus-visible {
   outline: none !important;
-  box-shadow: inherit; /* Maintain bubble depth shadows */
+  box-shadow: inherit;
+  /* Maintain bubble depth shadows */
 }
 
 /* Re-apply the base bubble shadows for focused arrows so they don't lose their depth */
@@ -808,7 +817,8 @@
   border: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow:
     0 20px 50px rgba(0, 0, 0, 0.6),
-    inset 0 0 30px rgba(14, 165, 233, 0.05); /* Internal liquid depth */
+    inset 0 0 30px rgba(14, 165, 233, 0.05);
+  /* Internal liquid depth */
 
   transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
@@ -838,16 +848,18 @@
 
 .info-section.tab-changing {
   border-color: rgba(56, 189, 248, 0.3);
-  background: rgba(14, 165, 233, 0.08); /* Much softer flash */
+  background: rgba(14, 165, 233, 0.08);
+  /* Much softer flash */
 }
 
 .info-section.tab-changing::before {
-  animation: ripple-wave 3s cubic-bezier(0.215, 1, 0.355, 1) forwards; /* Slower */
+  animation: ripple-wave 3s cubic-bezier(0.215, 1, 0.355, 1) forwards;
+  /* Slower */
 }
 
 .info-section.tab-changing::after {
-  animation: ripple-wave-delayed 3s cubic-bezier(0.215, 1, 0.355, 1) 0.2s
-    forwards; /* Slower + More delay */
+  animation: ripple-wave-delayed 3s cubic-bezier(0.215, 1, 0.355, 1) 0.2s forwards;
+  /* Slower + More delay */
 }
 
 /* No Noise Texture */
@@ -864,7 +876,8 @@
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  color: transparent; /* Fallback */
+  color: transparent;
+  /* Fallback */
 
   text-shadow: 0 4px 20px rgba(14, 165, 233, 0.5);
 
@@ -919,12 +932,10 @@
   left: -100%;
   width: 50%;
   height: 100%;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.2),
-    transparent
-  );
+  background: linear-gradient(90deg,
+      transparent,
+      rgba(255, 255, 255, 0.2),
+      transparent);
   transform: skewX(-25deg);
   transition: 0.5s;
 }
@@ -946,7 +957,8 @@
 }
 
 .divider {
-  display: none; /* Hide divider for bubble pills style */
+  display: none;
+  /* Hide divider for bubble pills style */
 }
 
 .animal-description {
@@ -1003,22 +1015,298 @@
     gap: 10px;
     flex-direction: column;
   }
+
   .nav-arrow {
     width: 48px;
     height: 48px;
   }
+
   .stage-wrapper {
     width: 90%;
   }
+
   .animal-title {
     font-size: 2.5rem;
   }
+
   .info-menu {
     flex-wrap: wrap;
     gap: 10px;
   }
+
   .info-section {
     padding: 30px;
     border-radius: 30px;
   }
+}
+
+/* Light Sweep Effect (Species in Pieces Style) */
+.light-sweep-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 3;
+  /* Above caustics */
+  mix-blend-mode: overlay;
+
+  /* The Moving Light Beam */
+  background: linear-gradient(115deg,
+      transparent 30%,
+      rgba(255, 255, 255, 0.15) 45%,
+      /* Subtle white shine */
+      rgba(255, 255, 255, 0.3) 50%,
+      /* Bright center */
+      rgba(255, 255, 255, 0.15) 55%,
+      transparent 70%);
+  background-size: 200% 200%;
+
+  animation: light-sweep-anim 8s cubic-bezier(0.4, 0.0, 0.2, 1) infinite;
+}
+
+@keyframes light-sweep-anim {
+  0% {
+    background-position: 200% 0%;
+    opacity: 0;
+  }
+
+  10% {
+    opacity: 1;
+  }
+
+  90% {
+    opacity: 1;
+  }
+
+  100% {
+    background-position: -200% 0%;
+    opacity: 0;
+  }
+}
+
+/* --- Species in Pieces: The Shimmer Effect --- */
+
+/* The Ghost Layer */
+.shard::before {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  /* Start transparent */
+  background: rgba(255, 255, 255, 0);
+
+  /* Inherit parent geometry */
+  /* Note: pointer-events none to pass clicks through */
+  pointer-events: none;
+
+  z-index: 2;
+  opacity: 0;
+  /* Hidden by default */
+  transition: opacity 0.5s ease;
+}
+
+/* Only animate when ready */
+.shard.shimmer-ready::before {
+  opacity: 1;
+  /* The Chase Animation
+     - 12s interval loop (Less frequent)
+     - Staggered by --shimmer-delay
+  */
+  animation: shimmer 12s infinite;
+  animation-delay: var(--shimmer-delay, 0s);
+}
+
+@keyframes shimmer {
+  0% {
+    background-color: rgba(255, 255, 255, 0);
+  }
+
+  /* Peak Glint (Keep it fast: 3% of 12s is ~0.36s) */
+  3% {
+    background-color: rgba(255, 255, 255, 0.4);
+    /* Strong flash */
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+  }
+
+  /* Decay */
+  6% {
+    background-color: rgba(255, 255, 255, 0);
+  }
+
+  100% {
+    background-color: rgba(255, 255, 255, 0);
+  }
+}
+
+/* --- REFACTOR: Floating Menu & Modal --- */
+
+/* 1. Ghost Menu (Floating Bottom) */
+.ghost-menu-container {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 20px;
+  z-index: 50;
+  /* Above everything */
+  padding: 15px 30px;
+  background: rgba(255, 255, 255, 0.05);
+  /* Very subtle bg */
+  backdrop-filter: blur(10px);
+  border-radius: 50px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+}
+
+.ghost-btn {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  padding: 12px 24px;
+  border-radius: 30px;
+  font-family: "Outfit", sans-serif;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.ghost-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.8);
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(255, 255, 255, 0.2);
+}
+
+.ghost-btn.active {
+  background: white;
+  color: #020617;
+  /* Dark text */
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.6);
+}
+
+/* 2. Full Screen Modal (Popup) */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(15px);
+  /* Strong blur behind modal */
+  z-index: 100;
+  /* Topmost */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fade-in-modal 0.5s ease forwards;
+}
+
+.modal-glass-card {
+  width: 80%;
+  max-width: 900px;
+  height: auto;
+  min-height: 50vh;
+  max-height: 90vh;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
+  padding: 40px;
+  position: relative;
+  box-shadow:
+    0 20px 50px rgba(0, 0, 0, 0.5),
+    inset 0 0 100px rgba(255, 255, 255, 0.05);
+  animation: slide-up-modal 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  overflow-y: auto;
+}
+
+.modal-close-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: rgba(0, 0, 0, 0.3);
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.modal-close-btn:hover {
+  background: rgba(255, 0, 0, 0.6);
+  transform: rotate(90deg);
+}
+
+.modal-title {
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+  background: linear-gradient(135deg, #fff, #94a3b8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.modal-text {
+  font-size: 1.2rem;
+  line-height: 1.8;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* Animations */
+@keyframes fade-in-modal {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slide-up-modal {
+  from {
+    transform: translateY(50px) scale(0.95);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+
+/* Transparent Stage Container */
+.stage-wrapper {
+  position: relative;
+  width: 60%;
+  max-width: 800px;
+  aspect-ratio: var(--ratio);
+
+  /* Centered */
+  margin: 0 auto;
+
+  /* Removed Glass Effect for floating look */
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+
+  overflow: visible;
 }

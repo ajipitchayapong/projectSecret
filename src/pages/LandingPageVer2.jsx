@@ -60,9 +60,9 @@ const LandingPageVer2 = () => {
         />
       </section>
 
-      <section className="section-dolphin-v2">
+      <section className="section-irrawaddy-v2">
         <div className="irrawaddy-dolphin-v2">
-          <div className="dolphin-wrapper-v2">
+          <div className="irrawaddy-wrapper-v2">
             {ANIMALS.find((a) => a.id === "irrawaddyDolphin")?.shards.map(
               (shard, index) => (
                 <div
