@@ -15,378 +15,34 @@
 }
 
 /* Glassmorphism Background: Deep Ocean Blue Theme */
+/* Glassmorphism Background: Deep Ocean Blue Theme - SIMPLIFIED */
 .explore-bg {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  /* Deep Underwater Gradient: Light Blue surface -> Deep Dark Blue abyss */
-  background: radial-gradient(circle at 50% 10%,
-      #0ea5e9 0%,
-      #0369a1 20%,
-      #172554 60%,
+  /* Smooth Deep Blue Gradient - Clean & Minimal */
+  background: radial-gradient(circle at 50% -20%,
+      #1e293b 0%,
+      #0f172a 40%,
       #020617 100%);
   z-index: 0;
   overflow: hidden;
-  /* Ensure orbs don't cause scroll */
 }
 
-/* Animations */
-@keyframes float {
-
-  0%,
-  100% {
-    transform: translate(0, 0) scale(1);
-  }
-
-  33% {
-    transform: translate(30px, -50px) scale(1.1);
-  }
-
-  66% {
-    transform: translate(-20px, 20px) scale(0.9);
-  }
-}
-
-@keyframes drift {
-
-  0%,
-  100% {
-    transform: translate(0, 0) scale(1);
-  }
-
-  50% {
-    transform: translate(-40px, -20px) scale(1.2);
-  }
-}
-
-@keyframes deepSeaCurrent {
-  0% {
-    background-position: 50% 0%;
-  }
-
-  100% {
-    background-position: 50% 100%;
-  }
-}
-
-@keyframes snow-drift {
-  0% {
-    background-position:
-      0 0,
-      0 0,
-      0 0;
-  }
-
-  100% {
-    background-position:
-      -500px 1000px,
-      400px 400px,
-      300px 300px;
-  }
-}
-
-@keyframes pulse-glow {
-
-  0%,
-  100% {
-    box-shadow:
-      0 0 15px rgba(56, 189, 248, 0.4),
-      inset 0 0 10px rgba(255, 255, 255, 0.2);
-    transform: scale(1.4);
-  }
-
-  50% {
-    box-shadow:
-      0 0 30px rgba(56, 189, 248, 0.7),
-      inset 0 0 20px rgba(56, 189, 248, 0.3);
-    transform: scale(1.55);
-  }
-}
-
-@keyframes bubble-drift {
-
-  0%,
-  100% {
-    transform: translate(0, 0);
-  }
-
-  25% {
-    transform: translate(2px, -3px);
-  }
-
-  50% {
-    transform: translate(-1px, -5px);
-  }
-
-  75% {
-    transform: translate(-3px, -2px);
-  }
-}
-
-@keyframes bubble-wobble {
-
-  0%,
-  100% {
-    border-radius: 50%;
-  }
-
-  33% {
-    border-radius: 48% 52% 51% 49% / 49% 51% 48% 52%;
-  }
-
-  66% {
-    border-radius: 52% 48% 49% 51% / 51% 49% 52% 48%;
-  }
-}
-
-@keyframes caustics-wave {
-  0% {
-    transform: rotate(0deg) scale(1.5) translateY(0);
-  }
-
-  50% {
-    transform: rotate(5deg) scale(1.6) translateY(-20px);
-  }
-
-  100% {
-    transform: rotate(0deg) scale(1.5) translateY(0);
-  }
-}
-
-@keyframes content-fade-in {
-  0% {
-    opacity: 0;
-    transform: translateY(20px) scale(0.95);
-    filter: blur(15px);
-  }
-
-  100% {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-    filter: blur(0);
-  }
-}
-
-@keyframes menu-pop {
-  0% {
-    transform: scale(1);
-  }
-
-  50% {
-    transform: scale(1.08);
-  }
-
-  100% {
-    transform: scale(1.05);
-  }
-}
-
-@keyframes ripple-wave {
-  0% {
-    transform: translate(-50%, -50%) scale(0.2);
-    opacity: 0.5;
-    /* Reduced opacity */
-    border-width: 10px;
-  }
-
-  100% {
-    transform: translate(-50%, -50%) scale(2.2);
-    opacity: 0;
-    border-width: 1px;
-  }
-}
-
-@keyframes ripple-wave-delayed {
-  0% {
-    transform: translate(-50%, -50%) scale(0.1);
-    opacity: 0.3;
-    /* Reduced opacity */
-    border-width: 6px;
-  }
-
-  100% {
-    transform: translate(-50%, -50%) scale(1.6);
-    opacity: 0;
-    border-width: 1px;
-  }
-}
-
-@keyframes container-wobble {
-
-  0%,
-  100% {
-    border-radius: 50px;
-    transform: scale(1);
-  }
-
-  25% {
-    transform: scale(1.005) skewX(0.2deg);
-  }
-
-  50% {
-    border-radius: 53px 47px 51px 49px / 49% 51% 47px 53px;
-    transform: scale(1.01);
-  }
-
-  75% {
-    transform: scale(1.005) skewX(-0.2deg);
-  }
-}
-
-@keyframes bubble-burst {
-  0% {
-    transform: scale(1);
-    opacity: 1;
-  }
-
-  15% {
-    transform: scale(1.15);
-    /* Subtle stretch before snap */
-    opacity: 0.8;
-  }
-
-  25% {
-    transform: scale(1.2);
-    opacity: 0;
-    /* Sudden snap! */
-  }
-
-  100% {
-    opacity: 0;
-  }
-}
-
-@keyframes bubble-droplets {
-  0% {
-    transform: translate(-50%, -50%) scale(0.5);
-    opacity: 0;
-    box-shadow:
-      0 -8px 0 -4px rgba(255, 255, 255, 0.8),
-      8px 0 0 -4px rgba(255, 255, 255, 0.8),
-      0 8px 0 -4px rgba(255, 255, 255, 0.8),
-      -8px 0 0 -4px rgba(255, 255, 255, 0.8);
-  }
-
-  20% {
-    opacity: 1;
-  }
-
-  100% {
-    transform: translate(-50%, -50%) scale(1.8);
-    opacity: 0;
-    box-shadow:
-      0 -25px 0 -6px rgba(56, 189, 248, 0.4),
-      25px 0 0 -6px rgba(56, 189, 248, 0.4),
-      0 25px 0 -6px rgba(56, 189, 248, 0.4),
-      -25px 0 0 -6px rgba(56, 189, 248, 0.4);
-  }
-}
-
-/* Wave Layer: Marine Snow Particles */
-.wave-layer {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 1;
-
-  /* Marine Snow Particles */
-  background-image:
-    radial-gradient(2px 2px at 20px 30px,
-      rgba(255, 255, 255, 0.4),
-      transparent),
-    radial-gradient(2px 2px at 40px 70px,
-      rgba(255, 255, 255, 0.4),
-      transparent),
-    radial-gradient(2px 2px at 50px 160px,
-      rgba(255, 255, 255, 0.4),
-      transparent),
-    radial-gradient(2px 2px at 90px 40px,
-      rgba(255, 255, 255, 0.4),
-      transparent),
-    radial-gradient(2px 2px at 130px 80px,
-      rgba(255, 255, 255, 0.4),
-      transparent),
-    radial-gradient(2px 2px at 160px 120px,
-      rgba(255, 255, 255, 0.4),
-      transparent);
-
-  background-size:
-    200px 200px,
-    300px 300px,
-    400px 400px,
-    250px 250px,
-    350px 350px,
-    450px 450px;
-
-  /* Drifting Animation */
-  animation: snow-drift 40s linear infinite;
-  opacity: 0.6;
-}
-
-/* Caustics Layer: Light Network */
+/* Subtle Caustics (Light Rays) - DISABLED */
 .caustics-layer {
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  pointer-events: none;
-  z-index: 2;
-  mix-blend-mode: overlay;
-  opacity: 0.4;
-
-  /* Overlapping Light Webs */
-  background:
-    repeating-radial-gradient(circle at 50% 50%,
-      transparent 0,
-      rgba(255, 255, 255, 0.1) 20px,
-      transparent 40px),
-    repeating-linear-gradient(45deg,
-      transparent 0,
-      rgba(255, 255, 255, 0.05) 50px,
-      transparent 100px);
-
-  animation: caustics-wave 15s ease-in-out infinite;
+  display: none;
 }
 
-/* Glowing Orbs - Animated */
-.explore-bg::before {
-  content: "";
-  position: absolute;
-  top: -20%;
-  left: 20%;
-  width: 600px;
-  height: 600px;
-  /* Light Aqua glow */
-  background: radial-gradient(circle,
-      rgba(34, 211, 238, 0.25) 0%,
-      transparent 70%);
-  border-radius: 50%;
-  pointer-events: none;
-  filter: blur(40px);
-  animation: float 20s ease-in-out infinite;
-}
-
+/* Removing busy layers for 'Clean' look */
+/* Removing busy layers for 'Clean' look */
+.wave-layer,
+.light-sweep-layer,
+.explore-bg::before,
 .explore-bg::after {
-  content: "";
-  position: absolute;
-  bottom: 0%;
-  right: 10%;
-  width: 500px;
-  height: 500px;
-  /* Deep Blue glow */
-  background: radial-gradient(circle,
-      rgba(37, 99, 235, 0.2) 0%,
-      transparent 70%);
-  border-radius: 50%;
-  pointer-events: none;
-  filter: blur(60px);
-  animation: drift 25s ease-in-out infinite alternate;
+  display: none;
 }
 
 .explore-container {
@@ -400,7 +56,6 @@
   align-items: center;
   justify-content: center;
   height: 100%;
-  /* Fill fixed parent exactly */
 }
 
 /* --- Progress Indicator (Step Tracker) --- */
@@ -640,8 +295,13 @@
   align-items: center;
   justify-content: center;
   width: 100%;
-  gap: 40px;
-  margin-bottom: 2rem;
+  gap: 20px;
+  flex-grow: 1;
+  /* Pushes content strictly */
+  min-height: 0;
+  /* Prevents overflow */
+  margin-bottom: 0;
+  padding-bottom: 0;
 }
 
 @keyframes float-animal {
@@ -656,6 +316,7 @@
   }
 }
 
+/* --- Animal Shadow Effect --- */
 .stage-inner {
   position: absolute;
   top: 0;
@@ -668,6 +329,9 @@
 
   transition: transform 0.2s ease-out;
   transform-origin: center center;
+
+  /* Deep Shadow Effect for Animal */
+  filter: drop-shadow(0 40px 60px rgba(0, 0, 0, 0.7));
 }
 
 /* --- Bubble UI Components --- */
@@ -800,161 +464,9 @@
 }
 
 /* --- Lower Section: Info Frame - Adjusted to Gel/Bubble Look --- */
-.info-section {
-  text-align: center;
-  max-width: 800px;
-  color: white;
-  position: relative;
-  overflow: hidden;
 
-  /* Dark Blue Glass Frame */
-  background: rgba(5, 15, 40, 0.7);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
 
-  padding: 50px;
-  border-radius: 50px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow:
-    0 20px 50px rgba(0, 0, 0, 0.6),
-    inset 0 0 30px rgba(14, 165, 233, 0.05);
-  /* Internal liquid depth */
 
-  transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-/* The Ripple Layers */
-.info-section::before,
-.info-section::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 500px;
-  height: 500px;
-  border: 2px solid rgba(125, 211, 252, 0.4);
-  border-radius: 50%;
-  transform: translate(-50%, -50%) scale(0);
-  pointer-events: none;
-  z-index: 10;
-  opacity: 0;
-}
-
-.info-section::after {
-  width: 300px;
-  height: 300px;
-  border-color: rgba(255, 255, 255, 0.3);
-}
-
-.info-section.tab-changing {
-  border-color: rgba(56, 189, 248, 0.3);
-  background: rgba(14, 165, 233, 0.08);
-  /* Much softer flash */
-}
-
-.info-section.tab-changing::before {
-  animation: ripple-wave 3s cubic-bezier(0.215, 1, 0.355, 1) forwards;
-  /* Slower */
-}
-
-.info-section.tab-changing::after {
-  animation: ripple-wave-delayed 3s cubic-bezier(0.215, 1, 0.355, 1) 0.2s forwards;
-  /* Slower + More delay */
-}
-
-/* No Noise Texture */
-
-.animal-title {
-  font-size: 3.5rem;
-  font-weight: 700;
-  margin: 0 0 1.5rem 0;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-
-  /* Multi-shade Ocean Gradient */
-  background: linear-gradient(135deg, #ffffff 0%, #38bdf8 50%, #0284c7 100%);
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
-  /* Fallback */
-
-  text-shadow: 0 4px 20px rgba(14, 165, 233, 0.5);
-
-  /* Entry Animation */
-  animation: content-fade-in 0.7s cubic-bezier(0.23, 1, 0.32, 1) forwards;
-}
-
-.info-menu {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 20px;
-  margin-bottom: 2rem;
-  font-weight: 500;
-  font-size: 1.1rem;
-  color: rgba(255, 255, 255, 0.6);
-}
-
-.menu-item {
-  cursor: pointer;
-  padding: 12px 35px;
-  border-radius: 40px;
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  border: 1px solid transparent;
-  color: rgba(224, 242, 254, 0.6);
-  position: relative;
-  overflow: hidden;
-}
-
-.menu-item:hover {
-  color: white;
-  background: rgba(255, 255, 255, 0.05);
-}
-
-/* Active Gel Bubble Button - Premium Refinement */
-.menu-item.active {
-  font-weight: 700;
-  color: #fff;
-  background: linear-gradient(135deg, #0ea5e9 0%, #0369a1 100%);
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  box-shadow:
-    inset 0 4px 8px rgba(255, 255, 255, 0.4),
-    0 10px 20px rgba(14, 165, 233, 0.4);
-  animation: menu-pop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-}
-
-/* Inner Liquid Sheen for Active Item */
-.menu-item.active::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 50%;
-  height: 100%;
-  background: linear-gradient(90deg,
-      transparent,
-      rgba(255, 255, 255, 0.2),
-      transparent);
-  transform: skewX(-25deg);
-  transition: 0.5s;
-}
-
-.menu-item.active::after {
-  content: "";
-  position: absolute;
-  bottom: -4px;
-  left: 50%;
-  width: 6px;
-  height: 6px;
-  background: #fff;
-  border-radius: 50%;
-  transform: translateX(-50%);
-  box-shadow:
-    0 0 10px #38bdf8,
-    0 0 20px #0ea5e9;
-  animation: pearl-glow 2s infinite ease-in-out;
-}
 
 .divider {
   display: none;
@@ -1257,6 +769,7 @@
   font-weight: 700;
   margin-bottom: 20px;
   background: linear-gradient(135deg, #fff, #94a3b8);
+  background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   text-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
@@ -1294,8 +807,11 @@
 /* Transparent Stage Container */
 .stage-wrapper {
   position: relative;
-  width: 60%;
-  max-width: 800px;
+  width: 100%;
+  max-width: 1200px;
+  height: auto;
+  max-height: 65vh;
+  /* Limit height so Title + Menu fit below */
   aspect-ratio: var(--ratio);
 
   /* Centered */
@@ -1309,4 +825,216 @@
   -webkit-backdrop-filter: none;
 
   overflow: visible;
+}
+
+/* --- NEW IMMERSIVE LAYOUT CSS --- */
+
+/* 1. Immersive Title (Centered below animal) */
+/* 1. Immersive Title Block (Species in Pieces Style) */
+.title-block {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  width: 100%;
+  /* Force full width for centering */
+  z-index: 20;
+  position: relative;
+  /* Fade/Slide in animation per animal */
+  animation: content-fade-in 0.8s ease-out forwards;
+}
+
+
+.title-left {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+  /* Ensure consistent width so divider doesn't jump */
+  width: 60px;
+}
+
+.piece-label {
+  font-size: 0.7rem;
+  letter-spacing: 1px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.6);
+  text-transform: uppercase;
+  line-height: 1;
+  margin-bottom: 2px;
+}
+
+.piece-number {
+  font-size: 2.5rem;
+  font-weight: 800;
+  line-height: 0.9;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.title-divider {
+  width: 3px;
+  height: 60px;
+  background-color: rgba(255, 255, 255, 0.4);
+  border-radius: 2px;
+}
+
+.title-name {
+  font-size: 4rem;
+  /* Big */
+  font-weight: 900;
+  text-transform: uppercase;
+  color: #fff;
+  letter-spacing: 2px;
+  line-height: 1;
+  /* Texture effect simulation */
+  opacity: 0.95;
+  text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.1);
+  margin: 0;
+}
+
+/* 2. Ghost Menu (Floating Bottom) */
+.ghost-menu-container {
+  display: flex;
+  gap: 30px;
+  /* More spacing for text */
+  justify-content: center;
+  margin-bottom: 40px;
+  z-index: 50;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  backdrop-filter: none;
+  padding: 0;
+
+  /* Fix Overlap: Convert from Absolute to Flow */
+  position: relative;
+  bottom: auto;
+  left: auto;
+  transform: none;
+  margin-top: 10px;
+  width: 100%;
+  /* Force full width for centering */
+}
+
+.ghost-btn {
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.6);
+  padding: 10px 0;
+  /* Text padding */
+  border-radius: 0;
+  width: auto;
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Outfit", sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  overflow: visible;
+  white-space: nowrap;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  position: relative;
+}
+
+.ghost-btn:hover {
+  background: transparent;
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: none;
+  border-radius: 0;
+}
+
+.ghost-btn.active {
+  background: transparent;
+  color: #38bdf8;
+  /* Highlight color */
+  font-weight: 700;
+  box-shadow: none;
+}
+
+.ghost-btn.active::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  height: 2px;
+  background: #38bdf8;
+  box-shadow: 0 0 10px #38bdf8;
+}
+
+/* 3. Modal Styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(15, 23, 42, 0.85);
+  /* Darker backdrop */
+  backdrop-filter: blur(20px);
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fade-in-modal 0.4s ease forwards;
+}
+
+.modal-glass-card {
+  width: 90%;
+  max-width: 800px;
+  max-height: 85vh;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 30px;
+  padding: 50px;
+  position: relative;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-content-scroll {
+  overflow-y: auto;
+  padding-right: 10px;
+}
+
+.modal-subtitle {
+  font-size: 1.8rem;
+  color: #38bdf8;
+  margin-bottom: 20px;
+}
+
+.modal-text {
+  font-size: 1.15rem;
+  line-height: 1.8;
+  color: rgba(226, 232, 240, 0.9);
+}
+
+.modal-close-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: transparent;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.modal-close-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: rotate(90deg);
 }

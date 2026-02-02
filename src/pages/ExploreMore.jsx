@@ -22,6 +22,7 @@ function ExploreMore() {
   const topicKeys = useMemo(() => Object.keys(ANIMAL_DETAILS.topics), []);
 
   const [activeTabKey, setActiveTabKey] = useState(topicKeys[0]);
+  const [showModal, setShowModal] = useState(false);
   const [isChangingTab, setIsChangingTab] = useState(false);
   const [shimmerReady, setShimmerReady] = useState(false);
 
@@ -29,10 +30,8 @@ function ExploreMore() {
 
 
   const handleTabChange = (key) => {
-    if (key === activeTabKey) return;
     setActiveTabKey(key);
-    setIsChangingTab(true);
-    setTimeout(() => setIsChangingTab(false), 600); // Match CSS animation duration
+    setShowModal(true);
   };
   // State stores the key string
   const stageRef = useRef(null);
@@ -190,34 +189,7 @@ function ExploreMore() {
 
       {/* Main Content Container */}
       <div className="explore-container">
-        {/* Step Indicator (Progress Dots) */}
-        <div className="progress-container">
-          <div className="progress-indicator">
-            {/* Background Track */}
-            <div className="progress-track-bg" />
 
-            {/* Traveling Fill - Width based on current index */}
-            <div
-              className="progress-track-fill"
-              style={{
-                width: `${(currentIndex / (levels.length - 1)) * 100}%`,
-              }}
-            />
-
-            {levels.map((_, index) => (
-              <div
-                key={index}
-                className={`progress-dot ${index === currentIndex ? "active" : ""
-                  } ${index < currentIndex ? "passed" : ""}`}
-                onClick={() => {
-                  setCurrentIndex(index);
-                  setActiveTabKey(topicKeys[0]); // Reset tab when jumping
-                  setDirection(index > currentIndex ? "left" : "right");
-                }}
-              />
-            ))}
-          </div>
-        </div>
 
         {/* Upper Section: Arrows + Stage */}
         <div className="stage-section">
@@ -250,7 +222,7 @@ function ExploreMore() {
             <div
               className="stage-inner"
               style={{
-                transform: "scale(1)",
+                transform: "scale(1.2)",
                 transformOrigin: "center center",
                 cursor: "default",
               }}
@@ -279,34 +251,56 @@ function ExploreMore() {
         </div>
 
         {/* Lower Section: Info */}
-        <div className={`info-section ${isChangingTab ? "tab-changing" : ""}`}>
-          {/* Use English Name from JSON - Keyed to currentIndex to re-animate on animal change */}
-          <h1 className="animal-title" key={currentIndex}>
-            {details.nameEN}
-          </h1>
+        {/* NEW LAYOUT: Split Title and Menu */}
 
-          {/* Dynamic Menu from JSON (Key-Based) */}
-          <div className="info-menu">
-            {topicKeys.map((key) => (
-              <span
-                key={key}
-                className={`menu-item ${activeTabKey === key ? "active" : ""}`}
-                onClick={() => handleTabChange(key)}
-                style={{ cursor: "pointer" }}
-              >
-                {ANIMAL_DETAILS.topics[key]}
-              </span>
-            ))}
+        {/* NEW LAYOUT: Title Block (Species in Pieces Style) */}
+        <div className="title-block" key={currentIndex}>
+          <div className="title-left">
+            <span className="piece-number">{currentIndex + 1}</span>
           </div>
-
-          {/* Description from JSON - Keyed to both animal and tab for smooth transitions */}
-          <p
-            className="animal-description"
-            key={`${currentIndex}-${activeTabKey}`}
-          >
-            {details.content[activeTabKey] || "No description available."}
-          </p>
+          <div className="title-divider"></div>
+          <h1 className="title-name">{details.nameEN}</h1>
         </div>
+
+        {/* 2. Ghost Menu (Bottom) */}
+        <div className="ghost-menu-container">
+          {topicKeys.map((key) => (
+            <button
+              key={key}
+              className={`ghost-btn`}
+              onClick={() => handleTabChange(key)}
+            >
+              {ANIMAL_DETAILS.topics[key]}
+            </button>
+          ))}
+        </div>
+
+        {/* 3. Detail Modal (Full Screen) */}
+        {showModal && (
+          <div className="modal-overlay" onClick={() => setShowModal(false)}>
+            <div
+              className="modal-glass-card"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button
+                className="modal-close-btn"
+                onClick={() => setShowModal(false)}
+              >
+                ×
+              </button>
+
+              <h2 className="modal-title">{details.nameEN}</h2>
+              <div className="modal-content-scroll">
+                <h3 className="modal-subtitle">
+                  {ANIMAL_DETAILS.topics[activeTabKey]}
+                </h3>
+                <p className="modal-text">
+                  {details.content[activeTabKey] || "No description available."}
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Helper Controls (Hidden or Minimized?) */}
