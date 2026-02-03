@@ -16,13 +16,15 @@ body {
   /* Anchor for absolute children */
   /* background gradient repeated... will keep existing but ensure height handles scroll */
   /* Background handled by main container to cover full scroll height */
-  background: linear-gradient(180deg,
-      #84b6d8 0%,
-      #4379b9 15%,
-      #437ab9 25%,
-      #3d6cae 45%,
-      #263987 65%,
-      #13144c 100%);
+  background: linear-gradient(
+    180deg,
+    #84b6d8 0%,
+    #4379b9 15%,
+    #437ab9 25%,
+    #3d6cae 45%,
+    #263987 65%,
+    #13144c 100%
+  );
   display: flex;
   flex-direction: column;
   /* Stack sections vertically */
@@ -122,7 +124,6 @@ body {
 }
 
 @keyframes float-arrow-v2 {
-
   0%,
   100% {
     transform: translateY(0);
@@ -201,10 +202,12 @@ body {
 .bubble-v2 {
   position: absolute;
   bottom: -20px;
-  background: radial-gradient(circle at 30% 30%,
-      rgba(255, 255, 255, 0.8),
-      rgba(255, 255, 255, 0.1) 60%,
-      transparent 80%);
+  background: radial-gradient(
+    circle at 30% 30%,
+    rgba(255, 255, 255, 0.8),
+    rgba(255, 255, 255, 0.1) 60%,
+    transparent 80%
+  );
   border-radius: 50%;
   box-shadow: 0 0 4px rgba(255, 255, 255, 0.2);
   animation: rise-v2 15s infinite ease-in;
@@ -589,7 +592,7 @@ body {
 
 .turtle-v2 {
   position: absolute;
-  top: 0;
+  top: -7%;
   left: 0;
   width: 100%;
   height: 100%;
@@ -725,7 +728,7 @@ body {
 .sperm-whale-v2 {
   position: relative;
   z-index: 10;
-  width: 80%;
+  width: 70%;
   pointer-events: none;
   animation: float-buoyant 13s ease-in-out infinite;
   /* Slower, heavier */
@@ -735,7 +738,7 @@ body {
   position: relative;
   width: 100%;
   aspect-ratio: 1600 / 900;
-  left: 15%;
+  left: 10%;
   transform: scaleX(-1) rotate(-10deg);
 }
 
