@@ -2,10 +2,11 @@ import { useState, useRef, useEffect, useMemo, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { ANIMALS } from "../data/animalConfig";
-import { ANIMAL_DETAILS } from "../data/animalDetails";
+import ANIMAL_DETAILS from "../data/animalDetails.json";
 import Button from "../components/Button";
 import UnderwaterEnvironment, {
   ShardExplosion,
+  ModalDecorations,
 } from "../components/UnderwaterEnvironment";
 import "./ExploreMore.css";
 
@@ -16,89 +17,6 @@ const MAX_SHARD_COUNT = Math.max(
 const DURATION = 1.0;
 // [CONFIG] เวลาที่ใช้ในการเรียงตัวทั้งหมดจนครบ (วินาที) - ไม่ว่าตัวสัตว์จะมีกี่ชิ้น ก็จะใช้เวลาเรียงตัวประมาณนี้
 const TARGET_STAGGER_TIME = 1.25;
-
-// ShardExplosion remains here as it's highly specific to menu clicks in this page
-// but for consistency we'll keep it as is or move if needed later.
-
-// Geometric Decorations specifically for the Modal
-const ModalDecorations = () => {
-  return (
-    <div className="modal-decor-layer">
-      {/* Corner Brackets */}
-      <div className="modal-corner top-left" />
-      <div className="modal-corner top-right" />
-      <div className="modal-corner bottom-left" />
-      <div className="modal-corner bottom-right" />
-
-      {/* Subtle floating shards inside modal */}
-      {[...Array(10)].map((_, i) => (
-        <motion.div
-          key={i}
-          className="modal-shard"
-          animate={{
-            y: [0, -30, 0],
-            rotate: [0, 15, 0],
-            opacity: [0.15, 0.4, 0.15],
-          }}
-          transition={{
-            duration: 6 + i,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: i * 0.4,
-          }}
-          style={{
-            top: `${15 + ((i * 12) % 70)}%`,
-            left: i % 2 === 0 ? `${2 + (i % 3) * 5}%` : `${85 + (i % 3) * 3}%`,
-            width: 50 + (i % 5) * 15,
-            height: 50 + (i % 5) * 15,
-          }}
-        />
-      ))}
-    </div>
-  );
-};
-
-// Menu Click Shard Explosion Component
-const ShardExplosion = ({ x, y, onComplete }) => {
-  const shards = useMemo(() => {
-    const colors = ["#ffffff", "#7dd3fc", "#38bdf8", "#2dd4bf"];
-    return [...Array(10)].map((_, i) => ({
-      id: i,
-      angle: (i / 10) * Math.PI * 2 + Math.random() * 0.5,
-      speed: Math.random() * 120 + 60, // Increased speed
-      size: Math.random() * 14 + 8, // Increased size from 4-8 to 8-22
-      color: colors[Math.floor(Math.random() * colors.length)],
-      rotation: Math.random() * 360,
-    }));
-  }, []);
-
-  return (
-    <div className="shard-explosion-container" style={{ left: x, top: y }}>
-      {shards.map((s, i) => (
-        <motion.div
-          key={s.id}
-          className="click-shard"
-          initial={{ x: 0, y: 0, opacity: 1, rotate: s.rotation, scale: 1 }}
-          animate={{
-            x: Math.cos(s.angle) * s.speed,
-            y: Math.sin(s.angle) * s.speed,
-            opacity: 0,
-            rotate: s.rotation + 360,
-            scale: 0.2,
-          }}
-          onAnimationComplete={i === 0 ? onComplete : undefined}
-          transition={{ duration: 0.6, ease: "easeOut" }}
-          style={{
-            width: s.size,
-            height: s.size,
-            backgroundColor: s.color,
-            boxShadow: `0 0 8px ${s.color}66`,
-          }}
-        />
-      ))}
-    </div>
-  );
-};
 
 function ExploreMore() {
   const levels = ANIMALS;

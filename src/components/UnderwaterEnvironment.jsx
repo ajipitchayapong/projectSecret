@@ -134,6 +134,44 @@ export const VibrantParticles = () => {
   );
 };
 
+// Geometric Decorations specifically for the Modal
+export const ModalDecorations = () => {
+  return (
+    <div className="modal-decor-layer">
+      {/* Corner Brackets */}
+      <div className="modal-corner top-left" />
+      <div className="modal-corner top-right" />
+      <div className="modal-corner bottom-left" />
+      <div className="modal-corner bottom-right" />
+
+      {/* Subtle floating shards inside modal */}
+      {[...Array(10)].map((_, i) => (
+        <motion.div
+          key={i}
+          className="modal-shard"
+          animate={{
+            y: [0, -30, 0],
+            rotate: [0, 15, 0],
+            opacity: [0.15, 0.4, 0.15],
+          }}
+          transition={{
+            duration: 6 + i,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: i * 0.4,
+          }}
+          style={{
+            top: `${15 + ((i * 12) % 70)}%`,
+            left: i % 2 === 0 ? `${2 + (i % 3) * 5}%` : `${85 + (i % 3) * 3}%`,
+            width: 50 + (i % 5) * 15,
+            height: 50 + (i % 5) * 15,
+          }}
+        />
+      ))}
+    </div>
+  );
+};
+
 // Sunlight Piercing Effect Wrapper
 export const SurfaceGlow = () => <div className="surface-glow" />;
 
