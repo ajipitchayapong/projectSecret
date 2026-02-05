@@ -18,11 +18,10 @@ body {
   /* Background handled by main container to cover full scroll height */
   background: linear-gradient(
     180deg,
-    #84b6d8 0%,
-    #4379b9 15%,
-    #437ab9 25%,
-    #3d6cae 45%,
-    #263987 65%,
+    #4fd1ed 0%,
+    /* Brighter Cyan Top */ #38bdf8 15%,
+    #0ea5e9 35%,
+    #1d4ed8 65%,
     #13144c 100%
   );
   display: flex;
@@ -175,18 +174,67 @@ body {
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
-/* Underwater Effects Container */
-/* Underwater Effects Container */
-.underwater-effects-container {
+/* Underwater Environment Container */
+.landing-bg {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   z-index: 0;
-  /* Behind content */
   pointer-events: none;
   overflow: hidden;
+}
+
+/* Background Shards */
+.background-shards-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.bg-shard {
+  position: absolute;
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+  filter: blur(1px);
+}
+
+/* Vibrant Particles */
+.vibrant-particles-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.bio-particle {
+  position: absolute;
+  background: #ffffff;
+  border-radius: 50%;
+  filter: blur(2px);
+  box-shadow:
+    0 0 10px #ffffff,
+    0 0 20px #7dd3fc;
+}
+
+/* Sunlight Piercing Glow */
+.surface-glow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 40vh;
+  background: radial-gradient(
+    circle at 50% -20%,
+    rgba(255, 255, 255, 0.4) 0%,
+    rgba(56, 189, 248, 0.2) 40%,
+    transparent 70%
+  );
+  pointer-events: none;
+  z-index: 2;
 }
 
 /* Bubbles */

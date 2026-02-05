@@ -1,8 +1,12 @@
 import { useState, useRef, useEffect, useMemo, useCallback } from "react";
 import { Link } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
 import { ANIMALS } from "../data/animalConfig";
-import ANIMAL_DETAILS from "../data/animalDetails.json";
+import { ANIMAL_DETAILS } from "../data/animalDetails";
 import Button from "../components/Button";
+import UnderwaterEnvironment, {
+  ShardExplosion,
+} from "../components/UnderwaterEnvironment";
 import "./ExploreMore.css";
 
 const MAX_SHARD_COUNT = Math.max(
@@ -13,38 +17,173 @@ const DURATION = 1.0;
 // [CONFIG] เวลาที่ใช้ในการเรียงตัวทั้งหมดจนครบ (วินาที) - ไม่ว่าตัวสัตว์จะมีกี่ชิ้น ก็จะใช้เวลาเรียงตัวประมาณนี้
 const TARGET_STAGGER_TIME = 1.25;
 
+// ShardExplosion remains here as it's highly specific to menu clicks in this page
+// but for consistency we'll keep it as is or move if needed later.
+
+// Geometric Decorations specifically for the Modal
+const ModalDecorations = () => {
+  return (
+    <div className="modal-decor-layer">
+      {/* Corner Brackets */}
+      <div className="modal-corner top-left" />
+      <div className="modal-corner top-right" />
+      <div className="modal-corner bottom-left" />
+      <div className="modal-corner bottom-right" />
+
+      {/* Subtle floating shards inside modal */}
+      {[...Array(10)].map((_, i) => (
+        <motion.div
+          key={i}
+          className="modal-shard"
+          animate={{
+            y: [0, -30, 0],
+            rotate: [0, 15, 0],
+            opacity: [0.15, 0.4, 0.15],
+          }}
+          transition={{
+            duration: 6 + i,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: i * 0.4,
+          }}
+          style={{
+            top: `${15 + ((i * 12) % 70)}%`,
+            left: i % 2 === 0 ? `${2 + (i % 3) * 5}%` : `${85 + (i % 3) * 3}%`,
+            width: 50 + (i % 5) * 15,
+            height: 50 + (i % 5) * 15,
+          }}
+        />
+      ))}
+    </div>
+  );
+};
+
+// Menu Click Shard Explosion Component
+const ShardExplosion = ({ x, y, onComplete }) => {
+  const shards = useMemo(() => {
+    const colors = ["#ffffff", "#7dd3fc", "#38bdf8", "#2dd4bf"];
+    return [...Array(10)].map((_, i) => ({
+      id: i,
+      angle: (i / 10) * Math.PI * 2 + Math.random() * 0.5,
+      speed: Math.random() * 120 + 60, // Increased speed
+      size: Math.random() * 14 + 8, // Increased size from 4-8 to 8-22
+      color: colors[Math.floor(Math.random() * colors.length)],
+      rotation: Math.random() * 360,
+    }));
+  }, []);
+
+  return (
+    <div className="shard-explosion-container" style={{ left: x, top: y }}>
+      {shards.map((s, i) => (
+        <motion.div
+          key={s.id}
+          className="click-shard"
+          initial={{ x: 0, y: 0, opacity: 1, rotate: s.rotation, scale: 1 }}
+          animate={{
+            x: Math.cos(s.angle) * s.speed,
+            y: Math.sin(s.angle) * s.speed,
+            opacity: 0,
+            rotate: s.rotation + 360,
+            scale: 0.2,
+          }}
+          onAnimationComplete={i === 0 ? onComplete : undefined}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          style={{
+            width: s.size,
+            height: s.size,
+            backgroundColor: s.color,
+            boxShadow: `0 0 8px ${s.color}66`,
+          }}
+        />
+      ))}
+    </div>
+  );
+};
+
 function ExploreMore() {
   const levels = ANIMALS;
   const [currentIndex, setCurrentIndex] = useState(0);
   const [direction, setDirection] = useState("left");
   const [mousePos, setMousePos] = useState(null);
+
+  // State for active explosions
+  const [explosions, setExplosions] = useState([]);
+
+  const triggerExplosion = (x, y) => {
+    const id = Date.now();
+    setExplosions((prev) => [...prev, { id, x, y }]);
+  };
+
+  const removeExplosion = (id) => {
+    setExplosions((prev) => prev.filter((exp) => exp.id !== id));
+  };
+
   // Create an array of topic keys (e.g., ["intro", "threat", "solution"])
   const topicKeys = useMemo(() => Object.keys(ANIMAL_DETAILS.topics), []);
 
   const [activeTabKey, setActiveTabKey] = useState(topicKeys[0]);
+  const [displayedKey, setDisplayedKey] = useState(topicKeys[0]); // New state for content
   const [showModal, setShowModal] = useState(false);
   const [isChangingTab, setIsChangingTab] = useState(false);
   const [shimmerReady, setShimmerReady] = useState(false);
 
-  // Calculate the exact time the assembly animation finishes
+  const [isClosing, setIsClosing] = useState(false);
 
+  const handleTabChange = (key, e) => {
+    // Trigger explosion at click position
+    if (e) {
+      triggerExplosion(e.clientX, e.clientY);
+    }
 
-  const handleTabChange = (key) => {
-    setActiveTabKey(key);
-    setShowModal(true);
+    // 0. Prevent action if modal is in the middle of closing
+    if (isClosing) return;
+
+    // 1. If modal is closed, ALWAYS open it and set the key
+    if (!showModal) {
+      setActiveTabKey(key);
+      setDisplayedKey(key);
+      setShowModal(true);
+      return;
+    }
+
+    // 2. If modal is open, only switch if key is different
+    if (key === activeTabKey) return;
+
+    // 3. Switch logic with fade
+    setActiveTabKey(key); // Update Button INSTANTLY
+    setIsChangingTab(true);
+    setTimeout(() => {
+      setDisplayedKey(key); // Update Content AFTER delay
+      setIsChangingTab(false);
+    }, 300); // Wait for fade-out (300ms)
   };
+
+  const closeModal = useCallback(() => {
+    if (isClosing) return;
+    setIsClosing(true);
+    setShowModal(false);
+    // Lockout matches AnimatePresence duration (0.4s)
+    setTimeout(() => {
+      setIsClosing(false);
+    }, 450);
+  }, [isClosing]);
   // State stores the key string
   const stageRef = useRef(null);
 
   const animal = levels[currentIndex];
 
-  // Lookup details from JSON using ID (lowercase matching for safety)
+  // ... (existing code for finding details) ...
+
   const details =
     ANIMAL_DETAILS.animals.find(
       (animalDetail) =>
         animalDetail.id.toLowerCase() ===
         (animal.id || animal.name).toLowerCase(),
     ) || ANIMAL_DETAILS.animals[0]; // Fallback
+
+  // ... (existing code) ...
+
+  // ... (inside Return) ...
 
   const totalShards = animal?.shards?.length || 0;
 
@@ -182,15 +321,11 @@ function ExploreMore() {
     <div className="explore-page">
       {/* Background (Dark Gradient) */}
       <div className="explore-bg">
-        <div className="wave-layer" />
-        <div className="caustics-layer" />
-        <div className="light-sweep-layer" />
+        <UnderwaterEnvironment />
       </div>
 
       {/* Main Content Container */}
       <div className="explore-container">
-
-
         {/* Upper Section: Arrows + Stage */}
         <div className="stage-section">
           {/* Left Arrow */}
@@ -256,6 +391,7 @@ function ExploreMore() {
         {/* NEW LAYOUT: Title Block (Species in Pieces Style) */}
         <div className="title-block" key={currentIndex}>
           <div className="title-left">
+            <span className="animal-label">Animal</span>
             <span className="piece-number">{currentIndex + 1}</span>
           </div>
           <div className="title-divider"></div>
@@ -268,45 +404,156 @@ function ExploreMore() {
             <button
               key={key}
               className={`ghost-btn`}
-              onClick={() => handleTabChange(key)}
+              onClick={(e) => handleTabChange(key, e)}
             >
               {ANIMAL_DETAILS.topics[key]}
             </button>
           ))}
         </div>
 
-        {/* 3. Detail Modal (Full Screen) */}
-        {showModal && (
-          <div className="modal-overlay" onClick={() => setShowModal(false)}>
-            <div
-              className="modal-glass-card"
-              onClick={(e) => e.stopPropagation()}
+        {/* 3. Detail Modal (Full Screen) with Framer Motion */}
+        <AnimatePresence>
+          {showModal && (
+            <motion.div
+              key="modal-overlay"
+              className="modal-overlay"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.4 }}
+              onClick={closeModal}
             >
-              <button
-                className="modal-close-btn"
-                onClick={() => setShowModal(false)}
+              <motion.div
+                key="modal-card"
+                className="modal-glass-card"
+                initial={{ y: "100vh", opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                exit={{ y: "100vh", opacity: 0 }}
+                transition={{ duration: 0.4, ease: "easeInOut" }}
+                onClick={(e) => e.stopPropagation()}
               >
-                ×
-              </button>
+                <ModalDecorations />
+                <button className="modal-close-btn" onClick={closeModal}>
+                  ×
+                </button>
 
-              <h2 className="modal-title">{details.nameEN}</h2>
-              <div className="modal-content-scroll">
-                <h3 className="modal-subtitle">
-                  {ANIMAL_DETAILS.topics[activeTabKey]}
-                </h3>
-                <p className="modal-text">
-                  {details.content[activeTabKey] || "No description available."}
-                </p>
-              </div>
-            </div>
-          </div>
-        )}
+                <h2 className="modal-title">{details.nameEN}</h2>
+
+                {/* Internal Navigation Tabs */}
+                <div className="modal-nav">
+                  {topicKeys.map((key) => {
+                    // Icon mapping for each topic
+                    const getIcon = (topicKey) => {
+                      switch (topicKey) {
+                        case "intro":
+                          return (
+                            <svg
+                              width="20"
+                              height="20"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              strokeWidth="2"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            >
+                              <circle cx="11" cy="11" r="8" />
+                              <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                            </svg>
+                          );
+                        case "threat":
+                          return (
+                            <svg
+                              width="20"
+                              height="20"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              strokeWidth="2"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            >
+                              <polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2" />
+                              <line x1="12" y1="8" x2="12" y2="12" />
+                              <line x1="12" y1="16" x2="12.01" y2="16" />
+                            </svg>
+                          );
+                        case "solution":
+                          return (
+                            <svg
+                              width="20"
+                              height="20"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              strokeWidth="2"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            >
+                              <circle cx="12" cy="12" r="10" />
+                              <circle cx="12" cy="12" r="4" />
+                              <line x1="4.93" y1="4.93" x2="9.17" y2="9.17" />
+                              <line
+                                x1="14.83"
+                                y1="14.83"
+                                x2="19.07"
+                                y2="19.07"
+                              />
+                              <line x1="14.83" y1="9.17" x2="19.07" y2="4.93" />
+                              <line x1="4.93" y1="19.07" x2="9.17" y2="14.83" />
+                            </svg>
+                          );
+                        default:
+                          return null;
+                      }
+                    };
+
+                    return (
+                      <button
+                        key={key}
+                        className={`modal-tab-btn ${activeTabKey === key ? "active" : ""}`}
+                        onClick={(e) => handleTabChange(key, e)}
+                      >
+                        <span className="tab-icon">{getIcon(key)}</span>
+                        <span className="tab-label">
+                          {ANIMAL_DETAILS.topics[key]}
+                        </span>
+                      </button>
+                    );
+                  })}
+                </div>
+
+                <div
+                  className={`modal-content-scroll ${isChangingTab ? "fading-out" : ""}`}
+                >
+                  <h3 className="modal-subtitle">
+                    {ANIMAL_DETAILS.topics[displayedKey]}
+                  </h3>
+                  <p className="modal-text">
+                    {details.content[displayedKey] ||
+                      "No description available."}
+                  </p>
+                </div>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
+
+      {/* Render Active Explosions */}
+      {explosions.map((exp) => (
+        <ShardExplosion
+          key={exp.id}
+          x={exp.x}
+          y={exp.y}
+          onComplete={() => removeExplosion(exp.id)}
+        />
+      ))}
 
       {/* Helper Controls (Hidden or Minimized?) */}
 
-      {/* Back Button */}
-      <Link to="/" className="back-link">
+      {/* Back Button - Stable DOM reference (toggled via CSS) */}
+      <Link to="/" className={`back-link ${showModal ? "modal-open" : ""}`}>
         ← Back
       </Link>
     </div>

@@ -1,6 +1,7 @@
 import React, { useRef } from "react";
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { ANIMALS } from "../data/animalConfig";
+import UnderwaterEnvironment from "../components/UnderwaterEnvironment";
 import "./LandingPageVer2.css";
 import topSceneOverlay from "/src/assets/top-scene.svg";
 import middleSceneOverlay from "/src/assets/middle-scene.svg";
@@ -74,8 +75,6 @@ const LandingPageVer2 = () => {
     restDelta: 0.001,
   });
 
-  const bubbleY = useTransform(smoothScrollY, [0, 5000], ["0%", "-50%"]);
-
   // Header Text Animations (Global Scroll to ensure perfect stickiness at top)
   // Move down 1px for every 1px scrolled (y=scrollY) to appear fixed
   // Extended range to 5000 to ensure it sticking until fade out point (regardless of where that is)
@@ -85,30 +84,8 @@ const LandingPageVer2 = () => {
 
   return (
     <div className="landing-page-v2">
-      <div
-        className="underwater-effects-container"
-        style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          width: "100%",
-          height: "100%",
-          pointerEvents: "none",
-          overflow: "hidden",
-        }}
-      >
-        <motion.div
-          style={{
-            width: "100%",
-            height: "100%",
-            y: bubbleY,
-          }}
-          className="bubbles-container"
-        >
-          {Array.from({ length: 20 }).map((_, i) => (
-            <span key={i} className="bubble-v2"></span>
-          ))}
-        </motion.div>
+      <div className="landing-bg">
+        <UnderwaterEnvironment />
       </div>
 
       <div className="global-scene-layer-v2">
