@@ -1,6 +1,8 @@
 import React, { useRef } from "react";
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
+import { Link } from "react-router-dom";
 import { ANIMALS } from "../data/animalConfig";
+import ANIMAL_DETAILS from "../data/animalDetails.json";
 import UnderwaterEnvironment from "../components/UnderwaterEnvironment";
 import "./LandingPageVer2.css";
 import topSceneOverlay from "/src/assets/top-scene.svg";
@@ -19,6 +21,8 @@ const ParallaxElement = ({
   children,
   yRange = ["0%", "0%"],
   xRange = ["0%", "0%"],
+  scaleRange,
+  rotateRange,
   opacityRange,
   opacityInputRange,
   offset = ["start end", "end start"],
@@ -45,6 +49,12 @@ const ParallaxElement = ({
 
   const y = useTransform(smoothProgress, getInputRange(yRange), yRange);
   const x = useTransform(smoothProgress, getInputRange(xRange), xRange);
+  const scale = scaleRange
+    ? useTransform(smoothProgress, getInputRange(scaleRange), scaleRange)
+    : undefined;
+  const rotate = rotateRange
+    ? useTransform(smoothProgress, getInputRange(rotateRange), rotateRange)
+    : undefined;
 
   // Optional opacity transform if opacityRange is provided
   // Allow manual override with opacityInputRange, or default to standard mapping
@@ -58,11 +68,127 @@ const ParallaxElement = ({
   return (
     <motion.div
       ref={ref}
-      style={{ position: "relative", y, x, opacity: finalOpacity, ...style }}
+      style={{
+        position: "relative",
+        y,
+        x,
+        scale,
+        rotate,
+        opacity: finalOpacity,
+        ...style,
+      }}
       className={className}
     >
       {children}
     </motion.div>
+  );
+};
+
+const AnimalInfoBox = ({
+  animalId,
+  align = "left",
+  isOpaque = false,
+  className = "",
+}) => {
+  const details = ANIMAL_DETAILS.animals.find((a) => a.id === animalId);
+  if (!details) return null;
+
+  return (
+    <ParallaxElement
+      yRange={["20%", "0%", "-5%"]}
+      opacityRange={[0, 1, 1]}
+      className={`animal-info-box-v2 ${align} ${className}`}
+      style={{ position: "absolute" }}
+    >
+      <div className={`info-content-v2 ${isOpaque ? "opaque-v2" : ""}`}>
+        <h3 className="info-name-v2">
+          {details.nameEN}{" "}
+          <span className="name-th-v2">| {details.nameTH}</span>
+        </h3>
+        <p className="info-desc-v2">{details.content.intro}</p>
+        <Link to="/explore" className="detail-btn-v2">
+          รายละเอียด
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="M5 12h14M12 5l7 7-7 7" />
+          </svg>
+        </Link>
+      </div>
+    </ParallaxElement>
+  );
+};
+
+const LightRays = () => {
+  return (
+    <div className="light-rays-container-v2">
+      <div className="light-ray-v2 r1"></div>
+      <div className="light-ray-v2 r2"></div>
+      <div className="light-ray-v2 r3"></div>
+      <div className="light-ray-v2 r4"></div>
+      <div className="light-ray-v2 r5"></div>
+    </div>
+  );
+};
+
+const MarineSnow = () => {
+  const particles = Array.from({ length: 30 }, (_, i) => ({
+    id: i,
+    left: `${Math.random() * 100}%`,
+    top: `${Math.random() * 100}%`,
+    size: Math.random() * 4 + 2,
+    delay: Math.random() * 10,
+    duration: Math.random() * 15 + 20,
+  }));
+
+  return (
+    <div className="marine-snow-container-v2">
+      {particles.map((p) => (
+        <div
+          key={p.id}
+          className="snow-particle-v2"
+          style={{
+            left: p.left,
+            top: p.top,
+            width: p.size,
+            height: p.size,
+            animationDelay: `${p.delay}s`,
+            animationDuration: `${p.duration}s`,
+          }}
+        />
+      ))}
+    </div>
+  );
+};
+
+const DepthIndicator = () => {
+  const { scrollYProgress } = useScroll();
+  const depth = useTransform(scrollYProgress, [0, 1], [0, 2000]); // Map 0-1 progress to 0-2000m
+  const roundedDepth = useSpring(depth, { stiffness: 100, damping: 30 });
+
+  return (
+    <div className="depth-indicator-v2">
+      <div className="depth-ruler-v2">
+        <div className="ruler-mark-v2">0m</div>
+        <div className="ruler-mark-v2">500m</div>
+        <div className="ruler-mark-v2">1000m</div>
+        <div className="ruler-mark-v2">1500m</div>
+        <div className="ruler-mark-v2">2000m</div>
+      </div>
+      <motion.div className="depth-value-v2">
+        <motion.span>
+          {useTransform(roundedDepth, (v) => Math.round(v))}
+        </motion.span>
+        <span className="unit-v2">m</span>
+      </motion.div>
+    </div>
   );
 };
 
@@ -86,13 +212,17 @@ const LandingPageVer2 = () => {
     <div className="landing-page-v2">
       <div className="landing-bg">
         <UnderwaterEnvironment />
+        <MarineSnow />
       </div>
 
       <div className="global-scene-layer-v2">
         {/* Place continuous background scene images here */}
       </div>
 
+      <DepthIndicator />
+
       <section className="section-1-v2">
+        <LightRays />
         <motion.div
           className="content-v2"
           style={{
@@ -102,8 +232,22 @@ const LandingPageVer2 = () => {
           }}
         >
           <div className="header-text-v2">
-            <h1 className="title-v2">Low-Poly Ocean</h1>
-            <p className="subtitle-v2">โลกในอีกมุมที่คุณไม่เคยเห็น</p>
+            <motion.h1
+              className="title-v2"
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+            >
+              Low-Poly Ocean
+            </motion.h1>
+            <motion.p
+              className="subtitle-v2"
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
+            >
+              โลกในอีกมุมที่คุณไม่เคยเห็น
+            </motion.p>
           </div>
 
           <div className="scroll-indicator-v2">
@@ -151,8 +295,10 @@ const LandingPageVer2 = () => {
 
       <section className="section-irrawaddy-v2">
         <ParallaxElement
-          yRange={["40%", "0%", "-10%"]} // Reduced contrast between fast/slow phase
-          xRange={["30%", "0%", "-5%"]}
+          yRange={["40%", "0%", "-10%"]}
+          xRange={["30%", "0%", "10%"]} // Enter from Right and drift further Right away from left box
+          scaleRange={[0.8, 1, 0.9]}
+          rotateRange={["-10deg", "0deg", "5deg"]}
           style={{ width: "100%", display: "flex", justifyContent: "center" }}
         >
           <div className="irrawaddy-dolphin-v2">
@@ -177,12 +323,19 @@ const LandingPageVer2 = () => {
             </div>
           </div>
         </ParallaxElement>
+        <AnimalInfoBox
+          animalId="irrawaddyDolphin"
+          align="left"
+          className="irrawaddy-info-v2"
+        />
       </section>
 
       <section className="section-dolphin-standard-v2">
         <ParallaxElement
           yRange={["40%", "0%", "-10%"]} // Slide in & Drift
           xRange={["-30%", "0%", "5%"]} // From Left -> Center -> Drift Right
+          scaleRange={[0.8, 1, 0.9]}
+          rotateRange={["-10deg", "0deg", "5deg"]}
           style={{
             width: "100%",
             display: "flex",
@@ -212,12 +365,18 @@ const LandingPageVer2 = () => {
             </div>
           </div>
         </ParallaxElement>
+        <AnimalInfoBox
+          animalId="dolphin"
+          align="right"
+          className="dolphin-info-v2"
+        />
       </section>
 
       <section className="section-stingray-v2">
         <ParallaxElement
           yRange={["40%", "0%", "-10%"]} // Slide & Drift
           xRange={["30%", "0%", "-5%"]} // Enter from Right
+          scaleRange={[0.7, 1, 0.8]}
           style={{ width: "100%", display: "flex", justifyContent: "center" }}
         >
           <div className="stingray-v2">
@@ -242,12 +401,18 @@ const LandingPageVer2 = () => {
             </div>
           </div>
         </ParallaxElement>
+        <AnimalInfoBox
+          animalId="stingray"
+          align="left"
+          className="stingray-info-v2"
+        />
       </section>
 
       <section className="section-dugong-v2">
         <ParallaxElement
           yRange={["40%", "0%", "-10%"]} // Slide & Drift
           xRange={["-30%", "0%", "5%"]} // Enter from Left
+          scaleRange={[0.8, 1, 0.9]}
           style={{ width: "100%", display: "flex", justifyContent: "center" }}
         >
           <div className="dugong-v2">
@@ -272,6 +437,11 @@ const LandingPageVer2 = () => {
             </div>
           </div>
         </ParallaxElement>
+        <AnimalInfoBox
+          animalId="dugong"
+          align="right"
+          className="dugong-info-v2"
+        />
       </section>
 
       <section className="section-middle-scene-v2">
@@ -294,6 +464,8 @@ const LandingPageVer2 = () => {
         <ParallaxElement
           yRange={["40%", "0%", "-10%"]} // Vertical Slide & Drift
           xRange={["0%", "0%", "0%"]} // Center vertical movement
+          scaleRange={[0.8, 1, 0.9]}
+          rotateRange={["10deg", "0deg", "-5deg"]}
           style={{
             width: "100%",
             height: "100%",
@@ -324,6 +496,12 @@ const LandingPageVer2 = () => {
             </div>
           </div>
         </ParallaxElement>
+        <AnimalInfoBox
+          animalId="turtle"
+          align="right"
+          isOpaque={true}
+          className="turtle-info-v2"
+        />
       </section>
 
       <section className="section-ronin-v2">
@@ -379,7 +557,9 @@ const LandingPageVer2 = () => {
 
         <ParallaxElement
           yRange={["40%", "0%", "-10%"]} // Slide & Drift
-          xRange={["30%", "0%", "-5%"]} // Enter from Right
+          xRange={["30%", "0%", "10%"]} // Enter from Right and drift further Right away from box
+          scaleRange={[0.8, 1, 0.9]}
+          rotateRange={["10deg", "0deg", "-5deg"]}
           style={{ width: "100%", display: "flex", justifyContent: "center" }}
         >
           <div className="ronin-v2">
@@ -405,9 +585,17 @@ const LandingPageVer2 = () => {
           </div>
         </ParallaxElement>
 
+        <AnimalInfoBox
+          animalId="ronin"
+          align="left"
+          className="ronin-info-v2"
+        />
+
         <ParallaxElement
           yRange={["40%", "0%", "-10%"]} // Slide & Drift
-          xRange={["-30%", "0%", "5%"]} // Enter from Left
+          xRange={["-30%", "0%", "-10%"]} // Enter from Left and drift further Left away from box
+          scaleRange={[0.8, 1, 0.9]}
+          rotateRange={["-10deg", "0deg", "5deg"]}
           style={{ width: "100%", display: "flex", justifyContent: "center" }}
         >
           <div className="sawfishes-v2">
@@ -432,12 +620,19 @@ const LandingPageVer2 = () => {
             </div>
           </div>
         </ParallaxElement>
+        <AnimalInfoBox
+          animalId="sawfishes"
+          align="right"
+          className="sawfishes-info-v2"
+        />
       </section>
 
       <section className="section-orca-v2">
         <ParallaxElement
           yRange={["40%", "0%", "-10%"]} // Slide & Drift
           xRange={["30%", "0%", "-5%"]} // Enter from Right
+          scaleRange={[0.7, 1, 0.8]}
+          rotateRange={["10deg", "0deg", "-5deg"]}
           style={{ width: "100%", display: "flex", justifyContent: "center" }}
         >
           <div className="orca-v2">
@@ -462,12 +657,15 @@ const LandingPageVer2 = () => {
             </div>
           </div>
         </ParallaxElement>
+        <AnimalInfoBox animalId="orca" align="left" isOpaque={true} />
       </section>
 
       <section className="section-sperm-whale-v2">
         <ParallaxElement
           yRange={["40%", "0%", "-10%"]} // Slide & Drift
           xRange={["-30%", "0%", "5%"]} // Enter from Left
+          scaleRange={[0.8, 1, 0.9]}
+          rotateRange={["-10deg", "0deg", "5deg"]}
           style={{ width: "100%", display: "flex", justifyContent: "center" }}
         >
           <div className="sperm-whale-v2">
@@ -492,12 +690,15 @@ const LandingPageVer2 = () => {
             </div>
           </div>
         </ParallaxElement>
+        <AnimalInfoBox animalId="spermWhale" align="right" />
       </section>
 
       <section className="section-blue-whale-v2">
         <ParallaxElement
           yRange={["40%", "0%", "-10%"]} // Vertical Slide & Drift
           xRange={["0%", "0%", "0%"]} // Center vertical
+          scaleRange={[0.6, 1, 0.7]}
+          rotateRange={["5deg", "0deg", "-5deg"]}
           style={{ width: "100%", display: "flex", justifyContent: "center" }}
         >
           <div className="blue-whale-v2">
@@ -522,6 +723,7 @@ const LandingPageVer2 = () => {
             </div>
           </div>
         </ParallaxElement>
+        <AnimalInfoBox animalId="blueWhale" align="left" isOpaque={true} />
       </section>
 
       <section className="section-bottom-scene-v2">

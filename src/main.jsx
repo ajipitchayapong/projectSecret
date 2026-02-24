@@ -11,7 +11,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Navigate to="/landing-design" replace />} />
+        <Route path="/" element={<Navigate to="/landing-v2" replace />} />
         <Route path="/landing-design" element={<LandingPage />} />
         <Route path="/explore" element={<ExploreMore />} />
         <Route path="/detail" element={<DetailPage />} />
