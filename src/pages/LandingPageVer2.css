@@ -157,7 +157,7 @@ body {
 }
 
 .title-v2 {
-  font-family: "Outfit", sans-serif;
+  font-family: var(--font-main);
   font-size: clamp(4rem, 8vw, 9rem);
   /* Large title */
   font-weight: 700;
@@ -167,7 +167,7 @@ body {
 }
 
 .subtitle-v2 {
-  font-family: "IBM Plex Sans Thai", "Outfit", sans-serif;
+  font-family: var(--font-main);
   font-size: clamp(1.5rem, 3vw, 3rem);
   color: rgba(255, 255, 255, 0.9);
   margin-top: 0.5rem;
@@ -915,9 +915,11 @@ body {
   right: 5% !important;
 }
 
-/* Specific Irrawaddy Box positioning to be higher as requested */
+/* Specific Irrawaddy Box positioning and width */
 .irrawaddy-info-v2 {
   top: 40% !important;
+  left: 5% !important; /* Moved further left as requested */
+  width: min(650px, 95vw) !important; /* Expanded width */
 }
 
 /* Specific Standard Dolphin Box positioning to be higher as requested */
@@ -936,7 +938,7 @@ body {
 }
 
 .info-name-v2 {
-  font-family: "Outfit", sans-serif;
+  font-family: var(--font-main);
   font-size: 2.5rem;
   font-weight: 700;
   color: white;
@@ -949,7 +951,7 @@ body {
 }
 
 .name-th-v2 {
-  font-family: "IBM Plex Sans Thai", sans-serif;
+  font-family: var(--font-main);
   font-size: 1.2rem;
   font-weight: 400;
   opacity: 0.7;
@@ -957,7 +959,7 @@ body {
 }
 
 .info-desc-v2 {
-  font-family: "IBM Plex Sans Thai", sans-serif;
+  font-family: var(--font-main);
   font-size: 1.15rem;
   line-height: 1.6;
   color: rgba(255, 255, 255, 0.85);
@@ -974,7 +976,7 @@ body {
   background: white;
   color: #13144c;
   text-decoration: none;
-  font-family: "Outfit", sans-serif;
+  font-family: var(--font-main);
   font-weight: 600;
   border-radius: 12px;
   width: fit-content;
@@ -1152,7 +1154,7 @@ body {
 .ruler-mark-v2 {
   position: absolute;
   right: 10px;
-  font-family: "Outfit", sans-serif;
+  font-family: var(--font-main);
   font-size: 0.7rem;
   color: rgba(255, 255, 255, 0.4);
   white-space: nowrap;
@@ -1178,7 +1180,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  font-family: "Outfit", sans-serif;
+  font-family: var(--font-main);
   color: white;
 }
 

@@ -1,3 +1,21 @@
+@font-face {
+  font-family: "Google Sans";
+  src: url("./assets/fonts/GoogleSans-VariableFont_GRAD,opsz,wght.ttf")
+    format("truetype");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Google Sans";
+  src: url("./assets/fonts/GoogleSans-Italic-VariableFont_GRAD,opsz,wght.ttf")
+    format("truetype");
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: swap;
+}
+
 @import url("https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap");
 
 :root {
@@ -8,7 +26,7 @@
   --primary-glow: 0 0 20px rgba(99, 102, 241, 0.6);
   --text-primary: #ffffff;
   --text-secondary: #94a3b8;
-  --font-main: "Outfit", system-ui, sans-serif;
+  --font-main: "Google Sans", system-ui, sans-serif;
 }
 
 *,
