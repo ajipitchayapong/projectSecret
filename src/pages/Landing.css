@@ -1,0 +1,1204 @@
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600&family=Outfit:wght@400;700&display=swap");
+
+/* Turn off default margins/padding */
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.landing-page-v2 {
+  width: 100%;
+  min-height: 100vh;
+  position: relative;
+  /* Anchor for absolute children */
+  /* background gradient repeated... will keep existing but ensure height handles scroll */
+  /* Background handled by main container to cover full scroll height */
+  background: linear-gradient(
+    180deg,
+    #4fd1ed 0%,
+    /* Brighter Cyan Top */ #38bdf8 15%,
+    #0ea5e9 35%,
+    #1d4ed8 65%,
+    #13144c 100%
+  );
+  display: flex;
+  flex-direction: column;
+  /* Stack sections vertically */
+  align-items: center;
+}
+
+.section-1-v2 {
+  width: 100%;
+  min-height: 100vh;
+  /* Allow growing if content is taller */
+  height: auto;
+  display: grid;
+  grid-template-areas: "stack";
+  align-items: center;
+  /* Center content vertically in grid */
+  justify-items: center;
+  position: relative;
+  /* Context for absolute bubbles */
+  padding-bottom: 50px;
+  /* Space at bottom */
+}
+
+.section-irrawaddy-v2 {
+  width: 100%;
+  height: auto;
+  /* Nature flow */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  padding: 100px 0;
+  margin-top: -45vh; /* Pushed further up to elevate the whole section */
+  /* Vertical breathing room */
+}
+
+.top-scene-overlay-v2 {
+  grid-area: stack;
+  width: 100%;
+  height: auto;
+  z-index: 20;
+  /* On top of the middle scene image (z-index 5) */
+  display: block;
+  /* position: absolute; REMOVED to allow flow */
+  pointer-events: none;
+  /* Let clicks pass through if it's just visual */
+}
+
+/* Scroll Indicator */
+.scroll-indicator-v2 {
+  margin-top: auto;
+  /* Push to bottom of flex container if parent is flex column */
+  padding-bottom: 40px;
+  /* Space from bottom */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  opacity: 0.8;
+  z-index: 100;
+  /* If content-v2 is 100vh height flex, margin-top: auto pushes it to bottom */
+}
+
+.mouse-v2 {
+  width: 26px;
+  height: 42px;
+  border: 2px solid white;
+  border-radius: 13px;
+  position: relative;
+}
+
+.wheel-v2 {
+  width: 4px;
+  height: 8px;
+  background-color: white;
+  border-radius: 2px;
+  position: absolute;
+  top: 6px;
+  left: 50%;
+  transform: translateX(-50%);
+  animation: scroll-wheel-v2 1.5s infinite;
+}
+
+@keyframes scroll-wheel-v2 {
+  0% {
+    top: 6px;
+    opacity: 1;
+  }
+
+  100% {
+    top: 18px;
+    opacity: 0;
+  }
+}
+
+.arrow-down-v2 {
+  animation: float-arrow-v2 1.5s infinite ease-in-out;
+}
+
+@keyframes float-arrow-v2 {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(5px);
+  }
+}
+
+.content-v2 {
+  grid-area: stack;
+  z-index: 9;
+  /* Behind overlay (10) */
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* Center vertically */
+  align-items: center;
+  align-self: start;
+  /* Align container to top of the grid cell */
+  width: 100%;
+  height: 100vh;
+  /* Occupy the first screen height */
+  padding-top: 25vh;
+  /* Removed padding to allow true centering */
+  pointer-events: none;
+  /* Let clicks pass through text container to image if needed, or vice versa */
+  box-sizing: border-box;
+  /* Ensure padding doesn't overflow width */
+}
+
+.title-v2 {
+  font-family: var(--font-main);
+  font-size: clamp(4rem, 8vw, 9rem);
+  /* Large title */
+  font-weight: 700;
+  color: white;
+  margin: 0;
+  text-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.subtitle-v2 {
+  font-family: var(--font-main);
+  font-size: clamp(1.5rem, 3vw, 3rem);
+  color: rgba(255, 255, 255, 0.9);
+  margin-top: 0.5rem;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Underwater Environment Container */
+.landing-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+/* Background Shards */
+.background-shards-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.bg-shard {
+  position: absolute;
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+  filter: blur(1px);
+}
+
+/* Vibrant Particles */
+.vibrant-particles-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.bio-particle {
+  position: absolute;
+  background: #ffffff;
+  border-radius: 50%;
+  filter: blur(2px);
+  box-shadow:
+    0 0 10px #ffffff,
+    0 0 20px #7dd3fc;
+}
+
+/* Sunlight Piercing Glow */
+.surface-glow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 40vh;
+  background: radial-gradient(
+    circle at 50% -20%,
+    rgba(255, 255, 255, 0.4) 0%,
+    rgba(56, 189, 248, 0.2) 40%,
+    transparent 70%
+  );
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Bubbles */
+.bubbles-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.bubble-v2 {
+  position: absolute;
+  bottom: -20px;
+  background: radial-gradient(
+    circle at 30% 30%,
+    rgba(255, 255, 255, 0.8),
+    rgba(255, 255, 255, 0.1) 60%,
+    transparent 80%
+  );
+  border-radius: 50%;
+  box-shadow: 0 0 4px rgba(255, 255, 255, 0.2);
+  animation: rise-v2 15s infinite ease-in;
+  opacity: 0;
+}
+
+@keyframes rise-v2 {
+  0% {
+    bottom: -20px;
+    transform: translateX(0) scale(0.5);
+    opacity: 0;
+  }
+
+  20% {
+    opacity: 0.5;
+  }
+
+  80% {
+    opacity: 0.6;
+  }
+
+  100% {
+    bottom: 110%;
+    transform: translateX(20px) scale(1.1);
+    opacity: 0;
+  }
+}
+
+/* Bubble Specifics */
+.bubble-v2:nth-child(1) {
+  left: 10%;
+  width: 8px;
+  height: 8px;
+  animation-duration: 8s;
+  animation-delay: 0s;
+}
+
+.bubble-v2:nth-child(2) {
+  left: 20%;
+  width: 14px;
+  height: 14px;
+  animation-duration: 12s;
+  animation-delay: 2s;
+}
+
+.bubble-v2:nth-child(3) {
+  left: 35%;
+  width: 10px;
+  height: 10px;
+  animation-duration: 10s;
+  animation-delay: 4s;
+}
+
+.bubble-v2:nth-child(4) {
+  left: 50%;
+  width: 18px;
+  height: 18px;
+  animation-duration: 16s;
+  animation-delay: 1s;
+}
+
+.bubble-v2:nth-child(5) {
+  left: 65%;
+  width: 6px;
+  height: 6px;
+  animation-duration: 9s;
+  animation-delay: 3s;
+}
+
+.bubble-v2:nth-child(6) {
+  left: 80%;
+  width: 12px;
+  height: 12px;
+  animation-duration: 13s;
+  animation-delay: 5s;
+}
+
+.bubble-v2:nth-child(7) {
+  left: 90%;
+  width: 9px;
+  height: 9px;
+  animation-duration: 11s;
+  animation-delay: 2s;
+}
+
+.bubble-v2:nth-child(8) {
+  left: 15%;
+  width: 15px;
+  height: 15px;
+  animation-duration: 15s;
+  animation-delay: 6s;
+}
+
+.bubble-v2:nth-child(9) {
+  left: 5%;
+  width: 5px;
+  height: 5px;
+  animation-duration: 7s;
+  animation-delay: 1s;
+}
+
+.bubble-v2:nth-child(10) {
+  left: 75%;
+  width: 11px;
+  height: 11px;
+  animation-duration: 12s;
+  animation-delay: 4s;
+}
+
+.bubble-v2:nth-child(11) {
+  left: 25%;
+  width: 7px;
+  height: 7px;
+  animation-duration: 10s;
+  animation-delay: 7s;
+}
+
+.bubble-v2:nth-child(12) {
+  left: 45%;
+  width: 16px;
+  height: 16px;
+  animation-duration: 17s;
+  animation-delay: 2s;
+}
+
+.bubble-v2:nth-child(13) {
+  left: 55%;
+  width: 8px;
+  height: 8px;
+  animation-duration: 9s;
+  animation-delay: 5s;
+}
+
+.bubble-v2:nth-child(14) {
+  left: 85%;
+  width: 10px;
+  height: 10px;
+  animation-duration: 11s;
+  animation-delay: 0s;
+}
+
+.bubble-v2:nth-child(15) {
+  left: 70%;
+  width: 13px;
+  height: 13px;
+  animation-duration: 14s;
+  animation-delay: 6s;
+}
+
+.bubble-v2:nth-child(16) {
+  left: 40%;
+  width: 9px;
+  height: 9px;
+  animation-duration: 13s;
+  animation-delay: 1s;
+}
+
+.bubble-v2:nth-child(17) {
+  left: 60%;
+  width: 12px;
+  height: 12px;
+  animation-duration: 15s;
+  animation-delay: 3s;
+}
+
+.bubble-v2:nth-child(18) {
+  left: 30%;
+  width: 6px;
+  height: 6px;
+  animation-duration: 8s;
+  animation-delay: 5s;
+}
+
+.bubble-v2:nth-child(19) {
+  left: 95%;
+  width: 10px;
+  height: 10px;
+  animation-duration: 12s;
+  animation-delay: 2s;
+}
+
+.bubble-v2:nth-child(20) {
+  left: 2%;
+  width: 7px;
+  height: 7px;
+  animation-duration: 9s;
+  animation-delay: 4s;
+}
+
+/* Gentle Float for Top Scene Overlay */
+.top-scene-overlay-v2 {
+  grid-area: stack;
+  width: 100%;
+  height: auto;
+  z-index: 20;
+  display: block;
+  pointer-events: none;
+  mix-blend-mode: normal;
+  animation: float-buoyant 6s ease-in-out infinite;
+}
+
+@keyframes float-buoyant {
+  0% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+/* Irrawaddy Dolphin */
+.irrawaddy-dolphin-v2 {
+  position: relative;
+  z-index: 10;
+  width: 50%;
+  left: 20%; /* Pushed right to clear the left-aligned info box */
+  margin-top: 50px; /* Elevated graphic significantly to match "move up" request */
+  /* align-self: center; REMOVED handled by flex parent */
+  /* margin-top: 100px; REMOVED handled by padding/layout */
+  pointer-events: none;
+  animation: float-buoyant 8s ease-in-out infinite reverse;
+  /* Slight variation of float */
+}
+
+.irrawaddy-wrapper-v2 {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1600 / 900;
+  /* Standard stage size */
+  /* transform: scaleX(-1); REMOVED to flip fish to face right */
+}
+
+/* Standard Dolphin (Second Dolphin) */
+.section-dolphin-standard-v2 {
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.dolphin-standard-v2 {
+  position: relative;
+  z-index: 10;
+  width: 50%;
+  right: 20%;
+  margin-top: 150px; /* Standardized alignment offset */
+  pointer-events: none;
+  animation: float-buoyant 7s ease-in-out infinite;
+  /* Slightly different timing */
+}
+
+.dolphin-wrapper-standard-v2 {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1600 / 900;
+  transform: scaleX(-1) rotate(30deg);
+  /* Reverted to Flip horizontally */
+}
+
+/* Global Scene Layer (For continuous background images) */
+.global-scene-layer-v2 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 5;
+  /* Between bubbles (1) and content (various) */
+  pointer-events: none;
+}
+
+.mid-left-scene-v2 {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  /* Offset upwards from Ronin section */
+  width: 45%;
+  /* Increased to 45% (balance between 30% and 50%) */
+  height: auto;
+  max-width: none;
+  z-index: 6;
+  opacity: 0.9;
+  object-fit: contain;
+  object-position: left center;
+}
+
+.mid-right-scene-v2 {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  /* Staggered */
+  width: auto;
+  height: auto;
+  max-height: 150%;
+  max-width: 40%;
+  z-index: 6;
+  opacity: 0.9;
+  object-fit: contain;
+  object-position: right center;
+}
+
+/* Stingray */
+.section-stingray-v2 {
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  padding: 100px 0;
+}
+
+.stingray-v2 {
+  position: relative;
+  z-index: 10;
+  width: 50%;
+  left: 20%;
+  margin-top: 150px; /* Aligned with box */
+  /* Consistent sizing */
+  pointer-events: none;
+  animation: float-buoyant 9s ease-in-out infinite;
+  /* Slower, heavier float */
+}
+
+.stingray-wrapper-v2 {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1600 / 900;
+  transform: scaleX(-1);
+}
+
+/* Dugong */
+.section-dugong-v2 {
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  padding: 100px 0;
+}
+
+.dugong-v2 {
+  position: relative;
+  z-index: 10;
+  width: 50%;
+  right: 20%;
+  margin-top: 220px; /* Lowered further per user request */
+  /* Consistent sizing */
+  pointer-events: none;
+  animation: float-buoyant 8.5s ease-in-out infinite alternate;
+  /* Gentle float */
+}
+
+.dugong-wrapper-v2 {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1600 / 900;
+  /* Add specific transforms here if needed */
+  transform: scaleX(-1);
+}
+
+/* Middle Scene Overlay (Bottom Scene) */
+.section-middle-scene-v2 {
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* Ensure section is relative so turtle can be absolute relative to it */
+  position: relative;
+  margin-top: -500px;
+  /* Pull closer to Dugong */
+  padding-top: 0;
+}
+
+.turtle-v2 {
+  position: absolute;
+  top: -7%;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 20;
+  pointer-events: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: float-buoyant 12s ease-in-out infinite;
+}
+
+.turtle-wrapper-v2 {
+  position: relative;
+  width: 50%;
+  /* Control size here */
+  aspect-ratio: 1600 / 900;
+  transform: scaleX(-1) rotate(-20deg);
+  /* Rotate or flip if needed */
+}
+
+.middle-scene-overlay-v2 {
+  width: 100%;
+  height: auto;
+  z-index: 5;
+  pointer-events: none;
+  animation: float-buoyant 8s ease-in-out infinite;
+}
+
+/* Ronin (Manta Ray?) + Sawfishes Combined */
+.section-ronin-v2 {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  /* Stack top-to-bottom */
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  padding: 100px 0;
+  gap: 50px;
+  margin-top: -80vh;
+  /* Space between Ronin and Sawfishes */
+}
+
+.ronin-v2 {
+  position: relative;
+  z-index: 10;
+  width: 40%;
+  left: 10%; /* Reduced from 20% to move closer to center */
+  top: 40px; /* Moved down slightly as requested */
+  /* Consistent sizing */
+  pointer-events: none;
+  animation: float-buoyant 11s ease-in-out infinite;
+  /* Slightly different timing */
+}
+
+.ronin-wrapper-v2 {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1600 / 900;
+  /* Add specific transforms here if needed */
+}
+
+/* Sawfishes */
+.section-sawfishes-v2 {
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  padding: 100px 0;
+}
+
+.sawfishes-v2 {
+  position: relative;
+  z-index: 10;
+  width: 40%;
+  right: 10%; /* Reduced from 20% to move closer to center */
+  top: 40px; /* Moved down slightly as requested */
+  /* Consistent sizing */
+  pointer-events: none;
+  animation: float-buoyant 10s ease-in-out infinite;
+  /* Standard float timing */
+}
+
+.sawfishes-wrapper-v2 {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1600 / 900;
+  transform: scaleX(-1);
+  /* Define aspect ratio to give height */
+  /* Add specific transforms here if needed */
+}
+
+/* Specific positioning for combined section */
+.ronin-info-v2 {
+  top: 15% !important;
+}
+
+.sawfishes-info-v2 {
+  top: 75% !important;
+}
+
+/* Orca (Killer Whale) */
+.section-orca-v2 {
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  padding: 100px 0;
+}
+
+.orca-v2 {
+  position: relative;
+  z-index: 10;
+  width: 57%;
+  pointer-events: none;
+  animation: float-buoyant 11s ease-in-out infinite;
+}
+
+.orca-wrapper-v2 {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1600 / 900;
+  left: 5%;
+  transform: scaleX(-1);
+}
+
+/* Sperm Whale */
+.section-sperm-whale-v2 {
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  padding: 100px 0;
+}
+
+.sperm-whale-v2 {
+  position: relative;
+  z-index: 10;
+  width: 70%;
+  pointer-events: none;
+  animation: float-buoyant 13s ease-in-out infinite;
+  /* Slower, heavier */
+}
+
+.sperm-whale-wrapper-v2 {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1600 / 900;
+  left: 5%;
+  transform: scaleX(-1) rotate(-10deg);
+}
+
+/* Blue Whale */
+.section-blue-whale-v2 {
+  width: 100%;
+  min-height: 130vh;
+  /* Taller section to separate whale from bottom rocks */
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  /* Parse whale to top */
+  position: relative;
+  padding-top: 15vh;
+  /* Push whale down slightly from top edge */
+}
+
+.blue-whale-v2 {
+  position: relative;
+  z-index: 10;
+  width: 95%;
+  /* Bigger than others */
+  pointer-events: none;
+  animation: float-buoyant 15s ease-in-out infinite;
+  /* Heaviest */
+}
+
+.blue-whale-wrapper-v2 {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1600 / 900;
+  transform: scaleX(-1);
+}
+
+.bottom-left-scene-v2 {
+  position: absolute;
+  left: 0;
+  width: auto;
+  height: auto;
+  max-height: 100%;
+  z-index: 20;
+  pointer-events: none;
+  object-fit: contain;
+  object-position: left top;
+}
+
+.bottom-right-scene-v2 {
+  position: absolute;
+  right: 0;
+  width: auto;
+  height: auto;
+  max-height: 100%;
+  z-index: 20;
+  pointer-events: none;
+  object-fit: contain;
+  object-position: right top;
+}
+
+/* Bottom Scene Section */
+.section-bottom-scene-v2 {
+  width: 100%;
+  min-height: 90vh;
+  /* Increased height to allow images to scale up larger */
+  height: auto;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  /* Align to top */
+  pointer-events: none;
+  padding-bottom: 50px;
+}
+
+/* --- Animal Info Box --- */
+.animal-info-box-v2 {
+  position: absolute;
+  top: 65%; /* Lowered from 50% to prevent overlap with animals */
+  transform: translateY(-50%);
+  width: min(500px, 90vw);
+  z-index: 50;
+  pointer-events: auto;
+}
+
+.animal-info-box-v2.left {
+  left: 15%; /* Increased from 10% to pull closer to center */
+}
+
+.animal-info-box-v2.right {
+  right: 15%; /* Increased from 10% to pull closer to center */
+}
+
+.info-content-v2 {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 24px;
+  padding: 2rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.info-content-v2.opaque-v2 {
+  background: #13144c; /* Dark navy opaque */
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Specific Turtle Box positioning to be closer to the animal */
+.turtle-info-v2 {
+  top: 40% !important;
+  right: 5% !important;
+}
+
+/* Specific Irrawaddy Box positioning and width */
+.irrawaddy-info-v2 {
+  top: 40% !important;
+  left: 5% !important; /* Moved further left as requested */
+  width: min(650px, 95vw) !important; /* Expanded width */
+}
+
+/* Specific Standard Dolphin Box positioning to be higher as requested */
+.dolphin-info-v2 {
+  top: 40% !important;
+}
+
+/* Specific Stingray Box positioning to be higher as requested */
+.stingray-info-v2 {
+  top: 40% !important;
+}
+
+/* Specific Dugong Box positioning to be higher as requested */
+.dugong-info-v2 {
+  top: 40% !important;
+}
+
+.info-name-v2 {
+  font-family: var(--font-main);
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: white;
+  margin: 0;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+
+.name-th-v2 {
+  font-family: var(--font-main);
+  font-size: 1.2rem;
+  font-weight: 400;
+  opacity: 0.7;
+  text-transform: none;
+}
+
+.info-desc-v2 {
+  font-family: var(--font-main);
+  font-size: 1.15rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.85);
+  margin: 0;
+  max-width: 100%;
+}
+
+.detail-btn-v2 {
+  margin-top: 0.5rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.8rem 1.8rem;
+  background: white;
+  color: #13144c;
+  text-decoration: none;
+  font-family: var(--font-main);
+  font-weight: 600;
+  border-radius: 12px;
+  width: fit-content;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
+}
+
+.detail-btn-v2:hover {
+  transform: translateY(-3px) scale(1.02);
+  background: #f0f7ff;
+  box-shadow: 0 8px 24px rgba(255, 255, 255, 0.2);
+}
+
+.detail-btn-v2 svg {
+  transition: transform 0.3s ease;
+}
+
+.detail-btn-v2:hover svg {
+  transform: translateX(4px);
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .animal-info-box-v2 {
+    position: relative;
+    top: auto;
+    left: auto !important;
+    right: auto !important;
+    transform: none;
+    margin: 20px auto;
+    width: 90%;
+  }
+}
+
+/* --- Light Rays Effect --- */
+.light-rays-container-v2 {
+  position: absolute;
+  top: -100px;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 1;
+  pointer-events: none;
+  overflow: hidden;
+  mask-image: linear-gradient(to bottom, black 10%, transparent 90%);
+}
+
+.light-ray-v2 {
+  position: absolute;
+  top: 0;
+  width: 100px;
+  height: 200%;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(255, 255, 255, 0.1),
+    transparent
+  );
+  transform: skewX(-30deg);
+  filter: blur(40px);
+  animation: light-ray-flicker 8s infinite ease-in-out;
+}
+
+.light-ray-v2.r1 {
+  left: 10%;
+  animation-delay: 0s;
+}
+.light-ray-v2.r2 {
+  left: 30%;
+  width: 150px;
+  animation-delay: 1s;
+}
+.light-ray-v2.r3 {
+  left: 55%;
+  width: 80px;
+  animation-delay: 2.5s;
+}
+.light-ray-v2.r4 {
+  left: 75%;
+  width: 120px;
+  animation-delay: 4s;
+}
+.light-ray-v2.r5 {
+  left: 90%;
+  width: 60px;
+  animation-delay: 1.5s;
+}
+
+@keyframes light-ray-flicker {
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: skewX(-30deg) translateX(0);
+  }
+  50% {
+    opacity: 0.6;
+    transform: skewX(-30deg) translateX(20px);
+  }
+}
+
+/* --- Marine Snow Particle Effect --- */
+.marine-snow-container-v2 {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.snow-particle-v2 {
+  position: absolute;
+  background: white;
+  border-radius: 50%;
+  opacity: 0.4;
+  filter: blur(1px);
+  animation: marine-snow-drift linear infinite;
+}
+
+@keyframes marine-snow-drift {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  25% {
+    transform: translate(15px, 25vh) rotate(90deg);
+  }
+  50% {
+    transform: translate(-10px, 50vh) rotate(180deg);
+    opacity: 0.6;
+  }
+  75% {
+    transform: translate(10px, 75vh) rotate(270deg);
+  }
+  100% {
+    transform: translate(0, 100vh) rotate(360deg);
+  }
+}
+
+/* Fine-tuning background for more depth */
+.landing-page-v2 {
+  background: linear-gradient(
+    180deg,
+    #4fd1ed 0%,
+    #38bdf8 15%,
+    #0ea5e9 35%,
+    #1d4ed8 60%,
+    #0c2461 80%,
+    #05081f 100%
+  );
+}
+
+/* --- Depth Indicator --- */
+.depth-indicator-v2 {
+  position: fixed;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  z-index: 100;
+  pointer-events: none;
+}
+
+.depth-ruler-v2 {
+  height: 200px;
+  width: 2px;
+  background: rgba(255, 255, 255, 0.2);
+  position: relative;
+  border-radius: 1px;
+}
+
+.ruler-mark-v2 {
+  position: absolute;
+  right: 10px;
+  font-family: var(--font-main);
+  font-size: 0.7rem;
+  color: rgba(255, 255, 255, 0.4);
+  white-space: nowrap;
+}
+
+.ruler-mark-v2:nth-child(1) {
+  top: 0%;
+}
+.ruler-mark-v2:nth-child(2) {
+  top: 25%;
+}
+.ruler-mark-v2:nth-child(3) {
+  top: 50%;
+}
+.ruler-mark-v2:nth-child(4) {
+  top: 75%;
+}
+.ruler-mark-v2:nth-child(5) {
+  top: 100%;
+}
+
+.depth-value-v2 {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  font-family: var(--font-main);
+  color: white;
+}
+
+.depth-value-v2 span:first-child {
+  font-size: 2.5rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.depth-value-v2 .unit-v2 {
+  font-size: 1rem;
+  opacity: 0.6;
+  font-weight: 400;
+}
+
+@media (max-width: 768px) {
+  .depth-indicator-v2 {
+    right: 10px;
+    scale: 0.8;
+  }
+}

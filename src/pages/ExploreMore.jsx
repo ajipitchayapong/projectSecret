@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect, useMemo, useCallback } from "react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { ANIMALS } from "../data/animalConfig";
 import ANIMAL_DETAILS from "../data/animalDetails.json";
@@ -20,7 +20,22 @@ const TARGET_STAGGER_TIME = 1.25;
 
 function ExploreMore() {
   const levels = ANIMALS;
+  const [searchParams] = useSearchParams();
   const [currentIndex, setCurrentIndex] = useState(0);
+
+  // Sync index from URL parameter on mount
+  useEffect(() => {
+    const animalId = searchParams.get("id");
+    if (animalId) {
+      const index = levels.findIndex(
+        (a) => a.id.toLowerCase() === animalId.toLowerCase(),
+      );
+      if (index !== -1) {
+        setCurrentIndex(index);
+      }
+    }
+  }, [searchParams, levels]);
+
   const [direction, setDirection] = useState("left");
   const [mousePos, setMousePos] = useState(null);
 
@@ -43,9 +58,15 @@ function ExploreMore() {
   const [displayedKey, setDisplayedKey] = useState(topicKeys[0]); // New state for content
   const [showModal, setShowModal] = useState(false);
   const [isChangingTab, setIsChangingTab] = useState(false);
+  const [isReady, setIsReady] = useState(false);
   const [shimmerReady, setShimmerReady] = useState(false);
-
   const [isClosing, setIsClosing] = useState(false);
+
+  useEffect(() => {
+    // Small delay to ensure browser has painted the initial scattered state
+    const timer = setTimeout(() => setIsReady(true), 50);
+    return () => clearTimeout(timer);
+  }, []);
 
   const handleTabChange = (key, e) => {
     // Trigger explosion at click position
@@ -178,7 +199,8 @@ function ExploreMore() {
     const shardData = animal.shards[index];
 
     // ถ้าเกิน range ก็แสดงเป็นตัว invisible เพื่อให้ transition สวย
-    const isVisible = !!shardData;
+    // If not ready, keep shards scattered (isVisible = false) to trigger entry animation
+    const isVisible = !!shardData && isReady;
 
     // Use normalized rank for animation to prevent large delays if orders are high numbers
     const rank = shardRanks[index] ?? index;
@@ -193,7 +215,6 @@ function ExploreMore() {
 
     // Simplified color logic: No hover, no mark
     const currentColor = isVisible ? shardData.color : "transparent";
-
     const currentOpacity = isVisible ? 1 : 0;
     const pointerEvents = isVisible ? "auto" : "none";
 
@@ -247,7 +268,12 @@ function ExploreMore() {
         {/* Upper Section: Arrows + Stage */}
         <div className="stage-section">
           {/* Left Arrow */}
-          <button className="nav-arrow prev" onClick={() => changeAnimal(-1)}>
+          <button
+            className="nav-arrow prev"
+            onClick={() => changeAnimal(-1)}
+            aria-label="Previous animal"
+          >
+            <span className="nav-label">ก่อนหน้า</span>
             <svg
               width="40"
               height="40"
@@ -285,7 +311,12 @@ function ExploreMore() {
           </div>
 
           {/* Right Arrow */}
-          <button className="nav-arrow next" onClick={() => changeAnimal(1)}>
+          <button
+            className="nav-arrow next"
+            onClick={() => changeAnimal(1)}
+            aria-label="Next animal"
+          >
+            <span className="nav-label">ถัดไป</span>
             <svg
               width="40"
               height="40"
@@ -351,7 +382,11 @@ function ExploreMore() {
                 onClick={(e) => e.stopPropagation()}
               >
                 <ModalDecorations />
-                <button className="modal-close-btn" onClick={closeModal}>
+                <button
+                  className="modal-close-btn"
+                  onClick={closeModal}
+                  aria-label="Close modal"
+                >
                   ×
                 </button>
 
