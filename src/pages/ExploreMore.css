@@ -1110,7 +1110,7 @@
   border-radius: 0;
   padding: 50px;
   /* Top padding to position content at eye level */
-  padding-top: 8vh;
+  padding-top: 0vh;
   position: relative;
   box-shadow: none;
   display: flex;
@@ -1268,8 +1268,14 @@
 
 .modal-subtitle {
   font-size: 2.5rem;
-  color: #38bdf8;
+  background: linear-gradient(135deg, #ffffff 0%, #38bdf8 50%, #0284c7 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: #38bdf8; /* Fallback */
+  margin-top: -4px; /* Shift higher */
   margin-bottom: 25px;
+  text-shadow: 0 4px 15px rgba(14, 165, 233, 0.4);
 }
 
 .modal-text {

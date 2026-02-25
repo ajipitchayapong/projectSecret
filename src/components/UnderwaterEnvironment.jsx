@@ -56,6 +56,7 @@ export const BackgroundShards = () => {
       opacity: Math.random() * 0.15 + 0.05,
       rotate: Math.random() * 360,
       color: colors[Math.floor(Math.random() * colors.length)],
+      offset: Math.random() * 40 - 20,
     }));
   }, []);
 
@@ -77,7 +78,7 @@ export const BackgroundShards = () => {
           animate={{
             y: ["110vh", "-10vh"],
             rotate: [s.rotate, s.rotate + 360],
-            x: [0, Math.random() * 40 - 20, 0],
+            x: [0, s.offset, 0],
           }}
           transition={{
             duration: s.duration,
@@ -101,6 +102,8 @@ export const VibrantParticles = () => {
       size: Math.random() * 4 + 2,
       delay: Math.random() * 5,
       duration: Math.random() * 5 + 5,
+      offsetX: Math.random() * 30 - 15,
+      offsetY: Math.random() * 30 - 15,
     }));
   }, []);
 
@@ -119,8 +122,8 @@ export const VibrantParticles = () => {
           animate={{
             opacity: [0.2, 0.8, 0.2],
             scale: [1, 1.5, 1],
-            x: [0, Math.random() * 30 - 15],
-            y: [0, Math.random() * 30 - 15],
+            x: [0, p.offsetX],
+            y: [0, p.offsetY],
           }}
           transition={{
             duration: p.duration,

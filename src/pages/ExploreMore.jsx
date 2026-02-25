@@ -8,6 +8,9 @@ import UnderwaterEnvironment, {
   ShardExplosion,
   ModalDecorations,
 } from "../components/UnderwaterEnvironment";
+import SoundController from "../components/SoundController";
+import "../components/SoundController.css";
+import bgSound from "../assets/sound/bg-sound.MP3";
 import "./ExploreMore.css";
 
 const MAX_SHARD_COUNT = Math.max(
@@ -263,6 +266,8 @@ function ExploreMore() {
         <UnderwaterEnvironment />
       </div>
 
+      <SoundController bgSound={bgSound} />
+
       {/* Main Content Container */}
       <div className="explore-container">
         {/* Upper Section: Arrows + Stage */}
@@ -506,7 +511,11 @@ function ExploreMore() {
       {/* Helper Controls (Hidden or Minimized?) */}
 
       {/* Back Button - Stable DOM reference (toggled via CSS) */}
-      <Link to="/" className={`back-link ${showModal ? "modal-open" : ""}`}>
+      <Link
+        to="/"
+        className={`back-link ${showModal ? "modal-open" : ""}`}
+        state={{ fromExplore: true }}
+      >
         ← Back
       </Link>
     </div>

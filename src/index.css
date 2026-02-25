@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap");
+
 @font-face {
   font-family: "Google Sans";
   src: url("./assets/fonts/GoogleSans-VariableFont_GRAD,opsz,wght.ttf")
@@ -15,8 +17,6 @@
   font-style: italic;
   font-display: swap;
 }
-
-@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap");
 
 :root {
   --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #312e81 100%);
