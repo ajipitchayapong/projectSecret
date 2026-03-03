@@ -11,6 +11,7 @@ import { ANIMALS } from "../data/animalConfig";
 import ANIMAL_DETAILS from "../data/animalDetails.json";
 import UnderwaterEnvironment from "../components/UnderwaterEnvironment";
 import SoundController from "../components/SoundController";
+import BackToTop from "../components/BackToTop";
 import "../components/SoundController.css";
 import "./Landing.css";
 import topSceneOverlay from "/src/assets/top-scene.svg";
@@ -930,6 +931,8 @@ const Landing = () => {
           />
         </ParallaxElement>
       </section>
+
+      <BackToTop />
     </div>
   );
 };

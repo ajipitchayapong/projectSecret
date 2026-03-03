@@ -1,0 +1,71 @@
+.back-to-top-btn {
+  position: fixed;
+  bottom: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 32px;
+
+  /* Enhanced Glassmorphism */
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 100px;
+
+  /* Typography */
+  color: white;
+  font-family: inherit;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+
+  /* Styling & Glow */
+  box-shadow:
+    0 10px 40px rgba(0, 0, 0, 0.4),
+    0 0 20px rgba(79, 209, 237, 0.2);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  outline: none;
+  white-space: nowrap;
+}
+
+.back-to-top-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(79, 209, 237, 0.8);
+  color: #4fd1ed;
+  box-shadow:
+    0 15px 50px rgba(0, 0, 0, 0.5),
+    0 0 30px rgba(79, 209, 237, 0.5);
+  transform: translateX(-50%) translateY(-5px) scale(1.05);
+}
+
+.back-to-top-btn svg {
+  width: 24px;
+  height: 24px;
+  transition: transform 0.3s ease;
+}
+
+.back-to-top-btn:hover svg {
+  transform: translateY(-4px);
+}
+
+.btn-text {
+  font-family: "IBM Plex Sans Thai", sans-serif;
+  letter-spacing: 0.5px;
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  .back-to-top-btn {
+    bottom: 30px;
+    padding: 12px 24px;
+    font-size: 1rem;
+  }
+
+  .btn-text {
+    display: block; /* Keep text visible even on mobile for prominence */
+  }
+}
