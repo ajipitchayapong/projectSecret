@@ -206,8 +206,6 @@ const DepthIndicator = () => {
   );
 };
 
-let hasAppInitialized = false;
-
 const Landing = () => {
   // Global scroll for Bubbles (to avoid ref/position issues on full-page element)
   const { scrollY } = useScroll();
@@ -226,142 +224,8 @@ const Landing = () => {
 
   const location = useLocation();
 
-  // --- Intro Overlay State ---
-  // We use a module-level variable 'hasAppInitialized' to check if this is a fresh page load.
-  // - On F5 (refresh) or direct visit: the JS environment is brand new, hasAppInitialized is false.
-  // - On SPA navigation (clicking Back from /explore, or using a Link): the JS environment is preserved, hasAppInitialized is true.
-  const [showIntro, setShowIntro] = useState(() => {
-    if (!hasAppInitialized) {
-      hasAppInitialized = true;
-      return true; // Show intro on fresh load
-    }
-
-    // We came back from another page in the app, so hide the intro
-    return false;
-  });
-
-  const introParticles = useMemo(() => {
-    return [...Array(20)].map((_, i) => ({
-      id: i,
-      initialX: `${Math.random() * 100}%`,
-      initialY: `${Math.random() * 100 + 100}%`,
-      initialScale: Math.random() * 0.5 + 0.5,
-      animX1: `${Math.random() * 100}%`,
-      animX2: `${Math.random() * 100 + (Math.random() * 20 - 10)}%`,
-      duration: 8 + Math.random() * 7,
-      delay: Math.random() * 5,
-    }));
-  }, []);
-
-  const startExperience = () => {
-    if (window.triggerSoundPlay) {
-      window.triggerSoundPlay();
-    }
-    setShowIntro(false);
-  };
-
   return (
     <div className="landing-page-v2">
-      <AnimatePresence>
-        {showIntro && (
-          <motion.div
-            className="intro-overlay"
-            initial={{ opacity: 1 }}
-            exit={{
-              opacity: 0,
-              scale: 1.1,
-              filter: "blur(20px)",
-              transition: { duration: 1.2, ease: [0.22, 1, 0.36, 1] },
-            }}
-          >
-            {/* Bioluminescent Particles for Wow Factor */}
-            <div className="intro-particles">
-              {introParticles.map((p) => (
-                <motion.div
-                  key={p.id}
-                  className="intro-particle"
-                  initial={{
-                    x: p.initialX,
-                    y: p.initialY,
-                    opacity: 0,
-                    scale: p.initialScale,
-                  }}
-                  animate={{
-                    y: "-20vh",
-                    opacity: [0, 0.8, 0],
-                    x: [p.animX1, p.animX2],
-                  }}
-                  transition={{
-                    duration: p.duration,
-                    repeat: Infinity,
-                    delay: p.delay,
-                    ease: "linear",
-                  }}
-                />
-              ))}
-            </div>
-
-            <motion.div
-              className="intro-portal-container"
-              initial="hidden"
-              animate="visible"
-            >
-              <motion.button
-                className="ocean-portal-btn"
-                onClick={startExperience}
-                variants={{
-                  hidden: { scale: 0.5, opacity: 0, filter: "blur(20px)" },
-                  visible: {
-                    scale: 1,
-                    opacity: 1,
-                    filter: "blur(0px)",
-                    transition: { duration: 1.5, ease: [0.22, 1, 0.36, 1] },
-                  },
-                }}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <div className="portal-content">
-                  <motion.span
-                    className="portal-action-v2"
-                    variants={{
-                      hidden: { scale: 0.8, opacity: 0 },
-                      visible: {
-                        scale: 1,
-                        opacity: 1,
-                        transition: {
-                          delay: 1,
-                          duration: 1.2,
-                          ease: "easeOut",
-                        },
-                      },
-                    }}
-                  >
-                    เริ่มการเดินทาง
-                  </motion.span>
-                </div>
-
-                {/* Advanced Water Sphere Layers */}
-                <div className="water-ripples" />
-                <div className="water-caustics" />
-                <div className="water-surface-shimmer" />
-                <div className="water-inner-glow" />
-                <div className="water-bubbles-portal">
-                  {[...Array(8)].map((_, i) => (
-                    <div key={i} className="water-bubble-small" />
-                  ))}
-                </div>
-              </motion.button>
-            </motion.div>
-
-            {/* Ambient Background Hint */}
-            <div className="intro-bg-hint">
-              <UnderwaterEnvironment />
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
       <div className="landing-bg">
         <UnderwaterEnvironment />
         <MarineSnow />
