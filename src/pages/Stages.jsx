@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Intro1 from "./Intro1.jsx";
+import Intro2 from "./Intro2.jsx";
 import "./Stages.css";
 
 const stagesData = [
@@ -18,18 +20,30 @@ const stagesData = [
   {
     id: 3,
     title: "ภัยคุกคาม",
-    bgClass: "bg-test",
+    bgClass: "bg-danger",
   },
   {
     id: 4,
     title: "ทำไมต้อง Polygon",
-    bgClass: "bg-deliver",
+    bgClass: "yPolygon",
   },
 ];
 
+// Keep track of intro state outside the component to persist across navigation
+// but reset on full page refresh.
+let hasSeenIntroGlobal = false;
+
 const Stages = () => {
   const [activeTab, setActiveTab] = useState(null);
+  const [introStep, setIntroStep] = useState(hasSeenIntroGlobal ? 0 : 1);
   const navigate = useNavigate();
+
+  const handleStepChange = (nextStep) => {
+    setIntroStep(nextStep);
+    if (nextStep === 0) {
+      hasSeenIntroGlobal = true;
+    }
+  };
 
   const handleTabClick = (route) => {
     if (route) {
@@ -53,6 +67,10 @@ const Stages = () => {
           </div>
         </div>
       ))}
+
+      {/* Intro Overlays */}
+      {introStep === 1 && <Intro1 onNext={() => handleStepChange(2)} />}
+      {introStep === 2 && <Intro2 onNext={() => handleStepChange(0)} />}
     </div>
   );
 };

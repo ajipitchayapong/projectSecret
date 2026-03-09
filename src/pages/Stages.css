@@ -47,14 +47,14 @@ body {
   background-position: center;
 }
 
-.bg-test {
-  background-image: url("../images/bg_research.webp");
+.bg-danger {
+  background-image: url("../images/bg_danger.webp");
   background-size: cover;
   background-position: center;
 }
 
-.bg-deliver {
-  background-image: url("../images/bg_research.webp");
+.yPolygon {
+  background-image: url("../images/bg_yPolygon.webp");
   background-size: cover;
   background-position: center;
 }
