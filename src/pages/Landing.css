@@ -156,10 +156,10 @@ body {
   /* Ensure padding doesn't overflow width */
 }
 
+
 .title-v2 {
   font-family: var(--font-main);
-  font-size: clamp(4rem, 8vw, 9rem);
-  /* Large title */
+  font-size: clamp(5rem, 4vw, 5rem);
   font-weight: 700;
   color: white;
   margin: 0;
@@ -173,6 +173,7 @@ body {
   margin-top: 0.5rem;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
+
 
 /* Underwater Environment Container */
 .landing-bg {
@@ -1518,5 +1519,255 @@ body {
     padding: 18px 45px;
     font-size: 1.1rem;
     letter-spacing: 4px;
+  }
+}
+
+
+/* ══════════════════════════════════════════
+   RESPONSIVE MEDIA QUERIES
+   ══════════════════════════════════════════ */
+
+/* ── Tablet & below (max 1024px) ── */
+@media (max-width: 1024px) {
+
+  .section-1-v2 {
+    min-height: 100vh;
+    padding-bottom: 0;
+  }
+
+  .section-irrawaddy-v2,
+  .section-dolphin-standard-v2,
+  .section-stingray-v2,
+  .section-dugong-v2,
+  .section-orca-v2,
+  .section-sperm-whale-v2,
+  .section-middle-scene-v2,
+  .section-ronin-v2,
+  .section-sawfishes-v2 {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    padding: 24px 16px !important;
+    margin-top: 0 !important;
+    gap: 16px !important;
+    position: relative !important;
+    overflow: visible !important;
+  }
+
+  .irrawaddy-dolphin-v2,
+  .dolphin-standard-v2,
+  .stingray-v2,
+  .dugong-v2,
+  .orca-v2,
+  .sperm-whale-v2,
+  .ronin-v2,
+  .sawfishes-v2 {
+    width: 85% !important;
+    left: 0 !important;
+    right: 0 !important;
+    top: 0 !important;
+    margin: 0 auto !important;
+  }
+
+  .turtle-v2 {
+    position: relative !important;
+    top: auto !important;
+    width: 85% !important;
+    height: auto !important;
+    margin: 0 auto !important;
+  }
+
+  .turtle-wrapper-v2 {
+    width: 100% !important;
+  }
+
+  .animal-info-box-v2,
+  .turtle-info-v2,
+  .irrawaddy-info-v2,
+  .dolphin-info-v2,
+  .stingray-info-v2,
+  .dugong-info-v2,
+  .ronin-info-v2,
+  .sawfishes-info-v2 {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+    transform: none !important;
+    width: 90% !important;
+    max-width: 500px !important;
+    margin: 0 auto !important;
+  }
+
+  .section-blue-whale-v2 {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    padding: 24px 16px !important;
+    margin-top: 0 !important;
+    min-height: unset !important;
+    padding-top: 24px !important;
+    gap: 16px !important;
+    position: relative !important;
+    overflow: visible !important;
+  }
+
+  .blue-whale-v2 {
+    width: 85% !important;
+    left: 0 !important;
+    right: 0 !important;
+    top: 0 !important;
+    margin: 0 auto !important;
+  }
+
+  .blue-whale-wrapper-v2 {
+    left: 0 !important;
+  }
+}
+
+/* ── Tablet เท่านั้น (769px - 1024px) ── */
+@media (min-width: 769px) and (max-width: 1024px) {
+
+  .content-v2 {
+    padding-top: 90px !important;
+    justify-content: flex-start !important;
+    align-items: center;
+  }
+
+  .title-v2 {
+    font-size: clamp(2.4rem, 4.5vw, 3.2rem) !important;
+    padding: 0 24px;
+    text-align: center;
+  }
+
+  .subtitle-v2 {
+    font-size: clamp(1rem, 2vw, 1.3rem) !important;
+    padding: 0 32px;
+    text-align: center;
+  }
+
+  .info-name-v2 {
+    font-size: 1.6rem !important;
+    flex-wrap: wrap;
+  }
+
+  .name-th-v2 {
+    font-size: 1.1rem !important;
+  }
+
+  .info-desc-v2 {
+    font-size: 1rem !important;
+    line-height: 1.5;
+    -webkit-line-clamp: 4;
+    line-clamp: 4;
+  }
+
+  .detail-btn-v2 {
+    font-size: 0.95rem !important;
+    padding: 0.7rem 1.4rem !important;
+  }
+}
+
+/* ── Mobile (max 768px) ── */
+@media (max-width: 768px) {
+
+  .intro-title {
+    font-size: clamp(2.5rem, 8vw, 4rem);
+    letter-spacing: 6px;
+  }
+
+  .intro-subtitle {
+    font-size: 1.1rem;
+    margin-bottom: 3rem;
+  }
+
+  .dive-btn-v2 {
+    padding: 18px 45px;
+    font-size: 1.1rem;
+    letter-spacing: 4px;
+  }
+
+  .back-link {
+    top: 12px;
+    left: 12px;
+    padding: 6px 12px;
+    font-size: 0.75rem;
+  }
+
+  .content-v2 {
+    padding-top: 100px !important;
+    justify-content: flex-start !important;
+    align-items: center;
+  }
+
+  .title-v2 {
+    font-size: clamp(1.6rem, 6vw, 2.2rem) !important;
+    padding: 0 16px;
+    text-align: center;
+  }
+
+  .subtitle-v2 {
+    font-size: clamp(0.8rem, 3.2vw, 1rem) !important;
+    padding: 0 20px;
+    text-align: center;
+  }
+
+  .info-name-v2 {
+    font-size: 1.1rem !important;
+    flex-wrap: wrap;
+  }
+
+  .name-th-v2 {
+    font-size: 0.85rem !important;
+  }
+
+  .info-desc-v2 {
+    font-size: 0.82rem !important;
+    line-height: 1.5;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+  }
+
+  .detail-btn-v2 {
+    font-size: 0.8rem !important;
+    padding: 0.55rem 1rem !important;
+  }
+}
+
+/* ── Small Mobile (max 480px) ── */
+@media (max-width: 480px) {
+
+  .content-v2 {
+    padding-top: 90px !important;
+  }
+
+  .title-v2 {
+    font-size: clamp(1.4rem, 7vw, 1.9rem) !important;
+    padding: 0 12px;
+  }
+
+  .subtitle-v2 {
+    font-size: clamp(0.75rem, 3.5vw, 0.9rem) !important;
+    padding: 0 16px;
+  }
+
+  .info-name-v2 {
+    font-size: 1rem !important;
+  }
+
+  .name-th-v2 {
+    font-size: 0.8rem !important;
+  }
+
+  .info-desc-v2 {
+    font-size: 0.78rem !important;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+  }
+
+  .detail-btn-v2 {
+    font-size: 0.75rem !important;
+    padding: 0.5rem 0.9rem !important;
   }
 }

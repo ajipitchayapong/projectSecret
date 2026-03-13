@@ -104,3 +104,57 @@
     transform: translateY(0);
   }
 }
+/* ===== TABLET (768px) ===== */
+@media (max-width: 768px) {
+  .diver-image {
+    width: 220px;
+  }
+
+  .diver-wrapper {
+    margin-bottom: 30px;
+  }
+
+  .typing-text {
+    font-size: 1.2rem;
+  }
+
+  .text-overlay {
+    padding: 24px;
+  }
+}
+
+/* ===== MOBILE (480px) ===== */
+@media (max-width: 480px) {
+  .intro2-overlay {
+    justify-content: flex-start;
+    padding-top: 40px;
+    padding-bottom: 24px;
+    overflow-y: auto; 
+  }
+
+  .diver-image {
+    width: 160px;
+  }
+
+  .diver-wrapper {
+    margin-bottom: 20px;
+  }
+
+  .text-overlay {
+    padding: 20px;
+    border-radius: 16px;
+    width: 88%;
+  }
+
+  .typing-text {
+    font-size: 1rem;
+    line-height: 1.7;
+    min-height: 3em;
+    margin-bottom: 16px;
+  }
+
+  .start-btn {
+    font-size: 1rem;
+    padding: 10px 32px;
+  }
+}

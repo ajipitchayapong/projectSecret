@@ -1,12 +1,11 @@
 /* --- Sound Control Container (Hover Logic) --- */
 .sound-control-container-v2 {
   position: fixed;
-  bottom: 30px;
+  top: 30px;
   right: 30px;
   display: flex;
   align-items: center;
   z-index: 1000;
-  /* Instead of pure button, making the container hold the button */
 }
 
 /* Adjust the button inside the container */
@@ -76,7 +75,7 @@
 /* --- Sound Toggle Button Styles --- */
 .sound-toggle {
   position: fixed;
-  bottom: 30px;
+  top: 30px;
   right: 30px;
   width: 60px;
   height: 60px;
@@ -134,4 +133,29 @@
 .sound-icon svg {
   width: 100%;
   height: 100%;
+}
+
+  .sound-control-container-v2 .sound-toggle {
+    position: relative;
+    top: auto;
+    bottom: auto;
+    right: auto;
+  }
+
+@media (max-width: 1024px) {
+  .sound-control-container-v2 {
+    bottom: auto;
+    top: 20px;
+    right: 20px;
+    align-items: center; /* จัดให้อยู่แนวเดียวกัน */
+  }
+
+}
+
+@media (max-width: 480px) {
+  .sound-control-container-v2 {
+    top: 15px;
+    right: 30px;
+  }
+
 }

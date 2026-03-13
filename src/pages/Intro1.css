@@ -314,3 +314,44 @@
     opacity: 0;
   }
 }
+
+/* ===== TABLET (768px) ===== */
+@media (max-width: 768px) {
+  .main-bubble {
+    width: 350px;
+    height: 350px;
+  }
+
+  .explore-text {
+    font-size: 3rem;
+    letter-spacing: 6px;
+  }
+
+  .bubble-highlight-sharp {
+    width: 60px;
+    height: 30px;
+  }
+}
+
+/* ===== MOBILE (480px) ===== */
+@media (max-width: 480px) {
+  .main-bubble {
+    width: 280px;
+    height: 280px;
+  }
+
+  .explore-text {
+    font-size: 2.2rem;
+    letter-spacing: 4px;
+  }
+
+  .bubble-highlight-sharp {
+    width: 50px;
+    height: 25px;
+  }
+
+  .bubble-glow-internal {
+    width: 70px;
+    height: 70px;
+  }
+}
