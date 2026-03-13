@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route, Link, Navigate } from "react-router-dom";
 import OrdererPage from "./pages/OrdererPage.jsx";
 import Landing from "./pages/Landing.jsx";
+import PolygonPage from "./pages/PolygonPage.jsx";
 import DetailPage from "./pages/DetailPage.jsx";
 import Stages from "./pages/Stages.jsx";
 import "./index.css";
@@ -16,6 +17,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         <Route path="/order" element={<OrdererPage />} />
         <Route path="/landing" element={<Landing />} />
         <Route path="/stages" element={<Stages />} />
+        <Route path="/polygon" element={<PolygonPage />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>,

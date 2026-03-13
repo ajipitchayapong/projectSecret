@@ -1,0 +1,206 @@
+.polygon-page-container {
+  width: 100%;
+  height: 800vh; /* Vertical scroll height to drive horizontal parallax */
+  background: #0a0a0a;
+  color: white;
+  overflow-x: hidden;
+  position: relative;
+}
+
+.parallax-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.bg-layer-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: auto; /* Preserve aspect ratio */
+  display: block;
+  max-width: none;
+}
+
+.bg-layer-img.bottom {
+  z-index: 1;
+}
+
+.bg-layer-img.middle {
+  z-index: 2;
+}
+
+.bg-layer-img.top {
+  z-index: 3;
+}
+
+.content-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.parallax-section {
+  flex: 0 0 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0 10vw;
+  box-sizing: border-box;
+}
+
+.parallax-section h1 {
+  font-family: "Outfit", sans-serif;
+  font-size: clamp(3rem, 8vw, 8rem);
+  margin: 0;
+  background: linear-gradient(to right, #ffd700, #ff8c00);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.parallax-section p {
+  font-family: "IBM Plex Sans Thai", sans-serif;
+  font-size: clamp(1.2rem, 2vw, 2.5rem);
+  opacity: 0.8;
+  max-width: 800px;
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.scroll-hint {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  opacity: 0.6;
+}
+
+.mouse-icon {
+  width: 20px;
+  height: 35px;
+  border: 2px solid white;
+  border-radius: 10px;
+  position: relative;
+}
+
+.mouse-wheel {
+  width: 4px;
+  height: 8px;
+  background: white;
+  position: absolute;
+  top: 5px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 2px;
+  animation: scroll-anim 2s infinite;
+}
+
+@keyframes scroll-anim {
+  0% {
+    transform: translate(-50%, 0);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, 15px);
+    opacity: 0;
+  }
+}
+
+.back-link {
+  position: fixed;
+  top: 2rem;
+  left: 2rem;
+  z-index: 100;
+  color: white;
+  text-decoration: none;
+  font-family: "Outfit", sans-serif;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 0.5rem 1rem;
+  border-radius: 30px;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.back-link:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateX(-5px);
+}
+
+.paper-ship-wrapper {
+  position: fixed;
+  top: 58%;
+  left: 2rem;
+  transform: translateY(-50%);
+  z-index: 10;
+  pointer-events: none;
+}
+
+.paper-ship {
+  width: clamp(80px, 10vw, 150px);
+  height: auto;
+  filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.3));
+}
+
+.orca-wrapper {
+  position: absolute;
+  z-index: 2; /* Between middle and top layer ideally, or matching middle index */
+  pointer-events: none;
+}
+
+.orca-img {
+  width: clamp(200px, 25vw, 400px);
+  height: auto;
+  filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.4));
+}
+
+.orca-message-box {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* Clean center without margin hacks */
+  z-index: 1000;
+  width: min(80vw, 450px);
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(15px);
+  padding: 1.5rem 2rem;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+  pointer-events: none;
+  display: flex;
+  justify-content: center;
+}
+
+.orca-message-box p {
+  margin: 0;
+  font-family: "IBM Plex Sans Thai", sans-serif;
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: white;
+  text-align: center;
+  word-break: keep-all;
+}

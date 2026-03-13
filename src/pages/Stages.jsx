@@ -26,6 +26,7 @@ const stagesData = [
     id: 4,
     title: "ทำไมต้อง Polygon",
     bgClass: "yPolygon",
+    route: "/polygon",
   },
 ];
 
