@@ -126,28 +126,45 @@
   }
 }
 
-.back-link {
+.hud-overlay {
   position: fixed;
-  top: 2rem;
-  left: 2rem;
-  z-index: 100;
-  color: white;
-  text-decoration: none;
-  font-family: "Outfit", sans-serif;
-  font-weight: 500;
-  display: flex;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 0; /* Only container, let children handle layout */
+  z-index: 2147483647 !important;
+  pointer-events: none;
+}
+
+.back-link {
+  position: fixed !important;
+  top: 2rem !important;
+  left: 2rem !important;
+  z-index: 2147483647 !important;
+  color: white !important;
+  text-decoration: none !important;
+  font-family: "IBM Plex Sans Thai", sans-serif !important;
+  font-weight: 600 !important;
+  display: flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
   align-items: center;
   gap: 0.5rem;
-  background: rgba(255, 255, 255, 0.1);
-  padding: 0.5rem 1rem;
+  background: rgba(255, 255, 255, 0.15);
+  padding: 0.6rem 1.2rem;
   border-radius: 30px;
-  backdrop-filter: blur(10px);
-  transition: all 0.3s ease;
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  pointer-events: auto !important;
 }
 
 .back-link:hover {
-  background: rgba(255, 255, 255, 0.2);
-  transform: translateX(-5px);
+  background: rgba(255, 255, 255, 0.25);
+  transform: translateX(-5px) scale(1.02);
+  border-color: rgba(255, 255, 255, 0.5);
 }
 
 .paper-ship-wrapper {
@@ -178,18 +195,20 @@
 }
 
 .orca-message-box {
-  position: fixed;
-  top: 50%;
+  position: absolute;
+  top: 25%;
   left: 50%;
-  transform: translate(-50%, -50%); /* Clean center without margin hacks */
+  transform: translate(-50%, -50%);
   z-index: 1000;
   width: min(80vw, 450px);
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(15px);
+  background: rgba(2, 6, 23, 0.6); /* Deep dark blue glass */
+  backdrop-filter: blur(20px);
   padding: 1.5rem 2rem;
   border-radius: 20px;
   border: 1px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+  box-shadow:
+    0 20px 50px rgba(0, 0, 0, 0.6),
+    inset 0 1px 1px rgba(255, 255, 255, 0.1);
   pointer-events: none;
   display: flex;
   justify-content: center;
@@ -203,4 +222,51 @@
   color: white;
   text-align: center;
   word-break: keep-all;
+}
+
+/* Polar Bear Positioning */
+.bear-wrapper {
+  position: absolute;
+  bottom: 46%; /* ปรับความสูงจากขอบล่างที่นี่ */
+  right: 5%;
+  z-index: 4; /* Behind or in front of layers as needed */
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.bear-message-box {
+  background: rgba(2, 6, 23, 0.55); /* Dark Glass theme */
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  padding: 25px 30px;
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  max-width: 450px;
+  width: 90vw;
+  pointer-events: auto;
+}
+
+.bear-message-box p {
+  margin: 0;
+  font-family: "IBM Plex Sans Thai", sans-serif;
+  font-size: 1rem;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.95);
+  text-align: left;
+  word-break: keep-all;
+}
+
+.bear-flip-container {
+  transform: scaleX(-1);
+  display: flex;
+}
+
+.bear-img {
+  width: auto;
+  height: clamp(100px, 15vh, 220px); /* ลดขนาดลงตามความเหมาะสม */
+  filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.3));
 }

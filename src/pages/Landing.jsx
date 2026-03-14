@@ -235,7 +235,7 @@ const Landing = () => {
           className="back-link"
           onClick={() => navigate("/stages", { state: { skipIntro: true } })}
         >
-          ← Back
+          ← ย้อนกลับ
         </button>,
         document.body,
       )}

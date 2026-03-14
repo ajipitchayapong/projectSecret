@@ -13,7 +13,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Navigate to="/stages" replace />} />
-        <Route path="/explore" element={<DetailPage />} />{" "}
+        <Route path="/detail" element={<DetailPage />} />{" "}
         {/* เปลี่ยนจาก /detail → /explore */}
         <Route path="/order" element={<OrdererPage />} />
         <Route path="/landing" element={<Landing />} />

@@ -512,11 +512,11 @@ function DetailPage() {
 
       {/* Back Button - Stable DOM reference (toggled via CSS) */}
       <Link
-        to="/landing"
+        to="/stages"
         className={`back-link ${showModal ? "modal-open" : ""}`}
         state={{ fromExplore: true }}
       >
-        ← Back
+        ← ย้อนกลับ
       </Link>
     </div>
   );
