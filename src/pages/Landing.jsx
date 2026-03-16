@@ -117,8 +117,8 @@ const AnimalInfoBox = ({
           <span className="name-th-v2">| {details.nameTH}</span>
         </h3>
         <p className="info-desc-v2">{details.content.intro}</p>
-        <Link to={`/explore?id=${animalId}`} className="detail-btn-v2">
-          เรียนรู้เพิ่มเติม
+        <Link to={`/detail?id=${animalId}`} className="detail-btn-v2">
+          รายละเอียด
           <svg
             width="16"
             height="16"
