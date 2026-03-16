@@ -312,7 +312,8 @@ function OrdererPage() {
       >
         <div style={{ pointerEvents: "auto" }}>
           <Link
-            to="/"
+            to="/stages"
+            state={{ skipIntro: true }}
             style={{
               textDecoration: "none",
               color: "white",

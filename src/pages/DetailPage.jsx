@@ -539,7 +539,11 @@ function DetailPage() {
 
       {/* Back Button - Stable DOM reference (toggled via CSS) */}
       {!showModal && (
-        <Link to="/stages" className="back-link" state={{ fromExplore: true }}>
+        <Link
+          to="/stages"
+          className="back-link"
+          state={{ fromExplore: true, skipIntro: true }}
+        >
           ← ย้อนกลับ
         </Link>
       )}

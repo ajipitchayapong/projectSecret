@@ -338,7 +338,7 @@ const PolygonPage = () => {
       </div>
       {createPortal(
         <div className="hud-overlay">
-          <Link to="/stages" className="back-link">
+          <Link to="/stages" className="back-link" state={{ skipIntro: true }}>
             <svg
               width="20"
               height="20"
