@@ -266,7 +266,7 @@ function DetailPage() {
         <UnderwaterEnvironment />
       </div>
 
-      <SoundController bgSound={bgSound} />
+      {!showModal && <SoundController bgSound={bgSound} />}
 
       {/* Main Content Container */}
       <div className="explore-container">
@@ -387,13 +387,40 @@ function DetailPage() {
                 onClick={(e) => e.stopPropagation()}
               >
                 <ModalDecorations />
-                <button
-                  className="modal-close-btn"
-                  onClick={closeModal}
-                  aria-label="Close modal"
-                >
-                  ×
-                </button>
+                {!isClosing && (
+                  <button
+                    className="modal-close-btn"
+                    onClick={closeModal}
+                    aria-label="Close modal"
+                  >
+                    <svg
+                      width="14"
+                      height="14"
+                      viewBox="0 0 14 14"
+                      fill="none"
+                      style={{ display: "block", flexShrink: 0 }}
+                    >
+                      <line
+                        x1="1"
+                        y1="1"
+                        x2="13"
+                        y2="13"
+                        stroke="white"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                      />
+                      <line
+                        x1="13"
+                        y1="1"
+                        x2="1"
+                        y2="13"
+                        stroke="white"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                      />
+                    </svg>
+                  </button>
+                )}
 
                 <h2 className="modal-title">{details.nameEN}</h2>
 
@@ -511,13 +538,11 @@ function DetailPage() {
       {/* Helper Controls (Hidden or Minimized?) */}
 
       {/* Back Button - Stable DOM reference (toggled via CSS) */}
-      <Link
-        to="/stages"
-        className={`back-link ${showModal ? "modal-open" : ""}`}
-        state={{ fromExplore: true }}
-      >
-        ← ย้อนกลับ
-      </Link>
+      {!showModal && (
+        <Link to="/stages" className="back-link" state={{ fromExplore: true }}>
+          ← ย้อนกลับ
+        </Link>
+      )}
     </div>
   );
 }

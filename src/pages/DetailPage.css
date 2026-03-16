@@ -852,11 +852,6 @@
   transition: all 0.3s ease;
 }
 
-.modal-close-btn:hover {
-  background: rgba(255, 0, 0, 0.6);
-  transform: rotate(90deg);
-}
-
 .modal-title {
   font-size: 3rem;
   font-weight: 700;
@@ -1110,7 +1105,7 @@
   border-radius: 0;
   padding: 50px;
   /* Top padding to position content at eye level */
-  padding-top: 0vh;
+  padding-top: 60px;
   position: relative;
   box-shadow: none;
   display: flex;
@@ -1282,90 +1277,6 @@
   font-size: 1.5rem;
   line-height: 1.8;
   color: rgba(226, 232, 240, 0.9);
-}
-
-.modal-close-btn {
-  position: absolute;
-  top: 40px;
-  right: 40px;
-  width: 60px;
-  height: 60px;
-  border-radius: 50% !important;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-
-  /* Bubble Background */
-  background: radial-gradient(
-    circle at 30% 30%,
-    rgba(255, 255, 255, 0.1) 0%,
-    rgba(255, 255, 255, 0.05) 40%,
-    rgba(14, 165, 233, 0.05) 100%
-  );
-  backdrop-filter: blur(5px);
-  -webkit-backdrop-filter: blur(5px);
-
-  /* Iridescent Rim */
-  border-top-color: rgba(255, 255, 255, 0.6);
-  border-left-color: rgba(255, 255, 255, 0.4);
-  border-bottom-color: rgba(56, 189, 248, 0.3);
-
-  box-shadow:
-    inset 0 4px 10px rgba(255, 255, 255, 0.3),
-    inset 0 -5px 15px rgba(0, 0, 0, 0.1),
-    0 10px 25px rgba(0, 0, 0, 0.3);
-
-  color: white;
-  font-size: 1.5rem;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s ease;
-  z-index: 100;
-
-  /* Bubble Animation */
-  animation:
-    bubble-wobble 6s infinite ease-in-out,
-    bubble-drift 7s infinite ease-in-out alternate;
-}
-
-.modal-close-btn::before {
-  content: "";
-  position: absolute;
-  top: 10px;
-  left: 12px;
-  width: 12px;
-  height: 12px;
-  background: radial-gradient(circle, #fff 0%, rgba(255, 255, 255, 0) 80%);
-  border-radius: 50%;
-  opacity: 0.8;
-  filter: blur(1px);
-}
-
-.modal-close-btn::after {
-  content: "";
-  position: absolute;
-  bottom: 8px;
-  right: 12px;
-  width: 8px;
-  height: 5px;
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 50%;
-  transform: rotate(-30deg);
-  filter: blur(1px);
-}
-
-.modal-close-btn:hover {
-  background: radial-gradient(
-    circle at 30% 30%,
-    rgba(255, 255, 255, 0.25) 0%,
-    rgba(56, 189, 248, 0.1) 100%
-  );
-  transform: scale(1.1) rotate(90deg);
-  box-shadow:
-    inset 0 8px 20px rgba(255, 255, 255, 0.7),
-    inset 0 -5px 15px rgba(0, 0, 0, 0.1),
-    0 15px 35px rgba(14, 165, 233, 0.3);
-  border-color: rgba(255, 255, 255, 0.8);
 }
 
 /* Menu Click Shard Explosion */
@@ -1656,4 +1567,305 @@
   fill: none !important;
   opacity: 1 !important;
   filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.6));
+}
+
+/* ══════════════════════════════════════════
+   MODAL RESPONSIVE — Tablet & Mobile
+   ══════════════════════════════════════════ */
+
+/* ── Tablet (max-width: 1024px) ── */
+@media (max-width: 1024px) {
+
+  .modal-glass-card {
+    padding: 30px 40px;
+    padding-top: 80px;
+    justify-content: flex-start;
+    align-items: center;
+  }
+
+  .modal-title {
+    font-size: 2.2rem;
+    width: 80%;           /* ขยายจาก 50% */
+    margin: 0 auto 20px auto;
+    text-align: center;
+  }
+
+  .modal-nav {
+    clip-path: polygon(5% 0%, 95% 0%, 100% 50%, 95% 100%, 5% 100%, 0% 50%);
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(255, 255, 255, 0.05) 15%,
+      rgba(255, 255, 255, 0.05) 85%,
+      transparent 100%
+    );
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-left: none;
+    border-right: none;
+    border-radius: 0;
+    padding: 10px 40px;
+    gap: 20px;
+    width: auto;
+    max-width: 90%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    flex-wrap: nowrap;
+    justify-content: center;
+    margin: 0 auto 30px auto;
+  }
+
+  .modal-nav::-webkit-scrollbar { display: none; }
+
+  .modal-tab-btn {
+    font-size: 1.1rem;
+    padding: 10px 20px;
+    letter-spacing: 1.5px;
+    border-radius: 20px;
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+
+  .modal-tab-btn .tab-icon { display: flex; }
+
+  .modal-subtitle {
+    font-size: 2rem;
+    margin-bottom: 20px;
+  }
+
+  .modal-text {
+    font-size: 1.2rem;
+    line-height: 1.8;
+  }
+
+  .modal-content-scroll {
+    width: 80%;           /* ขยายจาก 50% */
+    margin: 0 auto;
+    padding-right: 0;
+    text-align: left;
+    overflow-y: auto;
+    max-height: calc(100vh - 280px);
+  }
+}
+
+/* ── Mobile (max-width: 768px) ── */
+@media (max-width: 768px) {
+
+  .modal-glass-card {
+    padding: 20px 36px;
+    padding-top: 72px;
+    justify-content: flex-start;
+    align-items: center;
+    overflow-y: auto;
+  }
+
+  .modal-title {
+    font-size: 1.5rem;
+    width: 92%;           /* ขยายจาก 50% */
+    margin: 0 auto 16px auto;
+    text-align: center;
+  }
+
+  .modal-nav {
+    clip-path: polygon(5% 0%, 95% 0%, 100% 50%, 95% 100%, 5% 100%, 0% 50%);
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(255, 255, 255, 0.05) 15%,
+      rgba(255, 255, 255, 0.05) 85%,
+      transparent 100%
+    );
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-left: none;
+    border-right: none;
+    border-radius: 0;
+    padding: 8px 24px;
+    gap: 4px;
+    width: auto;
+    max-width: 96%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    flex-wrap: nowrap;
+    justify-content: center;
+    margin: 0 auto 20px auto;
+  }
+
+  .modal-nav::-webkit-scrollbar { display: none; }
+
+  .modal-tab-btn {
+    font-size: 0.85rem;
+    padding: 8px 12px;
+    letter-spacing: 1px;
+    border-radius: 20px;
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+
+  .modal-tab-btn .tab-icon { display: flex; }
+
+  .modal-tab-btn .tab-icon svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .modal-subtitle {
+    font-size: 1.4rem;
+    margin-bottom: 14px;
+    text-align: center;
+  }
+
+  .modal-text {
+    font-size: 1rem;
+    line-height: 1.75;
+  }
+
+  .modal-content-scroll {
+    width: 92%;           /* ขยายจาก 50% */
+    margin: 0 auto;
+    padding-right: 0;
+    text-align: left;
+    overflow-y: auto;
+    max-height: calc(100vh - 240px);
+  }
+
+  .modal-corner { display: none; }
+}
+
+/* ── Small Mobile (max-width: 480px) ── */
+@media (max-width: 480px) {
+
+  .modal-glass-card {
+    padding: 14px 24px;
+    padding-top: 64px;
+  }
+
+  .modal-title {
+    font-size: 1.2rem;
+    width: 96%;
+    margin: 0 auto 12px auto;
+  }
+
+  .modal-nav {
+    padding: 6px 16px;
+    gap: 2px;
+    max-width: 100%;
+    margin: 0 auto 16px auto;
+  }
+
+  .modal-tab-btn {
+    font-size: 0.72rem;
+    padding: 7px 10px;
+    letter-spacing: 0.5px;
+  }
+
+  .modal-tab-btn .tab-icon svg {
+    width: 12px;
+    height: 12px;
+  }
+
+  .modal-subtitle {
+    font-size: 1.15rem;
+    margin-bottom: 12px;
+  }
+
+  .modal-text {
+    font-size: 0.92rem;
+    line-height: 1.7;
+  }
+
+  .modal-content-scroll {
+    width: 96%;
+    margin: 0 auto;
+    max-height: calc(100vh - 210px);
+  }
+}
+
+/* ══════════════════════════════════════════
+   MODAL CLOSE BUTTON — Scoped & Symmetric
+   ══════════════════════════════════════════ */
+
+.modal-glass-card .modal-close-btn {
+  position: absolute;
+  top: 40px;
+  right: 40px;
+  width: 56px;
+  height: 56px;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  line-height: 0;
+  font-size: 0;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-top-color: rgba(255, 255, 255, 0.6);
+  border-left-color: rgba(255, 255, 255, 0.4);
+  border-bottom-color: rgba(56, 189, 248, 0.3);
+  background: radial-gradient(
+    circle at 30% 30%,
+    rgba(255, 255, 255, 0.1) 0%,
+    rgba(255, 255, 255, 0.05) 40%,
+    rgba(14, 165, 233, 0.05) 100%
+  );
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  box-shadow:
+    inset 0 4px 10px rgba(255, 255, 255, 0.3),
+    inset 0 -5px 15px rgba(0, 0, 0, 0.1),
+    0 10px 25px rgba(0, 0, 0, 0.3);
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 100;
+  animation:
+    bubble-wobble 6s infinite ease-in-out,
+    bubble-drift 7s infinite ease-in-out alternate;
+}
+
+.modal-glass-card .modal-close-btn:hover {
+  background: radial-gradient(
+    circle at 30% 30%,
+    rgba(255, 255, 255, 0.25) 0%,
+    rgba(56, 189, 248, 0.1) 100%
+  );
+  transform: scale(1.1) rotate(90deg);
+  box-shadow:
+    inset 0 8px 20px rgba(255, 255, 255, 0.7),
+    inset 0 -5px 15px rgba(0, 0, 0, 0.1),
+    0 15px 35px rgba(14, 165, 233, 0.3);
+  border-color: rgba(255, 255, 255, 0.8);
+}
+
+@media (max-width: 1024px) {
+  .modal-glass-card .modal-close-btn {
+    top: 20px;
+    right: 24px;
+    width: 46px;
+    height: 46px;
+  }
+}
+
+@media (max-width: 768px) {
+  .modal-glass-card .modal-close-btn {
+    top: 14px;
+    right: 14px;
+    width: 40px;
+    height: 40px;
+    animation: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .modal-glass-card .modal-close-btn {
+    top: 10px;
+    right: 25px;
+    width: 36px;
+    height: 36px;
+  }
 }

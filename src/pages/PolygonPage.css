@@ -270,3 +270,517 @@
   height: clamp(100px, 15vh, 220px); /* ลดขนาดลงตามความเหมาะสม */
   filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.3));
 }
+
+/* ══════════════════════════════════════════
+   SCRUBBER TUBE — Mobile & Tablet only
+   ══════════════════════════════════════════ */
+
+.scrubber-track-container {
+  display: none; /* ซ่อนบน desktop */
+}
+
+@media (max-width: 1024px) {
+  .scrubber-track-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80vw;
+    max-width: 400px;
+    z-index: 200;
+    background: rgba(0, 0, 0, 0.45);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 50px;
+    padding: 10px 16px;
+  }
+
+  .scrubber-label-left,
+  .scrubber-label-right {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    opacity: 0.6;
+  }
+
+  .scrubber-tube {
+    position: relative;
+    flex: 1;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 6px;
+    overflow: visible;
+  }
+
+  .scrubber-fill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.4) 0%,
+      rgba(255, 255, 255, 0.95) 100%
+    );
+    border-radius: 6px;
+    pointer-events: none;
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.4);
+    transition: width 0.05s linear;
+  }
+
+  .scrubber-input {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    width: 100%;
+    height: 28px; /* touch target ใหญ่ */
+    opacity: 0;
+    cursor: pointer;
+    margin: 0;
+    padding: 0;
+    -webkit-appearance: none;
+    appearance: none;
+    background: transparent;
+    border: none;
+    z-index: 10;
+  }
+
+  .scrubber-tube::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: calc(var(--thumb-pos, 0%) - 9px);
+    transform: translateY(-50%);
+    width: 18px;
+    height: 18px;
+    background: white;
+    border-radius: 50%;
+    box-shadow:
+      0 0 0 3px rgba(255, 255, 255, 0.2),
+      0 2px 8px rgba(0, 0, 0, 0.4);
+    pointer-events: none;
+    transition: left 0.05s linear;
+  }
+}
+
+.polygon-page-container {
+  width: 100%;
+  height: 800vh; /* Vertical scroll height to drive horizontal parallax */
+  background: #0a0a0a;
+  color: white;
+  overflow-x: hidden;
+  position: relative;
+}
+
+.parallax-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.bg-layer-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: auto; /* Preserve aspect ratio */
+  display: block;
+  max-width: none;
+}
+
+.bg-layer-img.bottom {
+  z-index: 1;
+}
+
+.bg-layer-img.middle {
+  z-index: 2;
+}
+
+.bg-layer-img.top {
+  z-index: 3;
+}
+
+.content-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.parallax-section {
+  flex: 0 0 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0 10vw;
+  box-sizing: border-box;
+}
+
+.parallax-section h1 {
+  font-family: "Outfit", sans-serif;
+  font-size: clamp(3rem, 8vw, 8rem);
+  margin: 0;
+  background: linear-gradient(to right, #ffd700, #ff8c00);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.parallax-section p {
+  font-family: "IBM Plex Sans Thai", sans-serif;
+  font-size: clamp(1.2rem, 2vw, 2.5rem);
+  opacity: 0.8;
+  max-width: 800px;
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.scroll-hint {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  opacity: 0.6;
+}
+
+.mouse-icon {
+  width: 20px;
+  height: 35px;
+  border: 2px solid white;
+  border-radius: 10px;
+  position: relative;
+}
+
+.mouse-wheel {
+  width: 4px;
+  height: 8px;
+  background: white;
+  position: absolute;
+  top: 5px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 2px;
+  animation: scroll-anim 2s infinite;
+}
+
+@keyframes scroll-anim {
+  0% {
+    transform: translate(-50%, 0);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, 15px);
+    opacity: 0;
+  }
+}
+
+.hud-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 0; /* Only container, let children handle layout */
+  z-index: 2147483647 !important;
+  pointer-events: none;
+}
+
+.back-link {
+  position: fixed !important;
+  top: 2rem !important;
+  left: 2rem !important;
+  z-index: 2147483647 !important;
+  color: white !important;
+  text-decoration: none !important;
+  font-family: "IBM Plex Sans Thai", sans-serif !important;
+  font-weight: 600 !important;
+  display: flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(255, 255, 255, 0.15);
+  padding: 0.6rem 1.2rem;
+  border-radius: 30px;
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  pointer-events: auto !important;
+}
+
+.back-link:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: translateX(-5px) scale(1.02);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.paper-ship-wrapper {
+  position: fixed;
+  top: 58%;
+  left: 2rem;
+  transform: translateY(-50%);
+  z-index: 10;
+  pointer-events: none;
+}
+
+.paper-ship {
+  width: clamp(80px, 10vw, 150px);
+  height: auto;
+  filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.3));
+}
+
+.orca-wrapper {
+  position: absolute;
+  z-index: 2; /* Between middle and top layer ideally, or matching middle index */
+  pointer-events: none;
+}
+
+.orca-img {
+  width: clamp(200px, 25vw, 400px);
+  height: auto;
+  filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.4));
+}
+
+.orca-message-box {
+  position: absolute;
+  top: 25%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+  width: min(80vw, 450px);
+  background: rgba(2, 6, 23, 0.6); /* Deep dark blue glass */
+  backdrop-filter: blur(20px);
+  padding: 1.5rem 2rem;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow:
+    0 20px 50px rgba(0, 0, 0, 0.6),
+    inset 0 1px 1px rgba(255, 255, 255, 0.1);
+  pointer-events: none;
+  display: flex;
+  justify-content: center;
+}
+
+.orca-message-box p {
+  margin: 0;
+  font-family: "IBM Plex Sans Thai", sans-serif;
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: white;
+  text-align: center;
+  word-break: keep-all;
+}
+
+/* Polar Bear Positioning */
+.bear-wrapper {
+  position: absolute;
+  bottom: 46%; /* ปรับความสูงจากขอบล่างที่นี่ */
+  right: 5%;
+  z-index: 4; /* Behind or in front of layers as needed */
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.bear-message-box {
+  background: rgba(2, 6, 23, 0.55); /* Dark Glass theme */
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  padding: 25px 30px;
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  max-width: 450px;
+  width: 90vw;
+  pointer-events: auto;
+}
+
+.bear-message-box p {
+  margin: 0;
+  font-family: "IBM Plex Sans Thai", sans-serif;
+  font-size: 1rem;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.95);
+  text-align: left;
+  word-break: keep-all;
+}
+
+.bear-flip-container {
+  transform: scaleX(-1);
+  display: flex;
+}
+
+.bear-img {
+  width: auto;
+  height: clamp(100px, 15vh, 220px); /* ลดขนาดลงตามความเหมาะสม */
+  filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.3));
+}
+
+/* ══════════════════════════════════════════
+   SCRUBBER TUBE — Mobile & Tablet only
+   ══════════════════════════════════════════ */
+
+.scrubber-track-container {
+  display: none; /* ซ่อนบน desktop */
+}
+
+@media (max-width: 1024px) {
+  .scrubber-track-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80vw;
+    max-width: 400px;
+    z-index: 200;
+    background: rgba(0, 0, 0, 0.45);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 50px;
+    padding: 10px 16px;
+  }
+
+  .scrubber-label-left,
+  .scrubber-label-right {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    opacity: 0.6;
+  }
+
+  .scrubber-tube {
+    position: relative;
+    flex: 1;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 6px;
+    overflow: visible;
+  }
+
+  .scrubber-fill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.4) 0%,
+      rgba(255, 255, 255, 0.95) 100%
+    );
+    border-radius: 6px;
+    pointer-events: none;
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.4);
+    transition: width 0.05s linear;
+  }
+
+  .scrubber-input {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    width: 100%;
+    height: 28px; /* touch target ใหญ่ */
+    opacity: 0;
+    cursor: pointer;
+    margin: 0;
+    padding: 0;
+    -webkit-appearance: none;
+    appearance: none;
+    background: transparent;
+    border: none;
+    z-index: 10;
+  }
+
+  .scrubber-tube::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: calc(var(--thumb-pos, 0%) - 9px);
+    transform: translateY(-50%);
+    width: 18px;
+    height: 18px;
+    background: white;
+    border-radius: 50%;
+    box-shadow:
+      0 0 0 3px rgba(255, 255, 255, 0.2),
+      0 2px 8px rgba(0, 0, 0, 0.4);
+    pointer-events: none;
+    transition: left 0.05s linear;
+  }
+}
+
+/* ══════════════════════════════════════════
+   MESSAGE BOXES — Mobile & Tablet fix
+   ══════════════════════════════════════════ */
+
+@media (max-width: 1024px) {
+
+  .orca-message-box {
+    position: fixed !important;
+    top: 80px;
+    left: 50%;
+    transform: translateX(-50%) !important;
+    width: min(88vw, 420px);
+    z-index: 1000;
+    /* ยกเลิก x transform ของ framer-motion */
+    will-change: opacity, transform;
+  }
+
+  .orca-message-box p {
+    font-size: 0.88rem;
+    line-height: 1.6;
+  }
+
+  .bear-message-box {
+    max-width: 80vw;
+    padding: 16px 20px;
+  }
+
+  .bear-message-box p {
+    font-size: 0.85rem;
+    line-height: 1.6;
+  }
+}
+
+@media (max-width: 480px) {
+
+  .orca-message-box {
+    top: 70px;
+    width: 92vw;
+  }
+
+  .orca-message-box p {
+    font-size: 0.8rem;
+  }
+}

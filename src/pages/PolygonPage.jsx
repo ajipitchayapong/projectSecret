@@ -132,8 +132,8 @@ const PolygonPage = () => {
   );
   const orcaMessageOpacity = useTransform(
     smoothProgress,
-    [0.4, 0.6, 0.82],
-    [0, 1, 1],
+    [0.4, 0.6, 0.72, 0.82],
+    [0, 1, 1, 0],
   );
 
   // Orca Horizontal Surge: Widened range to match
@@ -161,6 +161,27 @@ const PolygonPage = () => {
   // Bear Appearance Animation: Narrowed range to speed up the slide-in [0.75, 0.92]
   const bearX = useTransform(bearSpring, [0.75, 0.92], [450, 0]);
   const bearOpacity = useTransform(bearSpring, [0.75, 0.85, 0.92], [0, 1, 1]);
+
+  const progressWidth = useTransform(smoothProgress, [0, 1], ["0%", "100%"]);
+  const [showHint, setShowHint] = useState(true);
+
+  // เพิ่มหลัง showHint state
+  const [sliderValue, setSliderValue] = useState(0);
+
+  // sync scroll → slider
+  useMotionValueEvent(scrollYProgress, "change", (v) => {
+    setSliderValue(v * 100);
+    if (v > 0.02) setShowHint(false);
+  });
+
+  // slider → scroll
+  const handleSliderChange = (e) => {
+    const val = Number(e.target.value) / 100;
+    const container = containerRef.current;
+    if (!container) return;
+    const maxScroll = container.scrollHeight - window.innerHeight;
+    window.scrollTo({ top: val * maxScroll });
+  };
 
   return (
     <div className="polygon-page-container" ref={containerRef}>
@@ -268,6 +289,53 @@ const PolygonPage = () => {
         </motion.div>
       </div>
 
+      {/* Scrubber Tube — mobile/tablet only */}
+      <div className="scrubber-track-container">
+        <div className="scrubber-label-left">
+          <svg
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="white"
+            strokeWidth="2.5"
+            strokeLinecap="round"
+          >
+            <path d="M3 12h18M3 6h18M3 18h18" />
+          </svg>
+        </div>
+
+        <div
+          className="scrubber-tube"
+          style={{ "--thumb-pos": `${sliderValue}%` }}
+        >
+          <div className="scrubber-fill" style={{ width: `${sliderValue}%` }} />
+          <input
+            type="range"
+            min="0"
+            max="100"
+            step="0.1"
+            value={sliderValue}
+            onChange={handleSliderChange}
+            className="scrubber-input"
+            aria-label="เลื่อนดูเนื้อหา"
+          />
+        </div>
+
+        <div className="scrubber-label-right">
+          <svg
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="white"
+            strokeWidth="2.5"
+            strokeLinecap="round"
+          >
+            <path d="M5 12h14M12 5l7 7-7 7" />
+          </svg>
+        </div>
+      </div>
       {createPortal(
         <div className="hud-overlay">
           <Link to="/stages" className="back-link">
