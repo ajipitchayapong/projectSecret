@@ -11,6 +11,7 @@ import { Link } from "react-router-dom";
 import bottomLayer from "../images/bottom_layer.webp";
 import middleLayer from "../images/middle_layer.webp";
 import topLayer from "../images/top_layer.webp";
+n;
 import paperShip from "../images/paperShip.webp";
 import orcaImg from "../images/orca.webp";
 import bearImg from "../images/bear.webp";
