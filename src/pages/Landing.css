@@ -536,16 +536,14 @@ body {
 .mid-left-scene-v2 {
   position: absolute;
   left: 0;
-  top: 50%;
-  /* Offset upwards from Ronin section */
-  width: 45%;
-  /* Increased to 45% (balance between 30% and 50%) */
+  width: 100%; /* Spans the ParallaxElement width */
   height: auto;
   max-width: none;
+  max-height: 400vh; /* Scaled down */
   z-index: 6;
   opacity: 0.9;
   object-fit: contain;
-  object-position: left center;
+  object-position: left top;
 }
 
 .mid-right-scene-v2 {

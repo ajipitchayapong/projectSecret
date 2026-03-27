@@ -11,7 +11,6 @@ import { Link } from "react-router-dom";
 import bottomLayer from "../images/bottom_layer.webp";
 import middleLayer from "../images/middle_layer.webp";
 import topLayer from "../images/top_layer.webp";
-n;
 import paperShip from "../images/paperShip.webp";
 import orcaImg from "../images/orca.webp";
 import bearImg from "../images/bear.webp";
@@ -78,7 +77,7 @@ const PolygonPage = () => {
     }
 
     // Reset volume to an extremely soft and light level for the paper ship
-    audioRef.current.volume = 0.08; // Very subtle
+    audioRef.current.volume = 0.5; // Very subtle
 
     // Clear timeout and set a new one to fade out volume when scrolling stops
     if (audioTimeoutRef.current) clearTimeout(audioTimeoutRef.current);

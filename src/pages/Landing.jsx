@@ -541,8 +541,8 @@ const Landing = () => {
             style={{
               position: "absolute",
               left: 0,
-              top: "50%",
-              width: "45%",
+              top: "40%", // Move up slightly
+              width: "30%", // Smaller size
               zIndex: 6,
             }}
           >

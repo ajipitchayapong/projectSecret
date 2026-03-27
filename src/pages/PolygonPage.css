@@ -540,7 +540,7 @@
 
 .paper-ship-wrapper {
   position: fixed;
-  top: 58%;
+  top: 54%;
   left: 2rem;
   transform: translateY(-50%);
   z-index: 10;
@@ -598,7 +598,7 @@
 /* Polar Bear Positioning */
 .bear-wrapper {
   position: absolute;
-  bottom: 46%; /* ปรับความสูงจากขอบล่างที่นี่ */
+  bottom: 59%; /* ปรับความสูงจากขอบล่างที่นี่ */
   right: 5%;
   z-index: 4; /* Behind or in front of layers as needed */
   pointer-events: none;
@@ -745,7 +745,6 @@
    ══════════════════════════════════════════ */
 
 @media (max-width: 1024px) {
-
   .orca-message-box {
     position: fixed !important;
     top: 80px;
@@ -774,7 +773,6 @@
 }
 
 @media (max-width: 480px) {
-
   .orca-message-box {
     top: 70px;
     width: 92vw;
