@@ -58,8 +58,13 @@ const ParallaxElement = ({
   // If 3 values provided: [Start, Center, End] -> Map to [0, 0.5, 1]
   const getInputRange = (range) => (range.length === 3 ? [0, 0.5, 1] : [0, 1]);
 
+  const isMobile = typeof window !== "undefined" && window.innerWidth <= 768;
   const y = useTransform(smoothProgress, getInputRange(yRange), yRange);
-  const x = useTransform(smoothProgress, getInputRange(xRange), xRange);
+  const x = useTransform(
+    smoothProgress,
+    getInputRange(xRange),
+    isMobile ? ["0%", "0%"] : xRange,
+  );
   const scale = scaleRange
     ? useTransform(smoothProgress, getInputRange(scaleRange), scaleRange)
     : undefined;
