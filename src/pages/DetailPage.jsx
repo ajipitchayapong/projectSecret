@@ -349,7 +349,10 @@ function DetailPage() {
             <span className="piece-number">{currentIndex + 1}</span>
           </div>
           <div className="title-divider"></div>
-          <h1 className="title-name">{details.nameEN}</h1>
+          <h1 className="title-name">
+            <span className="title-en">{details.nameEN}</span>
+            <span className="title-th">{details.nameTH}</span>
+          </h1>
         </div>
 
         {/* 2. Ghost Menu (Bottom) */}
@@ -422,7 +425,10 @@ function DetailPage() {
                   </button>
                 )}
 
-                <h2 className="modal-title">{details.nameEN}</h2>
+                <h2 className="modal-title">
+                  <span className="modal-title-en">{details.nameEN}</span>
+                  <span className="modal-title-th">{details.nameTH}</span>
+                </h2>
 
                 {/* Internal Navigation Tabs */}
                 <div className="modal-nav">

@@ -118,8 +118,8 @@ const AnimalInfoBox = ({
     >
       <div className={`info-content-v2 ${isOpaque ? "opaque-v2" : ""}`}>
         <h3 className="info-name-v2">
-          {details.nameEN}{" "}
-          <span className="name-th-v2">| {details.nameTH}</span>
+          <span className="name-en-v2">{details.nameEN}</span>
+          <span className="name-th-v2">{details.nameTH}</span>
         </h3>
         <p className="info-desc-v2">{details.content.intro}</p>
         <Link to={`/detail?id=${animalId}`} className="detail-btn-v2">
@@ -542,12 +542,12 @@ const Landing = () => {
         <section className="section-ronin-v2">
           <ParallaxElement
             yRange={["0%", "-15%"]}
-            xRange={["-20%", "0%"]}
+            xRange={["-10%", "0%"]}
             style={{
               position: "absolute",
-              left: 0,
-              top: "40%", // Move up slightly
-              width: "30%", // Smaller size
+              left: "-5%", // Anchored to left edge with slight overlap
+              top: "35%",
+              width: "clamp(200px, 35%, 500px)", // Responsive width
               zIndex: 6,
             }}
           >
@@ -556,22 +556,20 @@ const Landing = () => {
               className="mid-left-scene-v2"
               alt=""
               style={{
-                position: "relative",
-                top: "auto",
-                left: "auto",
                 width: "100%",
+                height: "auto",
               }}
             />
           </ParallaxElement>
 
           <ParallaxElement
             yRange={["0%", "-15%"]}
-            xRange={["20%", "0%"]}
+            xRange={["10%", "0%"]}
             style={{
               position: "absolute",
-              right: 0,
-              top: "50%",
-              width: "40%",
+              right: "-5%", // Anchored to right edge with slight overlap
+              top: "45%",
+              width: "clamp(250px, 45%, 700px)", // Responsive width
               zIndex: 6,
               display: "flex",
               justifyContent: "flex-end",
@@ -582,10 +580,8 @@ const Landing = () => {
               className="mid-right-scene-v2"
               alt=""
               style={{
-                position: "relative",
-                top: "auto",
-                right: "auto",
                 width: "100%",
+                height: "auto",
               }}
             />
           </ParallaxElement>

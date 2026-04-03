@@ -941,23 +941,28 @@ body {
 
 .info-name-v2 {
   font-family: var(--font-main);
-  font-size: 2.5rem;
-  font-weight: 700;
   color: white;
   margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.name-en-v2 {
+  font-size: 2.22rem;
+  font-weight: 700;
   letter-spacing: 0.05em;
   text-transform: uppercase;
-  display: flex;
-  align-items: baseline;
-  gap: 0.5rem;
+  line-height: 1.1;
 }
 
 .name-th-v2 {
   font-family: var(--font-main);
-  font-size: 1.2rem;
+  font-size: 1.5rem;
   font-weight: 400;
-  opacity: 0.7;
+  opacity: 0.85;
   text-transform: none;
+  line-height: 1.2;
 }
 
 .info-desc-v2 {
@@ -1539,13 +1544,23 @@ body {
   .section-dugong-v2,
   .section-orca-v2,
   .section-sperm-whale-v2,
-  .section-middle-scene-v2,
-  .section-ronin-v2,
   .section-sawfishes-v2 {
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
     padding: 24px 16px !important;
+    margin-top: 0 !important;
+    gap: 16px !important;
+    position: relative !important;
+    overflow: visible !important;
+  }
+
+  .section-middle-scene-v2,
+  .section-ronin-v2 {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    padding: 24px 0 !important; /* Edge to edge horizontal */
     margin-top: 0 !important;
     gap: 16px !important;
     position: relative !important;
@@ -1647,6 +1662,13 @@ body {
   .info-name-v2 {
     font-size: 1.6rem !important;
     flex-wrap: wrap;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 2px !important;
+  }
+
+  .name-en-v2 {
+    font-size: 1.4rem !important;
   }
 
   .name-th-v2 {
@@ -1712,6 +1734,13 @@ body {
   .info-name-v2 {
     font-size: 1.1rem !important;
     flex-wrap: wrap;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 1px !important;
+  }
+
+  .name-en-v2 {
+    font-size: 1.1rem !important;
   }
 
   .name-th-v2 {
