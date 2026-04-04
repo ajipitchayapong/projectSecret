@@ -3,6 +3,7 @@ import Intro1 from "./Intro1.jsx";
 import Intro2 from "./Intro2.jsx";
 import "./Stages.css";
 import { useNavigate, useLocation } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
 
 const stagesData = [
   {
@@ -73,48 +74,120 @@ const Stages = () => {
   return (
     <div className="stages-container">
       {stagesData.map((stage) => (
-        <div
+        <motion.div
           key={stage.id}
+          layoutId={`stage-${stage.id}`}
           className={`stage-tab ${stage.bgClass} ${activeTab === stage.id ? "active" : ""}`}
           onMouseEnter={() => !isMobile && setActiveTab(stage.id)}
           onMouseLeave={() => !isMobile && setActiveTab(null)}
           onClick={() => handleTabClick(stage)}
         >
-          <div className="stage-content">
+          <motion.div layout className="stage-content">
             <div className="stage-number-circle">{stage.id}</div>
             <h2 className="stage-title">{stage.title}</h2>
-          </div>
+          </motion.div>
 
           <div className="stage-info">
             <h1 className="stage-info-title">{stage.title}</h1>
             <p className="stage-info-subtitle">{stage.subtitle}</p>
           </div>
-        </div>
+        </motion.div>
       ))}
 
-      {mobileSelected && selectedStage && (
-        <div
-          className={`mobile-preview ${selectedStage.bgClass}`}
-          onClick={() => handleTabClick(selectedStage)}
-        >
-          <div className="mobile-preview-overlay" />
-          <button
-            className="mobile-preview-close"
-            onClick={(e) => {
-              e.stopPropagation();
-              setMobileSelected(null);
-            }}
+      <AnimatePresence>
+        {mobileSelected && selectedStage && (
+          <motion.div
+            key="mobile-preview"
+            layoutId={`stage-${selectedStage.id}`}
+            className={`mobile-preview ${selectedStage.bgClass}`}
+            onClick={() => handleTabClick(selectedStage)}
+            style={{ zIndex: 100 }}
           >
-            ✕
-          </button>
-          <div className="mobile-preview-content">
-            <div className="stage-number-circle large">{selectedStage.id}</div>
-            <h1 className="mobile-preview-title">{selectedStage.title}</h1>
-            <p className="mobile-preview-subtitle">{selectedStage.subtitle}</p>
-            <button className="mobile-preview-btn">เข้าสู่เส้นทางนี้ →</button>
-          </div>
-        </div>
-      )}
+            <motion.div
+              className="mobile-preview-overlay"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+            />
+            <button
+              className="mobile-preview-close"
+              onClick={(e) => {
+                e.stopPropagation();
+                setMobileSelected(null);
+              }}
+            >
+              ✕
+            </button>
+            <motion.div
+              className="mobile-preview-content"
+              initial="hidden"
+              animate="visible"
+              exit="hidden"
+              variants={{
+                visible: {
+                  transition: {
+                    staggerChildren: 0.1,
+                    delayChildren: 0.2,
+                  },
+                },
+              }}
+            >
+              <motion.div
+                className="stage-number-circle large"
+                variants={{
+                  hidden: { y: -20, opacity: 0 },
+                  visible: {
+                    y: 0,
+                    opacity: 1,
+                    transition: { duration: 0.4, ease: "easeOut" },
+                  },
+                }}
+              >
+                {selectedStage.id}
+              </motion.div>
+              <motion.h1
+                className="mobile-preview-title"
+                variants={{
+                  hidden: { y: 20, opacity: 0 },
+                  visible: {
+                    y: 0,
+                    opacity: 1,
+                    transition: { duration: 0.4, ease: "easeOut" },
+                  },
+                }}
+              >
+                {selectedStage.title}
+              </motion.h1>
+              <motion.p
+                className="mobile-preview-subtitle"
+                variants={{
+                  hidden: { y: 20, opacity: 0 },
+                  visible: {
+                    y: 0,
+                    opacity: 1,
+                    transition: { duration: 0.4, ease: "easeOut" },
+                  },
+                }}
+              >
+                {selectedStage.subtitle}
+              </motion.p>
+              <motion.button
+                className="mobile-preview-btn"
+                variants={{
+                  hidden: { scale: 0.8, opacity: 0 },
+                  visible: {
+                    scale: 1,
+                    opacity: 1,
+                    transition: { duration: 0.4, ease: "easeOut" },
+                  },
+                }}
+              >
+                เข้าสู่เส้นทางนี้ →
+              </motion.button>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {introStep === 1 && <Intro1 onNext={() => handleStepChange(2)} />}
       {introStep === 2 && <Intro2 onNext={() => handleStepChange(0)} />}

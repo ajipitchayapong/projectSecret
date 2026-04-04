@@ -161,6 +161,7 @@ body {
     padding-bottom: 16px !important;
     align-items: flex-start;
     padding-left: 20px;
+    transition: none !important;
   }
 
   .stage-tab:hover,
@@ -199,7 +200,9 @@ body {
   text-align: center;
   opacity: 0;
   transform: translateY(-20px);
-  transition: opacity 0.4s ease, transform 0.4s ease;
+  transition:
+    opacity 0.4s ease,
+    transform 0.4s ease;
   z-index: 3;
   pointer-events: none;
 }
@@ -221,14 +224,14 @@ body {
   font-size: 1.6rem;
   font-weight: 800;
   margin-bottom: 10px;
-  text-shadow: 0 2px 10px rgba(0,0,0,0.6);
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
 }
 
 .stage-info-subtitle {
-  color: rgba(255,255,255,0.85);
+  color: rgba(255, 255, 255, 0.85);
   font-size: 0.95rem;
   line-height: 1.6;
-  text-shadow: 0 1px 6px rgba(0,0,0,0.5);
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.5);
 }
 
 /* ===== Mobile Fullscreen Preview ===== */
@@ -247,7 +250,7 @@ body {
 .mobile-preview-overlay {
   position: absolute;
   inset: 0;
-  background: rgba(0,0,0,0.55);
+  background: rgba(0, 0, 0, 0.55);
   backdrop-filter: blur(2px);
 }
 
@@ -255,18 +258,21 @@ body {
   position: absolute;
   top: 20px;
   right: 20px;
-  background: rgba(255,255,255,0.2);
+  background: rgba(255, 255, 255, 0.2);
   border: none;
   color: white;
   font-size: 1.2rem;
   width: 40px;
   height: 40px;
+  min-width: 40px;
+  padding: 0;
   border-radius: 50%;
   cursor: pointer;
   z-index: 10;
   display: flex;
   align-items: center;
   justify-content: center;
+  line-height: 1;
 }
 
 .mobile-preview-content {
@@ -290,15 +296,15 @@ body {
   color: white;
   font-size: 2rem;
   font-weight: 800;
-  text-shadow: 0 2px 12px rgba(0,0,0,0.6);
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.6);
 }
 
 .mobile-preview-subtitle {
-  color: rgba(255,255,255,0.9);
+  color: rgba(255, 255, 255, 0.9);
   font-size: 1rem;
   line-height: 1.7;
   max-width: 320px;
-  text-shadow: 0 1px 6px rgba(0,0,0,0.5);
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.5);
 }
 
 .mobile-preview-btn {
@@ -311,5 +317,5 @@ body {
   font-size: 1rem;
   font-weight: 700;
   cursor: pointer;
-  box-shadow: 0 5px 20px rgba(0,198,255,0.4);
+  box-shadow: 0 5px 20px rgba(0, 198, 255, 0.4);
 }
