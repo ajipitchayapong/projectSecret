@@ -52,6 +52,22 @@ const Stages = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  // Lock scroll when intro is active
+  useEffect(() => {
+    if (introStep === 1 || introStep === 2) {
+      document.body.style.overflow = "hidden";
+      document.body.style.touchAction = "none"; // Extra lock for mobile
+    } else {
+      document.body.style.overflow = "auto";
+      document.body.style.touchAction = "auto";
+    }
+
+    return () => {
+      document.body.style.overflow = "auto";
+      document.body.style.touchAction = "auto";
+    };
+  }, [introStep]);
+
   const handleStepChange = (nextStep) => {
     setIntroStep(nextStep);
     if (nextStep === 0) hasSeenIntroGlobal = true;

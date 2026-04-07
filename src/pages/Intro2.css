@@ -129,7 +129,7 @@
     justify-content: flex-start;
     padding-top: 40px;
     padding-bottom: 24px;
-    overflow-y: auto; 
+    overflow: hidden;
   }
 
   .diver-image {
