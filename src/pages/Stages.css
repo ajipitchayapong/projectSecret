@@ -79,8 +79,32 @@ body {
   transition: opacity 0.4s ease;
 }
 
-/* Optional: Make the gradient slightly taller/darker on hover */
-.stage-tab:hover::before,
+/* Hover State - Expand */
+@media (hover: hover) {
+  .stage-tab:hover {
+    flex: 3;
+  }
+  .stage-tab:hover::before {
+    background: linear-gradient(
+      to top,
+      rgba(0, 0, 0, 0.95) 0%,
+      rgba(0, 0, 0, 0.4) 30%,
+      rgba(0, 0, 0, 0) 50%
+    );
+  }
+  .stage-tab:hover .stage-title {
+    opacity: 1;
+  }
+  .stage-tab:hover .stage-info {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Active State (for mobile or desktop) */
+.stage-tab.active {
+  flex: 3;
+}
 .stage-tab.active::before {
   background: linear-gradient(
     to top,
@@ -89,11 +113,12 @@ body {
     rgba(0, 0, 0, 0) 50%
   );
 }
-
-/* Hover State - Expand */
-.stage-tab:hover,
-.stage-tab.active {
-  flex: 3; /* Expands to take more space */
+.stage-tab.active .stage-title {
+  opacity: 1;
+}
+.stage-tab.active .stage-info {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 /* To compress others more, you could also just rely on flex: 3 vs flex: 1 for siblings */
@@ -140,7 +165,6 @@ body {
   white-space: nowrap;
 }
 
-.stage-tab:hover .stage-title,
 .stage-tab.active .stage-title {
   opacity: 1;
 }
@@ -164,9 +188,15 @@ body {
     transition: none !important;
   }
 
-  .stage-tab:hover,
   .stage-tab.active {
     flex: 2 !important;
+  }
+
+  /* Disable hover expansion on mobile */
+  @media (hover: hover) {
+    .stage-tab:hover {
+      flex: 2 !important;
+    }
   }
 
   .stage-content {
@@ -207,13 +237,6 @@ body {
   pointer-events: none;
 }
 
-.stage-tab:hover .stage-info,
-.stage-tab.active .stage-info {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.stage-tab:hover .stage-info,
 .stage-tab.active .stage-info {
   opacity: 1;
   transform: translateY(0);
