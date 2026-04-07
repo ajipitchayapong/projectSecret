@@ -168,10 +168,9 @@ const PolygonPage = () => {
   // เพิ่มหลัง showHint state
   const [sliderValue, setSliderValue] = useState(0);
 
-  // sync scroll → slider
+  // sync scroll → UI (avoiding React re-renders)
   useMotionValueEvent(scrollYProgress, "change", (v) => {
-    setSliderValue(v * 100);
-    if (v > 0.02) setShowHint(false);
+    if (v > 0.02 && showHint) setShowHint(false);
   });
 
   // slider → scroll
@@ -307,9 +306,21 @@ const PolygonPage = () => {
 
         <div
           className="scrubber-tube"
-          style={{ "--thumb-pos": `${sliderValue}%` }}
+          style={{
+            "--thumb-pos": useTransform(
+              scrollYProgress,
+              [0, 1],
+              ["0%", "100%"],
+            ),
+          }}
         >
-          <div className="scrubber-fill" style={{ width: `${sliderValue}%` }} />
+          <motion.div
+            className="scrubber-fill"
+            style={{
+              scaleX: scrollYProgress,
+              transformOrigin: "left",
+            }}
+          />
           <input
             type="range"
             min="0"

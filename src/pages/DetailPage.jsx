@@ -337,33 +337,72 @@ function DetailPage() {
     const ty = Math.sin(angle) * radius;
     const rot = (index * 45) % 360;
 
-    const currentTransform = isVisible
-      ? "translate(0px, 0px) rotate(0deg)"
-      : `translate(${tx}px, ${ty}px) rotate(${rot}deg)`;
+    const pointsMatch = shardData?.clipPath.match(/polygon\((.*)\)/);
+    const pointsStr = pointsMatch
+      ? pointsMatch[1].replace(/%/g, "").replace(/,/g, "").trim()
+      : "50 50, 50 50, 50 50";
+
+    // All shards in the pool are now rendered to ensure a full explosion effect
+    const finalOpacity = isVisible ? 1 : 0;
+    const finalScale = isVisible ? 1 : 0;
+
+    // Scale translations to match SVG 100x100 coordinate system
+    const txScaled = tx * 0.1;
+    const tyScaled = ty * 0.1;
 
     return (
-      <div
-        key={index}
-        className={`shard ${shimmerReady ? "shimmer-ready" : ""}`}
+      <motion.g
+        key={`${currentIndex}-${index}`}
+        className={`shard-group ${shimmerReady ? "shimmer-ready" : ""}`}
+        initial={{
+          opacity: 0,
+          x: txScaled,
+          y: tyScaled,
+          rotate: rot,
+          scale: 0,
+        }}
+        animate={{
+          opacity: finalOpacity,
+          x: isVisible ? 0 : txScaled,
+          y: isVisible ? 0 : tyScaled,
+          rotate: isVisible ? 0 : rot,
+          scale: finalScale,
+        }}
+        transition={{
+          opacity: { duration: 0.4, delay: delay },
+          x: { duration: DURATION, delay: delay, ease: [0.25, 0.8, 0.25, 1] },
+          y: { duration: DURATION, delay: delay, ease: [0.25, 0.8, 0.25, 1] },
+          rotate: {
+            duration: DURATION,
+            delay: delay,
+            ease: [0.25, 0.8, 0.25, 1],
+          },
+          scale: {
+            duration: DURATION,
+            delay: delay,
+            ease: [0.25, 0.8, 0.25, 1],
+          },
+        }}
         style={{
-          clipPath: currentClipPath,
-          WebkitClipPath: currentClipPath,
-          backgroundColor: currentColor,
-          opacity: currentOpacity,
           pointerEvents: pointerEvents,
-          zIndex: 1,
-          transform: currentTransform,
-
-          transition: `
-            clip-path ${DURATION}s ${delay}s cubic-bezier(0.25, 0.8, 0.25, 1),
-            -webkit-clip-path ${DURATION}s ${delay}s cubic-bezier(0.25, 0.8, 0.25, 1),
-            opacity 0.4s ${delay}s ease-out,
-            background-color 0s 0s linear,
-            transform ${DURATION}s ${delay}s cubic-bezier(0.25, 0.8, 0.25, 1)
-          `,
+          transformOrigin: "50% 50%",
           "--shimmer-delay": `${Math.floor(rank / batchSize) * 0.1}s`,
         }}
-      />
+      >
+        <polygon
+          points={pointsStr}
+          fill={isVisible ? shardData.color : "transparent"}
+        />
+        {/* Shimmer Layer */}
+        {shimmerReady && isVisible && (
+          <polygon
+            className="shard-shimmer-svg"
+            points={pointsStr}
+            fill="white"
+            style={{ pointerEvents: "none" }}
+          />
+        )}
+      </motion.g>
     );
   });
 
@@ -419,7 +458,14 @@ function DetailPage() {
                 cursor: "default",
               }}
             >
-              {shards}
+              <svg
+                key={currentIndex}
+                viewBox="0 0 100 100"
+                preserveAspectRatio="none"
+                style={{ width: "100%", height: "100%", overflow: "visible" }}
+              >
+                {shards}
+              </svg>
             </div>
           </div>
 

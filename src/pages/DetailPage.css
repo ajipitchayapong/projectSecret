@@ -744,6 +744,32 @@
   }
 }
 
+/* SVG Shimmer version */
+.shard-shimmer-svg {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.shimmer-ready .shard-shimmer-svg {
+  animation: shimmer-svg 12s infinite;
+  animation-delay: var(--shimmer-delay, 0s);
+}
+
+@keyframes shimmer-svg {
+  0% {
+    opacity: 0;
+  }
+  3% {
+    opacity: 0.4;
+  }
+  6% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
 /* --- REFACTOR: Floating Menu & Modal --- */
 
 /* 1. Ghost Menu (Floating Bottom) */

@@ -483,7 +483,7 @@ body {
   /* margin-top: 100px; REMOVED handled by padding/layout */
   pointer-events: none;
   animation: float-buoyant 8s ease-in-out infinite reverse;
-  /* Slight variation of float */
+  will-change: transform;
 }
 
 .irrawaddy-wrapper-v2 {
@@ -512,7 +512,7 @@ body {
   margin-top: 150px; /* Standardized alignment offset */
   pointer-events: none;
   animation: float-buoyant 7s ease-in-out infinite;
-  /* Slightly different timing */
+  will-change: transform;
 }
 
 .dolphin-wrapper-standard-v2 {
@@ -583,7 +583,7 @@ body {
   /* Consistent sizing */
   pointer-events: none;
   animation: float-buoyant 9s ease-in-out infinite;
-  /* Slower, heavier float */
+  will-change: transform;
 }
 
 .stingray-wrapper-v2 {
@@ -613,7 +613,7 @@ body {
   /* Consistent sizing */
   pointer-events: none;
   animation: float-buoyant 8.5s ease-in-out infinite alternate;
-  /* Gentle float */
+  will-change: transform;
 }
 
 .dugong-wrapper-v2 {
@@ -650,6 +650,7 @@ body {
   justify-content: center;
   align-items: center;
   animation: float-buoyant 12s ease-in-out infinite;
+  will-change: transform;
 }
 
 .turtle-wrapper-v2 {
@@ -694,7 +695,7 @@ body {
   /* Consistent sizing */
   pointer-events: none;
   animation: float-buoyant 11s ease-in-out infinite;
-  /* Slightly different timing */
+  will-change: transform;
 }
 
 .ronin-wrapper-v2 {
@@ -724,7 +725,7 @@ body {
   /* Consistent sizing */
   pointer-events: none;
   animation: float-buoyant 10s ease-in-out infinite;
-  /* Standard float timing */
+  will-change: transform;
 }
 
 .sawfishes-wrapper-v2 {
@@ -762,6 +763,7 @@ body {
   width: 57%;
   pointer-events: none;
   animation: float-buoyant 11s ease-in-out infinite;
+  will-change: transform;
 }
 
 .orca-wrapper-v2 {
@@ -789,7 +791,7 @@ body {
   width: 70%;
   pointer-events: none;
   animation: float-buoyant 13s ease-in-out infinite;
-  /* Slower, heavier */
+  will-change: transform;
 }
 
 .sperm-whale-wrapper-v2 {

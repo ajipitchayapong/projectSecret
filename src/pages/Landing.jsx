@@ -11,6 +11,7 @@ import { ANIMALS } from "../data/animalConfig";
 import ANIMAL_DETAILS from "../data/animalDetails.json";
 import UnderwaterEnvironment from "../components/UnderwaterEnvironment";
 import SoundController from "../components/SoundController";
+import AnimalSVG from "../components/AnimalSVG";
 import BackToTop from "../components/BackToTop";
 import "../components/SoundController.css";
 import "./Landing.css";
@@ -338,23 +339,7 @@ const Landing = () => {
           >
             <div className="irrawaddy-dolphin-v2">
               <div className="irrawaddy-wrapper-v2">
-                {ANIMALS.find((a) => a.id === "irrawaddyDolphin")?.shards.map(
-                  (shard, index) => (
-                    <div
-                      key={index}
-                      className="shard"
-                      style={{
-                        clipPath: shard.clipPath,
-                        backgroundColor: shard.color,
-                        width: "100%",
-                        height: "100%",
-                        position: "absolute",
-                        top: 0,
-                        left: 0,
-                      }}
-                    />
-                  ),
-                )}
+                <AnimalSVG animalId="irrawaddyDolphin" />
               </div>
             </div>
           </ParallaxElement>
@@ -380,23 +365,7 @@ const Landing = () => {
           >
             <div className="dolphin-standard-v2">
               <div className="dolphin-wrapper-standard-v2">
-                {ANIMALS.find((a) => a.id === "dolphin")?.shards.map(
-                  (shard, index) => (
-                    <div
-                      key={index}
-                      className="shard"
-                      style={{
-                        clipPath: shard.clipPath,
-                        backgroundColor: shard.color,
-                        width: "100%",
-                        height: "100%",
-                        position: "absolute",
-                        top: 0,
-                        left: 0,
-                      }}
-                    />
-                  ),
-                )}
+                <AnimalSVG animalId="dolphin" />
               </div>
             </div>
           </ParallaxElement>
@@ -416,23 +385,7 @@ const Landing = () => {
           >
             <div className="stingray-v2">
               <div className="stingray-wrapper-v2">
-                {ANIMALS.find((a) => a.id === "stingray")?.shards.map(
-                  (shard, index) => (
-                    <div
-                      key={index}
-                      className="shard"
-                      style={{
-                        clipPath: shard.clipPath,
-                        backgroundColor: shard.color,
-                        width: "100%",
-                        height: "100%",
-                        position: "absolute",
-                        top: 0,
-                        left: 0,
-                      }}
-                    />
-                  ),
-                )}
+                <AnimalSVG animalId="stingray" />
               </div>
             </div>
           </ParallaxElement>
@@ -452,23 +405,7 @@ const Landing = () => {
           >
             <div className="dugong-v2">
               <div className="dugong-wrapper-v2">
-                {ANIMALS.find((a) => a.id === "dugong")?.shards.map(
-                  (shard, index) => (
-                    <div
-                      key={index}
-                      className="shard"
-                      style={{
-                        clipPath: shard.clipPath,
-                        backgroundColor: shard.color,
-                        width: "100%",
-                        height: "100%",
-                        position: "absolute",
-                        top: 0,
-                        left: 0,
-                      }}
-                    />
-                  ),
-                )}
+                <AnimalSVG animalId="dugong" />
               </div>
             </div>
           </ParallaxElement>
@@ -511,23 +448,7 @@ const Landing = () => {
           >
             <div className="turtle-v2">
               <div className="turtle-wrapper-v2">
-                {ANIMALS.find((a) => a.id === "turtle")?.shards.map(
-                  (shard, index) => (
-                    <div
-                      key={index}
-                      className="shard"
-                      style={{
-                        clipPath: shard.clipPath,
-                        backgroundColor: shard.color,
-                        width: "100%",
-                        height: "100%",
-                        position: "absolute",
-                        top: 0,
-                        left: 0,
-                      }}
-                    />
-                  ),
-                )}
+                <AnimalSVG animalId="turtle" />
               </div>
             </div>
           </ParallaxElement>
@@ -595,23 +516,7 @@ const Landing = () => {
           >
             <div className="ronin-v2">
               <div className="ronin-wrapper-v2">
-                {ANIMALS.find((a) => a.id === "ronin")?.shards.map(
-                  (shard, index) => (
-                    <div
-                      key={index}
-                      className="shard"
-                      style={{
-                        clipPath: shard.clipPath,
-                        backgroundColor: shard.color,
-                        width: "100%",
-                        height: "100%",
-                        position: "absolute",
-                        top: 0,
-                        left: 0,
-                      }}
-                    />
-                  ),
-                )}
+                <AnimalSVG animalId="ronin" />
               </div>
             </div>
           </ParallaxElement>
@@ -631,23 +536,7 @@ const Landing = () => {
           >
             <div className="sawfishes-v2">
               <div className="sawfishes-wrapper-v2">
-                {ANIMALS.find((a) => a.id === "sawfishes")?.shards.map(
-                  (shard, index) => (
-                    <div
-                      key={index}
-                      className="shard"
-                      style={{
-                        clipPath: shard.clipPath,
-                        backgroundColor: shard.color,
-                        width: "100%",
-                        height: "100%",
-                        position: "absolute",
-                        top: 0,
-                        left: 0,
-                      }}
-                    />
-                  ),
-                )}
+                <AnimalSVG animalId="sawfishes" />
               </div>
             </div>
           </ParallaxElement>
@@ -668,23 +557,7 @@ const Landing = () => {
           >
             <div className="orca-v2">
               <div className="orca-wrapper-v2">
-                {ANIMALS.find((a) => a.id === "orca")?.shards.map(
-                  (shard, index) => (
-                    <div
-                      key={index}
-                      className="shard"
-                      style={{
-                        clipPath: shard.clipPath,
-                        backgroundColor: shard.color,
-                        width: "100%",
-                        height: "100%",
-                        position: "absolute",
-                        top: 0,
-                        left: 0,
-                      }}
-                    />
-                  ),
-                )}
+                <AnimalSVG animalId="orca" />
               </div>
             </div>
           </ParallaxElement>
@@ -701,23 +574,7 @@ const Landing = () => {
           >
             <div className="sperm-whale-v2">
               <div className="sperm-whale-wrapper-v2">
-                {ANIMALS.find((a) => a.id === "spermWhale")?.shards.map(
-                  (shard, index) => (
-                    <div
-                      key={index}
-                      className="shard"
-                      style={{
-                        clipPath: shard.clipPath,
-                        backgroundColor: shard.color,
-                        width: "100%",
-                        height: "100%",
-                        position: "absolute",
-                        top: 0,
-                        left: 0,
-                      }}
-                    />
-                  ),
-                )}
+                <AnimalSVG animalId="spermWhale" />
               </div>
             </div>
           </ParallaxElement>
@@ -734,23 +591,7 @@ const Landing = () => {
           >
             <div className="blue-whale-v2">
               <div className="blue-whale-wrapper-v2">
-                {ANIMALS.find((a) => a.id === "blueWhale")?.shards.map(
-                  (shard, index) => (
-                    <div
-                      key={index}
-                      className="shard"
-                      style={{
-                        clipPath: shard.clipPath,
-                        backgroundColor: shard.color,
-                        width: "100%",
-                        height: "100%",
-                        position: "absolute",
-                        top: 0,
-                        left: 0,
-                      }}
-                    />
-                  ),
-                )}
+                <AnimalSVG animalId="blueWhale" />
               </div>
             </div>
           </ParallaxElement>
