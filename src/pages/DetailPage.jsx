@@ -130,6 +130,17 @@ const ImageCarousel = ({ images }) => {
 };
 
 function DetailPage() {
+  // Lock scroll on this page
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+    document.body.style.touchAction = "none";
+
+    return () => {
+      document.body.style.overflow = "auto";
+      document.body.style.touchAction = "auto";
+    };
+  }, []);
+
   const levels = ANIMALS;
   const [searchParams] = useSearchParams();
   const [currentIndex, setCurrentIndex] = useState(0);

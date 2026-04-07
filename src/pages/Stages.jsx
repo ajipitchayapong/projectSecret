@@ -52,21 +52,16 @@ const Stages = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // Lock scroll when intro is active
+  // Always lock scroll on this page (it's a fullscreen vertical layout)
   useEffect(() => {
-    if (introStep === 1 || introStep === 2) {
-      document.body.style.overflow = "hidden";
-      document.body.style.touchAction = "none"; // Extra lock for mobile
-    } else {
-      document.body.style.overflow = "auto";
-      document.body.style.touchAction = "auto";
-    }
+    document.body.style.overflow = "hidden";
+    document.body.style.touchAction = "none";
 
     return () => {
       document.body.style.overflow = "auto";
       document.body.style.touchAction = "auto";
     };
-  }, [introStep]);
+  }, []);
 
   const handleStepChange = (nextStep) => {
     setIntroStep(nextStep);
