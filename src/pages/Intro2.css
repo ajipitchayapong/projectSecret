@@ -1,15 +1,14 @@
 .intro2-overlay {
-  width: 100vw;
-  height: 100vh;
+  position: fixed;
+  inset: 0;
+  width: 100dvw;
+  height: 100dvh;
   background-size: cover;
   background-position: center;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  position: fixed;
-  top: 0;
-  left: 0;
   z-index: 999;
   overflow: hidden;
 }

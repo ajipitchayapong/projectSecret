@@ -1,14 +1,13 @@
 .intro1-overlay {
-  width: 100vw;
-  height: 100vh;
+  position: fixed;
+  inset: 0;
+  width: 100dvw;
+  height: 100dvh;
   background: linear-gradient(180deg, #1a4a6e 0%, #0a2a4e 100%);
   display: flex;
   justify-content: center;
   align-items: center;
   overflow: hidden;
-  position: fixed;
-  top: 0;
-  left: 0;
   z-index: 999;
   cursor: pointer;
 }

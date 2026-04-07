@@ -89,26 +89,27 @@ const Stages = () => {
 
   return (
     <div className="stages-container">
-      {stagesData.map((stage) => (
-        <motion.div
-          key={stage.id}
-          layoutId={`stage-${stage.id}`}
-          className={`stage-tab ${stage.bgClass} ${activeTab === stage.id ? "active" : ""}`}
-          onMouseEnter={() => !isMobile && setActiveTab(stage.id)}
-          onMouseLeave={() => !isMobile && setActiveTab(null)}
-          onClick={() => handleTabClick(stage)}
-        >
-          <motion.div layout className="stage-content">
-            <div className="stage-number-circle">{stage.id}</div>
-            <h2 className="stage-title">{stage.title}</h2>
-          </motion.div>
+      {introStep === 0 &&
+        stagesData.map((stage) => (
+          <motion.div
+            key={stage.id}
+            layoutId={`stage-${stage.id}`}
+            className={`stage-tab ${stage.bgClass} ${activeTab === stage.id ? "active" : ""}`}
+            onMouseEnter={() => !isMobile && setActiveTab(stage.id)}
+            onMouseLeave={() => !isMobile && setActiveTab(null)}
+            onClick={() => handleTabClick(stage)}
+          >
+            <motion.div layout className="stage-content">
+              <div className="stage-number-circle">{stage.id}</div>
+              <h2 className="stage-title">{stage.title}</h2>
+            </motion.div>
 
-          <div className="stage-info">
-            <h1 className="stage-info-title">{stage.title}</h1>
-            <p className="stage-info-subtitle">{stage.subtitle}</p>
-          </div>
-        </motion.div>
-      ))}
+            <div className="stage-info">
+              <h1 className="stage-info-title">{stage.title}</h1>
+              <p className="stage-info-subtitle">{stage.subtitle}</p>
+            </div>
+          </motion.div>
+        ))}
 
       <AnimatePresence>
         {mobileSelected && selectedStage && (
