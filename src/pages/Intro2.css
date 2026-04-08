@@ -1,8 +1,6 @@
 .intro2-overlay {
   position: fixed;
   inset: 0;
-  width: 100dvw;
-  height: 100dvh;
   background-size: cover;
   background-position: center;
   display: flex;
@@ -119,6 +117,43 @@
 
   .text-overlay {
     padding: 24px;
+  }
+}
+
+/* ===== SHORT SCREENS (Laptops with scaling) ===== */
+@media (max-height: 800px) and (min-width: 769px) {
+  .diver-image {
+    width: 220px;
+  }
+  .diver-wrapper {
+    margin-bottom: 30px;
+  }
+  .typing-text {
+    font-size: 1.3rem;
+  }
+  .text-overlay {
+    padding: 20px;
+  }
+}
+
+@media (max-height: 650px) and (min-width: 769px) {
+  .diver-image {
+    width: 160px;
+  }
+  .diver-wrapper {
+    margin-bottom: 20px;
+  }
+  .typing-text {
+    font-size: 1.1rem;
+    min-height: 3em;
+    margin-bottom: 15px;
+  }
+  .text-overlay {
+    padding: 15px;
+  }
+  .start-btn {
+    padding: 10px 30px;
+    font-size: 1rem;
   }
 }
 

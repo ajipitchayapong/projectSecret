@@ -1,8 +1,6 @@
 .intro1-overlay {
   position: fixed;
   inset: 0;
-  width: 100dvw;
-  height: 100dvh;
   background: linear-gradient(180deg, #1a4a6e 0%, #0a2a4e 100%);
   display: flex;
   justify-content: center;
@@ -324,6 +322,34 @@
   .explore-text {
     font-size: 3rem;
     letter-spacing: 6px;
+  }
+
+  .bubble-highlight-sharp {
+    width: 60px;
+    height: 30px;
+  }
+}
+
+/* ===== SHORT SCREENS (Laptops with scaling) ===== */
+@media (max-height: 800px) and (min-width: 769px) {
+  .main-bubble {
+    width: 400px;
+    height: 400px;
+  }
+
+  .explore-text {
+    font-size: 3.5rem;
+  }
+}
+
+@media (max-height: 650px) and (min-width: 769px) {
+  .main-bubble {
+    width: 300px;
+    height: 300px;
+  }
+
+  .explore-text {
+    font-size: 2.8rem;
   }
 
   .bubble-highlight-sharp {
