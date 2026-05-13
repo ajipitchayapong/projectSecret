@@ -21,7 +21,7 @@ const DURATION = 1.0;
 // [CONFIG] เวลาที่ใช้ในการเรียงตัวทั้งหมดจนครบ (วินาที) - ไม่ว่าตัวสัตว์จะมีกี่ชิ้น ก็จะใช้เวลาเรียงตัวประมาณนี้
 const TARGET_STAGGER_TIME = 1.25;
 
-const ImageCarousel = ({ images }) => {
+const ImageCarousel = ({ images, credits }) => {
   const [[page, direction], setPage] = useState([0, 0]);
 
   if (!images || images.length === 0) return null;
@@ -53,77 +53,81 @@ const ImageCarousel = ({ images }) => {
   };
 
   return (
-    <div className="animal-carousel-container">
-      <div className="animal-carousel-viewport">
-        <AnimatePresence initial={false} custom={direction} mode="popLayout">
-          <motion.div
-            key={page}
-            custom={direction}
-            variants={variants}
-            initial="enter"
-            animate="center"
-            exit="exit"
-            transition={{
-              x: { type: "spring", stiffness: 300, damping: 30 },
-              opacity: { duration: 0.2 },
-            }}
-            className="animal-carousel-slide-motion"
-          >
-            <img
-              src={images[imageIndex]}
-              alt={`slide-${imageIndex}`}
-              className="animal-carousel-img"
-            />
-          </motion.div>
-        </AnimatePresence>
+    <div className="carousel-wrapper">
+      <div className="animal-carousel-container">
+        <div className="animal-carousel-viewport">
+          <AnimatePresence initial={false} custom={direction} mode="popLayout">
+            <motion.div
+              key={page}
+              custom={direction}
+              variants={variants}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              transition={{
+                x: { type: "spring", stiffness: 300, damping: 30 },
+                opacity: { duration: 0.2 },
+              }}
+              className="animal-carousel-slide-motion"
+            >
+              <img
+                src={images[imageIndex]}
+                alt={`slide-${imageIndex}`}
+                className="animal-carousel-img"
+              />
+            </motion.div>
+          </AnimatePresence>
+        </div>
+
+        {images.length > 1 && (
+          <>
+            <button
+              className="carousel-nav-btn prev"
+              onClick={() => paginate(-1)}
+              aria-label="Previous image"
+            >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M15 19l-7-7 7-7"
+                />
+              </svg>
+            </button>
+            <button
+              className="carousel-nav-btn next"
+              onClick={() => paginate(1)}
+              aria-label="Next image"
+            >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M9 5l7 7-7 7"
+                />
+              </svg>
+            </button>
+            <div className="animal-carousel-dots">
+              {images.map((_, idx) => (
+                <div
+                  key={idx}
+                  className={`animal-carousel-dot ${idx === imageIndex ? "active" : ""}`}
+                  onClick={() => {
+                    const diff = idx - imageIndex;
+                    if (diff !== 0) paginate(diff);
+                  }}
+                />
+              ))}
+            </div>
+          </>
+        )}
       </div>
 
-      {images.length > 1 && (
-        <>
-          <button
-            className="carousel-nav-btn prev"
-            onClick={() => paginate(-1)}
-            aria-label="Previous image"
-          >
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M15 19l-7-7 7-7"
-              />
-            </svg>
-          </button>
-          <button
-            className="carousel-nav-btn next"
-            onClick={() => paginate(1)}
-            aria-label="Next image"
-          >
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M9 5l7 7-7 7"
-              />
-            </svg>
-          </button>
-
-          <div className="animal-carousel-dots">
-            {images.map((_, idx) => (
-              <div
-                key={idx}
-                className={`animal-carousel-dot ${
-                  idx === imageIndex ? "active" : ""
-                }`}
-                onClick={() => {
-                  const diff = idx - imageIndex;
-                  if (diff !== 0) paginate(diff);
-                }}
-              />
-            ))}
-          </div>
-        </>
+      {/* Credit อยู่นอก container แล้ว */}
+      {credits?.[imageIndex] && (
+        <p className="carousel-credit">ภาพ : {credits[imageIndex]}</p>
       )}
     </div>
   );
@@ -515,7 +519,7 @@ function DetailPage() {
           </div>
           <div className="title-divider"></div>
           <h1 className="title-name">
-            <span className="title-en">{details.nameEN}</span>
+            <span className="title-en">{details.nameTH}</span>
           </h1>
         </div>
 
@@ -590,7 +594,7 @@ function DetailPage() {
                 )}
 
                 <h2 className="modal-title">
-                  <span className="modal-title-en">{details.nameEN}</span>
+                  <span className="modal-title-en">{details.nameTH}</span>
                 </h2>
 
                 {/* Internal Navigation Tabs */}
@@ -684,7 +688,10 @@ function DetailPage() {
                     {ANIMAL_DETAILS.topics[displayedKey]}
                   </h3>
                   {displayedKey === "intro" && (
-                    <ImageCarousel images={details.carouselImages} />
+                    <ImageCarousel
+                      images={details.carouselImages}
+                      credits={details.carouselCredits}
+                    />
                   )}
                   <p className="modal-text">
                     {details.content[displayedKey] ||
